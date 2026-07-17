@@ -76,7 +76,9 @@ Use these instead of exploring from scratch — exploration burns the tool-call 
 SELECT * FROM course_plan_vs_actual WHERE university = 'MRV' ORDER BY start_slip_days;
 SELECT * FROM planning_standards;
 ```
-That is nearly the whole investigation in two queries. It gives you, per course: planned vs actual sessions (per section), start slip in days, actual weeks, % completed, and `coverage` — which flags courses **delivered but absent from the HLID** and vice versa. Then:
+**Do NOT add `WHERE coverage='both'`.** The rows where coverage is `delivered_not_planned` are a finding in their own right — MRV ran Introduction to NIAT, Test Your Current Knowledge and Foreign Language all semester, and none of them appear in its HLID. Filtering to `both` deletes that discovery silently. Likewise `planned_not_delivered` means a course was promised and never ran. Read every row, then decide what matters.
+
+That is nearly the whole investigation in two queries. It gives you, per course: planned vs actual sessions (per section), start slip in days, actual weeks, % completed, and `coverage`. Then:
 - Total `planned_total_hours` for the university → compare to the **495-hour budget** and the **15-week floor**.
 - Compare `actual_weeks` to `planned_weeks` — if delivery consistently needed more, the plan was too short.
 - Check ratings (below) before blaming delivery.

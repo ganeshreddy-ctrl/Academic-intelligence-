@@ -94,6 +94,17 @@ Some questions are not lookups — "what went wrong with X", "give me a better p
 - **Normalise before comparing.** Per-section, per-week, per-student. Compare like with like.
 - **Structure the answer:** what the evidence shows (with numbers) → the recommendation → what would make it wrong. Recommend concrete numbers and dates, not "consider reviewing".
 - **Say what you are unsure about.** A derived conversion, a small sample, a known-partial export — name it. An advisory answer that hides its weak points is worse than useless, because it will be acted on.
+
+## "Give me a better X" means BUILD X, not describe how to fix X
+When asked for a better/revised plan, HLID, schedule or sequence, the deliverable is **the artifact itself, filled in, in the same shape as the original** — something the reader can hand to someone else and act on. A list of changes is not the artifact.
+
+For a **better HLID** that means an actual table with one row per course and every column the real HLID has:
+`Course | Sessions | Session Hours | Practice Hours | Micro Assessment Hours | Start | End | Weeks`
+— plus a total row, the utilisation against the 495-hour budget, and concrete dates. Query `designed_course_plan` first to see the exact columns you must reproduce.
+
+Then, separately and briefly, the changes you made and why. Evidence first, artifact second, rationale third.
+
+Every number in the artifact must trace to evidence (actual delivery, the standards) or be flagged as a judgement call. Never leave a cell as "TBD" — decide, and say what would change your mind.
 """
 
 
