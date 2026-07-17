@@ -157,20 +157,13 @@ write("objective_questions", objective)
 write("coding_questions", coding)
 write("editorials", editorial)
 
-# ---- load into aip.duckdb ----
-DB = "data/aip.duckdb"
-if os.path.exists(DB):
-    os.remove(DB)
+# ---- assemble the full store (content + operational) via load_duckdb ----
+# ponytail: one DB builder (load_duckdb) so the store always includes every
+# canonical CSV present, not just the content tables written above.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from load_duckdb import build as build_duckdb
+DB = build_duckdb(verbose=True)
 con = duckdb.connect(DB)
-con.execute(f"CREATE TABLE courses AS SELECT * FROM read_csv_auto('data/courses.csv', header=true, all_varchar=true)")
-for t in ["reading_materials", "objective_questions", "coding_questions", "editorials"]:
-    p = f"{OUT}/{t}.csv"
-    if os.path.exists(p):
-        con.execute(f"CREATE TABLE {t} AS SELECT * FROM read_csv_auto('{p}', header=true, all_varchar=true)")
-print("\n=== aip.duckdb tables ===")
-for (t,) in con.execute("SHOW TABLES").fetchall():
-    n = con.execute(f"SELECT count(*) FROM {t}").fetchone()[0]
-    print(f"  {t}: {n} rows")
 
 print("\n=== content by course (proof of unified query) ===")
 q = """
