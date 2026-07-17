@@ -1,0 +1,227 @@
+layer,raw_title,course_key,match_status,catalogue_course_title,stack
+catalogue,Data Analytics Foundation,data analytics foundation,self,Data Analytics Foundation,DS/ML
+catalogue,Data Analytics with PowerBI,data analytics with powerbi,self,Data Analytics with PowerBI,DS/ML
+catalogue,Advanced Aptitude,advanced aptitude,self,Advanced Aptitude,Aptitude
+catalogue,Django Backend Development,django backend development,self,Django Backend Development,FullStack
+catalogue,Data Analytics with Tableau,data analytics with tableau,self,Data Analytics with Tableau,DS/ML
+catalogue,Introduction to Deep Learning,introduction to deep learning,self,Introduction to Deep Learning,DS/ML
+catalogue,AI Vision Systems: Detection & Segmentation,ai vision systems detection segmentation,self,AI Vision Systems: Detection & Segmentation,DS/ML
+catalogue,Productionisation of ML systems,productionisation of ml systems,self,Productionisation of ML systems,DS/ML
+catalogue,Problem Solving Techniques,problem solving techniques,self,Problem Solving Techniques,Programming & Algorithms
+catalogue,Advanced GenAI,advanced genai,self,Advanced GenAI,DS/ML
+catalogue,High-Level System Design,high level system design,self,High-Level System Design,System Design
+catalogue,Course 3  (Yet to Confirm Names),course 3 yet to confirm names,self,Course 3  (Yet to Confirm Names),Physical AI
+catalogue,AI FullStack Projects,ai fullstack projects,self,AI FullStack Projects,FullStack
+catalogue,Intorduction to Natural Language Processing,intorduction to natural language processing,self,Intorduction to Natural Language Processing,DS/ML
+catalogue,Operating Systems,operating systems,self,Operating Systems,CS Core
+catalogue,Practical Software Engineering,practical software engineering,self,Practical Software Engineering,GenAI
+catalogue,AI For Finance,ai for finance,self,AI For Finance,GenAI
+catalogue,Base 44 Mastery,base 44 mastery,self,Base 44 Mastery,GenAI
+catalogue,Advanced Frontend Development Using React,advanced frontend development using react,self,Advanced Frontend Development Using React,FullStack
+catalogue,Unsupervised Learning,unsupervised learning,self,Unsupervised Learning,DS/ML
+catalogue,Low Level System Design,low level system design,self,Low Level System Design,System Design
+catalogue,Testing With Selenium,testing with selenium,self,Testing With Selenium,DevOps & Testing
+catalogue,Introduction to Software Development,introduction to software development,self,Introduction to Software Development,Induction
+catalogue,Probability and Statistics,probability and statistics,self,Probability and Statistics,DS/ML
+catalogue,PyTorch for Deep Learning,pytorch for deep learning,self,PyTorch for Deep Learning,DS/ML
+catalogue,Quantitative Aptitude,quantitative aptitude,self,Quantitative Aptitude,Aptitude
+catalogue,Computer Programming using Python,computer programming using python,self,Computer Programming using Python,Programming & Algorithms
+catalogue,Computer Networks,computer networks,self,Computer Networks,CS Core
+catalogue,Introduction to GenAI,introduction to genai,self,Introduction to GenAI,GenAI
+catalogue,AI For Sales,ai for sales,self,AI For Sales,GenAI
+catalogue,Applied Communicative English,applied communicative english,self,Applied Communicative English,English
+catalogue,Cloud Computing Foundations,cloud computing foundations,self,Cloud Computing Foundations,DevOps & Testing
+catalogue,Data Science Foundations,data science foundations,self,Data Science Foundations,DS/ML
+catalogue,Supervised Learning: Regression,supervised learning regression,self,Supervised Learning: Regression,DS/ML
+catalogue,SpringBoot Backend Development,springboot backend development,self,SpringBoot Backend Development,FullStack
+catalogue,AI For HR,ai for hr,self,AI For HR,GenAI
+catalogue,Database Management Systems,database management systems,self,Database Management Systems,CS Core
+catalogue,OpenAI Workshop,openai workshop,self,OpenAI Workshop,GenAI
+catalogue,Language Analytics,language analytics,self,Language Analytics,English
+catalogue,Computer Programming using JS,computer programming using js,self,Computer Programming using JS,Programming & Algorithms
+catalogue,MERN Projects,mern projects,self,MERN Projects,FullStack
+catalogue,Linear Algebra and Calculus,linear algebra and calculus,self,Linear Algebra and Calculus,DS/ML
+catalogue,Course 4  (Yet to Confirm Names),course 4 yet to confirm names,self,Course 4  (Yet to Confirm Names),Physical AI
+catalogue,Advanced NLP : Sequence and Attention Models,advanced nlp sequence and attention models,self,Advanced NLP : Sequence and Attention Models,DS/ML
+catalogue,Numerical Ability,numerical ability,self,Numerical Ability,Aptitude
+catalogue,React Projects,react projects,self,React Projects,FullStack
+catalogue,Communicative English Foundation,communicative english foundation,self,Communicative English Foundation,English
+catalogue,Course 2  (Yet to Confirm Names),course 2 yet to confirm names,self,Course 2  (Yet to Confirm Names),Physical AI
+catalogue,Data Structures and Algorithms using C++,data structures and algorithms using c,self,Data Structures and Algorithms using C++,Programming & Algorithms
+catalogue,Web Application Development,web application development,self,Web Application Development,FullStack
+catalogue,Frontend Development,frontend development,self,Frontend Development,FullStack
+catalogue,Introduction to ML and Classification Algorithms,introduction to ml and classification algorithms,self,Introduction to ML and Classification Algorithms,DS/ML
+catalogue,Ensemble Learning,ensemble learning,self,Ensemble Learning,DS/ML
+catalogue,Foundations of Computer Vision with CNNs,foundations of computer vision with cnns,self,Foundations of Computer Vision with CNNs,DS/ML
+catalogue,Logical Reasoning,logical reasoning,self,Logical Reasoning,Aptitude
+catalogue,Communicative English Advanced,communicative english advanced,self,Communicative English Advanced,English
+catalogue,Computer Programming using Java,computer programming using java,self,Computer Programming using Java,Programming & Algorithms
+catalogue,Advanced Data Structures and Algorithms,advanced data structures and algorithms,self,Advanced Data Structures and Algorithms,Programming & Algorithms
+catalogue,"Backend Development Using Node, MongoDB",backend development using node mongodb,self,"Backend Development Using Node, MongoDB",FullStack
+catalogue,Math for CSE,math for cse,self,Math for CSE,DS/ML
+catalogue,Generative AI for Vision: Transformers & Diffusion Models,generative ai for vision transformers diffusion models,self,Generative AI for Vision: Transformers & Diffusion Models,DS/ML
+catalogue,Building LLM Applications,building llm applications,self,Building LLM Applications,GenAI
+catalogue,Course 1 (Yet to Confirm Names),course 1 yet to confirm names,self,Course 1 (Yet to Confirm Names),Physical AI
+delivered,Data Structures,data structures,partial,Data Structures and Algorithms using C++,Programming & Algorithms
+delivered,Build Your Own Responsive Website,build your own responsive website,unmapped,,
+delivered,Node JS,node js,unmapped,,
+delivered,Logical Reasoning and Analytical Skills,logical reasoning and analytical skills,partial,Logical Reasoning,Aptitude
+delivered,Back End Development,back end development,unmapped,,
+delivered,react,react,unmapped,,
+delivered,APTITUDE,aptitude,partial,Advanced Aptitude,Aptitude
+delivered,Skill Assessment,skill assessment,unmapped,,
+delivered,Web Development Assessment,web development assessment,unmapped,,
+delivered,Object Oriented Programming,object oriented programming,unmapped,,
+delivered,Digital Electronics,digital electronics,unmapped,,
+delivered,Mathematics for Computing,mathematics for computing,unmapped,,
+delivered,DataBase Management System,database management system,partial,Database Management Systems,CS Core
+delivered,Introduction to Databases(+Mongo DB),introduction to databases mongo db,unmapped,,
+delivered,ITP,itp,unmapped,,
+delivered,Redux & NextJS,redux nextjs,unmapped,,
+delivered,Introduction to Artificial Intelligence,introduction to artificial intelligence,unmapped,,
+delivered,Physics Assessment,physics assessment,unmapped,,
+delivered,Fundamentals of Web Development,fundamentals of web development,unmapped,,
+delivered,Applied Physics for Data Science [Lab],applied physics for data science lab,unmapped,,
+delivered,Introduction to ReactJS,introduction to reactjs,unmapped,,
+delivered,Introduction to NIAT,introduction to niat,unmapped,,
+delivered,Problem Solving with Python,problem solving with python,unmapped,,
+delivered,Computer Programming,computer programming,partial,Computer Programming using Python,Programming & Algorithms
+delivered,DSA Foundation,dsa foundation,unmapped,,
+delivered,Data Structures using C++,data structures using c,unmapped,,
+delivered,Engineering Physics,engineering physics,unmapped,,
+delivered,Mathematics Assessment,mathematics assessment,unmapped,,
+delivered,Linear algebra and Optimization,linear algebra and optimization,unmapped,,
+delivered,Foreign Language-2,foreign language 2,unmapped,,
+delivered,HTML & CSS,html css,unmapped,,
+delivered,Core Java,core java,unmapped,,
+delivered,Web Application Development 1,web application development 1,partial,Web Application Development,FullStack
+delivered,Intro to Software Development,intro to software development,unmapped,,
+delivered,Advanced Communication Skills,advanced communication skills,unmapped,,
+delivered,English - Advance,english advanced,partial,Communicative English Advanced,English
+delivered,DAA,daa,unmapped,,
+delivered,GEN AI,gen ai,unmapped,,
+delivered,Workshop Technology (Introduction to Generative AI),workshop technology introduction to generative ai,unmapped,,
+delivered,Django & DRF for Backend Development,django drf for backend development,unmapped,,
+delivered,GEN_ AI Assessments,gen ai assessments,unmapped,,
+delivered,Build Your Own Static Website,build your own static website,unmapped,,
+delivered,ADVANCE DSA,advanced dsa,unmapped,,
+delivered,C Programming,c programming,unmapped,,
+delivered,Introduction to Generative AI - Assessments,introduction to generative ai assessments,unmapped,,
+delivered,Environmental Studies,environmental studies,unmapped,,
+delivered,Engineering Drawing,engineering drawing,unmapped,,
+delivered,Basic Electronics,basic electronics,unmapped,,
+delivered,Mathematics 1,mathematics 1,unmapped,,
+delivered,DBMS,dbms,unmapped,,
+delivered,DSA,dsa,unmapped,,
+delivered,Algorithm Design,algorithm design,unmapped,,
+delivered,CSP,csp,unmapped,,
+delivered,Programming with Python,programming with python,unmapped,,
+delivered,Communicative English Advanced,communicative english advanced,exact,Communicative English Advanced,English
+delivered,Testing Course,testing course,unmapped,,
+delivered,Logical Reasoning,logical reasoning,exact,Logical Reasoning,Aptitude
+delivered,Web Application Development I,web application development i,partial,Web Application Development,FullStack
+delivered,SDP,sdp,unmapped,,
+delivered,VIDEO Games,video games,unmapped,,
+delivered,ENGLISH,english,partial,Applied Communicative English,English
+delivered,Introduction to Database Management Systems Assessment,introduction to database management systems assessment,partial,Database Management Systems,CS Core
+delivered,Chemistry Assessment,chemistry assessment,unmapped,,
+delivered,Frontend Development Essentials-1 Assessments,frontend development essentials 1 assessments,partial,Frontend Development,FullStack
+delivered,Computer Programming Laboratory,computer programming laboratory,unmapped,,
+delivered,Introduction To Logic,introduction to logic,unmapped,,
+delivered,Professional Skills for Engineers,professional skills for engineers,unmapped,,
+delivered,Foreign Language,foreign language,unmapped,,
+delivered,DBMS Fundamentals,dbms fundamentals,unmapped,,
+delivered,Interview Prep Course,interview prep course,unmapped,,
+delivered,Web  Application Development -2,web application development 2,partial,Web Application Development,FullStack
+delivered,Quantitative Aptitude,quantitative aptitude,exact,Quantitative Aptitude,Aptitude
+delivered,Design and Analysis of Algorithms,design and analysis of algorithms,unmapped,,
+delivered,Practical Software Engineering,practical software engineering,exact,Practical Software Engineering,GenAI
+delivered,Frontend Development Essentials-1,frontend development essentials 1,partial,Frontend Development,FullStack
+delivered,Intermediate Language Skills Preparation,intermediate language skills preparation,unmapped,,
+delivered,Advanced Frontend Development Assessment,advanced frontend development assessment,partial,Frontend Development,FullStack
+delivered,Data Structure,data structure,partial,Data Structures and Algorithms using C++,Programming & Algorithms
+delivered,Fundamentals Of Quantum Computing,fundamentals of quantum computing,unmapped,,
+delivered,Introduction to GIT,introduction to git,unmapped,,
+delivered,Modern Responsive Web Design,modern responsive web design,unmapped,,
+delivered,Introduction to React JS,introduction to react js,unmapped,,
+delivered,Generative AI,generative ai,partial,Generative AI for Vision: Transformers & Diffusion Models,DS/ML
+delivered,Problem Solving Using Python Programming,problem solving using python programming,unmapped,,
+delivered,Design & Drafting,design drafting,unmapped,,
+delivered,Indian Knowledge Systems,indian knowledge systems,unmapped,,
+delivered,Introduction to Tech,introduction to tech,unmapped,,
+delivered,ReactJS Vite Mini Projects,reactjs vite mini projects,unmapped,,
+delivered,Math For Computer Science,math for computer science,unmapped,,
+delivered,Build Your Own Dynamic Web Application,build your own dynamic web application,unmapped,,
+delivered,Web Development Programmining,web development programmining,unmapped,,
+delivered,ADVANCE APTITUDE,advanced aptitude,exact,Advanced Aptitude,Aptitude
+delivered,Typescript,typescript,unmapped,,
+delivered,Introduction to Web Technologies,introduction to web technologies,unmapped,,
+delivered,Python Programming Assessments,python programming assessments,unmapped,,
+delivered,Python Programming,python programming,unmapped,,
+delivered,Probability & Statistics,probability statistics,unmapped,,
+delivered,AI For Finanace,ai for finanace,unmapped,,
+delivered,Communication English Foundation,communication english foundation,unmapped,,
+delivered,Mathematics 2,mathematics 2,unmapped,,
+delivered,AI For Finance,ai for finance,exact,AI For Finance,GenAI
+delivered,Database Management Systems,database management systems,exact,Database Management Systems,CS Core
+delivered,Applied Physics for Data Science,applied physics for data science,unmapped,,
+delivered,Universal Human Values,universal human values,unmapped,,
+delivered,Introduction to JavaScript,introduction to javascript,unmapped,,
+delivered,Advanced English,advanced english,unmapped,,
+delivered,Probability and Statistics,probability and statistics,exact,Probability and Statistics,DS/ML
+delivered,Introduction to Database,introduction to database,unmapped,,
+delivered,Programming Foundations,programming foundations,unmapped,,
+delivered,Intro to NIAT,intro to niat,unmapped,,
+delivered,Database Systems,database systems,unmapped,,
+delivered,Front End Full Stack Development,front end full stack development,unmapped,,
+delivered,English - Basic,english basic,unmapped,,
+delivered,Mathematics for Computer Science_1,mathematics for computer science 1,unmapped,,
+delivered,Test Based Learning,test based learning,unmapped,,
+delivered,Cambridge English B1,cambridge english b1,unmapped,,
+delivered,Mathematics for Data Science,mathematics for data science,unmapped,,
+delivered,Quantitaive Aptitude,quantitaive aptitude,unmapped,,
+delivered,Logical Mathematics For Software Engineers I,logical mathematics for software engineers i,unmapped,,
+delivered,Orientation Session,orientation session,unmapped,,
+delivered,Building LLM Applications,building llm applications,exact,Building LLM Applications,GenAI
+delivered,Applied Communicative English,applied communicative english,exact,Applied Communicative English,English
+delivered,Building LLM Applications 2,building llm applications 2,partial,Building LLM Applications,GenAI
+delivered,English Language Proficiency B1,english language proficiency b1,unmapped,,
+delivered,Linear algebra and Calculus,linear algebra and calculus,exact,Linear Algebra and Calculus,DS/ML
+delivered,Quantitative Skills,quantitative skills,unmapped,,
+delivered,Indian Knowledge System,indian knowledge system,unmapped,,
+delivered,Production Ready Practices,production ready practices,unmapped,,
+delivered,Test Your Current Knowledge,test your current knowledge,unmapped,,
+delivered,Mathematics for Computer Science,mathematics for computer science,unmapped,,
+delivered,Introduction to Generative AI,introduction to generative ai,unmapped,,
+delivered,JS Essentials,js essentials,unmapped,,
+delivered,Problem Solving With Python Programming-2,problem solving with python programming 2,unmapped,,
+delivered,Advanced Frontend Development,advanced frontend development,partial,Advanced Frontend Development Using React,FullStack
+delivered,Quantum Physics,quantum physics,unmapped,,
+delivered,Introduction to Computing Systems,introduction to computing systems,unmapped,,
+delivered,Frontend Development 1,frontend development 1,partial,Frontend Development,FullStack
+delivered,Computer Aided Engineering Graphics,computer aided engineering graphics,unmapped,,
+delivered,Numerical Ability,numerical ability,exact,Numerical Ability,Aptitude
+delivered,Communicative English Foundation,communicative english foundation,exact,Communicative English Foundation,English
+delivered,LLM,llm,unmapped,,
+delivered,CALCULUS,calculus,partial,Linear Algebra and Calculus,DS/ML
+delivered,Calculus and Differential Equations,calculus and differential equations,unmapped,,
+delivered,Engineering Chemistry,engineering chemistry,unmapped,,
+delivered,Introduction to Database Management Systems,introduction to database management systems,partial,Database Management Systems,CS Core
+delivered,Problem Solving With Python Programming-2 Assessments,problem solving with python programming 2 assessments,unmapped,,
+delivered,Web Application Development,web application development,exact,Web Application Development,FullStack
+delivered,Physics,physics,unmapped,,
+content,Introduction to Databases,introduction to databases,unmapped,,
+content,Introduction to React JS,introduction to react js,unmapped,,
+content,More NodeJS Concepts,more nodejs concepts,unmapped,,
+content,HTML & CSS,html css,unmapped,,
+content,JS Essentials,js essentials,unmapped,,
+content,Data Structures and Algorithms using C++,data structures and algorithms using c,exact,Data Structures and Algorithms using C++,Programming & Algorithms
+content,Computer Programming using Python,computer programming using python,exact,Computer Programming using Python,Programming & Algorithms
+content,MongoDB Integration with NodeJS,mongodb integration with nodejs,unmapped,,
+content,Build Your Own Dynamic Web Application,build your own dynamic web application,unmapped,,
+content,Node JS,node js,unmapped,,
+content,Web Application Development,web application development,exact,Web Application Development,FullStack
+content,Frontend Development,frontend development,exact,Frontend Development,FullStack
+content,Database Management Systems,database management systems,exact,Database Management Systems,CS Core
+content,"Backend Development Using Node, MongoDB",backend development using node mongodb,exact,"Backend Development Using Node, MongoDB",FullStack
+content,Advanced Frontend Development Using React,advanced frontend development using react,exact,Advanced Frontend Development Using React,FullStack

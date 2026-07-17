@@ -20,6 +20,11 @@ def build(db="data/aip.duckdb", verbose=True):
     for name, path in sources:
         con.execute(f"CREATE TABLE {name} AS SELECT * FROM "
                     f"read_csv_auto('{path.replace(os.sep,'/')}', header=true, all_varchar=true)")
+    # content_units: unified view over the three content-item tables (survives rebuilds)
+    con.execute("""CREATE VIEW content_units AS
+        SELECT unit_id, course_title, 'objective' AS k FROM objective_questions
+        UNION ALL SELECT unit_id, course_title, 'coding'  FROM coding_questions
+        UNION ALL SELECT unit_id, course_title, 'reading' FROM reading_materials""")
     if verbose:
         print("=== aip.duckdb tables (from committed canonical) ===")
         for (t,) in con.execute("SHOW TABLES").fetchall():

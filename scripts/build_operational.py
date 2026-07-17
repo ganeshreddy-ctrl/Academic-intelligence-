@@ -28,7 +28,8 @@ con.execute(f"""COPY (
 con.execute(f"""COPY (
   SELECT
     coalesce(q.institute_name, l.institute_name)  AS institute_name,
-    coalesce(q.session_id,     l.session_id)      AS session_id,
+    -- normalize session_id to dash-less form so it joins sessions/scheduling (which store 32-hex, no dashes)
+    lower(replace(coalesce(q.session_id, l.session_id), '-', '')) AS session_id,
     coalesce(q.session_title,  l.session_title)   AS session_title,
     coalesce(q.unit_ids,       l.unit_ids)        AS unit_ids,
     q.total_feedbacks, q.session_understanding_rating, q.teaching_quality_rating,
