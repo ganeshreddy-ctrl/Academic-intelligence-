@@ -49,14 +49,15 @@ def first_video(mm):
         return mm[0].get("multimedia_url", "")
     return ""
 
-# ---- Extractor A: per-course-id JSON (React, Backend x3) ----
-PC = {  # filename id -> course_id fallback (same here)
-    "40ab5ebd-3def-4faf-adca-3d39d921df1c": "40ab5ebd-3def-4faf-adca-3d39d921df1c",
-    "d82d6905-6694-42c4-8c0c-bd2c887c1b53": "d82d6905-6694-42c4-8c0c-bd2c887c1b53",
-    "128b8668-816b-44eb-9f04-86a571b0b495": "128b8668-816b-44eb-9f04-86a571b0b495",
-    "b785ce15-460c-4e34-b3f3-b4b1b78ed789": "b785ce15-460c-4e34-b3f3-b4b1b78ed789",
-}
-for fid, fallback in PC.items():
+# ---- Extractor A: per-course-id JSON (any UUID-named file in data/raw/json/) ----
+# ponytail: auto-discover by UUID filename so new course drops need no code change;
+# the dsa-*.json files don't match the pattern and are handled separately below.
+import re
+UUID = re.compile(r"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}")
+PC = {os.path.basename(p)[:-5]: os.path.basename(p)[:-5]
+      for p in glob.glob(f"{RAW}/json/*.json")
+      if UUID.fullmatch(os.path.basename(p)[:-5])}
+for fid, fallback in sorted(PC.items()):
     src = fid[:8]
     with open(f"{RAW}/json/{fid}.json", encoding="utf-8") as f:
         data = json.load(f)

@@ -7,13 +7,18 @@ we've actually ingested, writes data/courses.csv, prints a grouped checklist.
 import csv, sys
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
-# course_id -> ingested source dir (verified loads)
-INGESTED = {
-    "4b8803cc-8ecb-4284-9fcf-53c5afd2a93c": "data/raw/python-course/",
-    "e216af3e-bcd0-4dee-9c4f-67e7502ecba3": "data/raw/dsa-cpp/",
-    "40ab5ebd-3def-4faf-adca-3d39d921df1c": "data/raw/react-course/",
-    "d82d6905-6694-42c4-8c0c-bd2c887c1b53": "data/raw/backend-node-course/",
-}
+# loaded = any course_id present in the canonical content (source of truth),
+# so this stays correct as new courses are flattened in. ponytail: derive, don't maintain a list.
+import glob, os
+INGESTED = {}
+for cf in glob.glob("data/canonical/*.csv"):
+    with open(cf, encoding="utf-8") as f:
+        rd = csv.DictReader(f)
+        if "course_id" not in (rd.fieldnames or []):
+            continue
+        for row in rd:
+            if row.get("course_id"):
+                INGESTED.setdefault(row["course_id"], "data/canonical/")
 
 with open("data/raw/catalogue/stack.csv", encoding="utf-8") as f:
     rows = list(csv.reader(f))

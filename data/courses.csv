@@ -1,20 +1,20 @@
 stack,course_title,course_outcome,course_ids,prereq_course_ids,content_in_catalogue,has_taxonomy,ingest_status,source_dir
-Programming & Algorithms,Computer Programming using Python,"Learner goes from zero to writing correct, working Python programs — variables, control flow, loops, four data structures of Python, functions, and standard-library usage, with fluency in Python's specific error patterns",4b8803cc-8ecb-4284-9fcf-53c5afd2a93c,-,yes,no,loaded,data/raw/python-course/
+Programming & Algorithms,Computer Programming using Python,"Learner goes from zero to writing correct, working Python programs — variables, control flow, loops, four data structures of Python, functions, and standard-library usage, with fluency in Python's specific error patterns",4b8803cc-8ecb-4284-9fcf-53c5afd2a93c,-,yes,no,loaded,data/canonical/
 Programming & Algorithms,Computer Programming using JS,,,,no,no,no-content,
 Programming & Algorithms,Computer Programming using Java,,,,no,no,no-content,
-Programming & Algorithms,Data Structures and Algorithms using C++,,e216af3e-bcd0-4dee-9c4f-67e7502ecba3,4b8803cc-8ecb-4284-9fcf-53c5afd2a93c,yes,no,loaded,data/raw/dsa-cpp/
+Programming & Algorithms,Data Structures and Algorithms using C++,,e216af3e-bcd0-4dee-9c4f-67e7502ecba3,4b8803cc-8ecb-4284-9fcf-53c5afd2a93c,yes,no,loaded,data/canonical/
 Programming & Algorithms,Advanced Data Structures and Algorithms,,,,no,no,no-content,
 Programming & Algorithms,Problem Solving Techniques,,,,no,no,no-content,
-FullStack,Web Application Development,,cf46b992-3227-4074-84b2-f6867a00360d,,yes,no,not-ingested,
-FullStack,Frontend Development,,c0d9b357-87a7-41e2-985f-affaef636499; 7e0446da-981d-4faa-b02d-f4dc605dba66,cf46b992-3227-4074-84b2-f6867a00360d,yes,no,not-ingested,
-FullStack,Advanced Frontend Development Using React,,40ab5ebd-3def-4faf-adca-3d39d921df1c,c0d9b357-87a7-41e2-985f-affaef636499; 7e0446da-981d-4faa-b02d-f4dc605dba66,yes,yes,loaded,data/raw/react-course/
-FullStack,"Backend Development Using Node, MongoDB",,d82d6905-6694-42c4-8c0c-bd2c887c1b53; 128b8668-816b-44eb-9f04-86a571b0b495; b785ce15-460c-4e34-b3f3-b4b1b78ed789,,yes,no,loaded,data/raw/backend-node-course/
+FullStack,Web Application Development,,cf46b992-3227-4074-84b2-f6867a00360d,,yes,no,loaded,data/canonical/
+FullStack,Frontend Development,,c0d9b357-87a7-41e2-985f-affaef636499; 7e0446da-981d-4faa-b02d-f4dc605dba66,cf46b992-3227-4074-84b2-f6867a00360d,yes,no,loaded,data/canonical/
+FullStack,Advanced Frontend Development Using React,,40ab5ebd-3def-4faf-adca-3d39d921df1c,c0d9b357-87a7-41e2-985f-affaef636499; 7e0446da-981d-4faa-b02d-f4dc605dba66,yes,yes,loaded,data/canonical/
+FullStack,"Backend Development Using Node, MongoDB",,d82d6905-6694-42c4-8c0c-bd2c887c1b53; 128b8668-816b-44eb-9f04-86a571b0b495; b785ce15-460c-4e34-b3f3-b4b1b78ed789,,yes,no,loaded,data/canonical/
 FullStack,Django Backend Development,,,,no,no,no-content,
 FullStack,SpringBoot Backend Development,,,,no,no,no-content,
 FullStack,AI FullStack Projects,,,,no,no,no-content,
 FullStack,React Projects,,,,no,no,no-content,
 FullStack,MERN Projects,,,,no,no,no-content,
-CS Core,Database Management Systems,,25c1a72c-216e-47e1-9bc6-b2f16c66e0ca; a3aa84c2-ac32-4ed5-81a9-f050566521e9; dd6794ae-5206-4bb4-af26-efdacd3668fd,,yes,no,not-ingested,
+CS Core,Database Management Systems,,25c1a72c-216e-47e1-9bc6-b2f16c66e0ca; a3aa84c2-ac32-4ed5-81a9-f050566521e9; dd6794ae-5206-4bb4-af26-efdacd3668fd,,yes,no,loaded,data/canonical/
 CS Core,Operating Systems,,,,no,no,no-content,
 CS Core,Computer Networks,,,,no,no,no-content,
 Induction,Introduction to Software Development,,10114fc8-7285-453e-bfda-933a15438c2c,-,yes,no,not-ingested,
