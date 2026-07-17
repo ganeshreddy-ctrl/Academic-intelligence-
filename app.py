@@ -39,8 +39,16 @@ def get_db():
 
 
 con = get_db()
-MODEL = secret("AIP_MODEL", agent.DEFAULT_MODEL)
 API_KEY = secret("OPENROUTER_API_KEY")
+
+# Curated from OpenRouter's live model list — all support tool-calling, which this
+# agent requires. Prices are input/output per million tokens.
+MODEL_CHOICES = {
+    "anthropic/claude-opus-4.8":      "best analysis · $5/$25",
+    "anthropic/claude-opus-4.8-fast": "same quality, faster · $10/$50",
+    "anthropic/claude-sonnet-4.5":    "cheaper, fine for lookups · $3/$15",
+    "anthropic/claude-fable-5":       "alternative · $10/$50",
+}
 
 if "msgs" not in st.session_state:
     st.session_state.msgs = []   # [{role, content}]
@@ -49,7 +57,22 @@ with st.sidebar:
     st.subheader("Academic Intelligence")
     st.caption("Ask anything the data can answer — content, courses, delivery, "
                "feedback, instructors, plan-vs-actual.")
-    st.write(f"**Model:** `{MODEL}`")
+
+    # Default to the configured model; if it isn't in the curated list, keep it as an
+    # option so a secrets override is never silently ignored.
+    configured = secret("AIP_MODEL", agent.DEFAULT_MODEL)
+    options = list(MODEL_CHOICES)
+    if configured not in options:
+        options.insert(0, configured)
+    MODEL = st.selectbox(
+        "Model",
+        options,
+        index=options.index(configured),
+        format_func=lambda m: m.split("/")[-1],
+        help="Opus for analysis and planning; Sonnet is cheaper and fine for lookups.",
+    )
+    st.caption(MODEL_CHOICES.get(MODEL, "from AIP_MODEL secret"))
+
     tables = [t for (t,) in con.execute("SHOW TABLES").fetchall()]
     with st.expander(f"Data ({len(tables)} tables)"):
         for t in tables:
