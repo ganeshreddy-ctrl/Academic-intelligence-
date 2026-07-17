@@ -1,2 +1,9 @@
 # local machine settings (permission allowlist) — not shared
 .claude/settings.local.json
+
+# large raw source dumps (92MB) — regenerable; canonical CSVs hold the flattened data
+data/raw/
+# build artifact — rebuild with scripts/build_canonical.py
+data/aip.duckdb
+# python cache
+__pycache__/

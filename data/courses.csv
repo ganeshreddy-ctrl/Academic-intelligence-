@@ -1,0 +1,97 @@
+stack,course_title,course_outcome,course_ids,prereq_course_ids,content_in_catalogue,has_taxonomy,ingest_status,source_dir
+Programming & Algorithms,Computer Programming using Python,"Learner goes from zero to writing correct, working Python programs — variables, control flow, loops, four data structures of Python, functions, and standard-library usage, with fluency in Python's specific error patterns",4b8803cc-8ecb-4284-9fcf-53c5afd2a93c,-,yes,no,loaded,data/raw/python-course/
+Programming & Algorithms,Computer Programming using JS,,,,no,no,no-content,
+Programming & Algorithms,Computer Programming using Java,,,,no,no,no-content,
+Programming & Algorithms,Data Structures and Algorithms using C++,,e216af3e-bcd0-4dee-9c4f-67e7502ecba3,4b8803cc-8ecb-4284-9fcf-53c5afd2a93c,yes,no,loaded,data/raw/dsa-cpp/
+Programming & Algorithms,Advanced Data Structures and Algorithms,,,,no,no,no-content,
+Programming & Algorithms,Problem Solving Techniques,,,,no,no,no-content,
+FullStack,Web Application Development,,cf46b992-3227-4074-84b2-f6867a00360d,,yes,no,not-ingested,
+FullStack,Frontend Development,,c0d9b357-87a7-41e2-985f-affaef636499; 7e0446da-981d-4faa-b02d-f4dc605dba66,cf46b992-3227-4074-84b2-f6867a00360d,yes,no,not-ingested,
+FullStack,Advanced Frontend Development Using React,,40ab5ebd-3def-4faf-adca-3d39d921df1c,c0d9b357-87a7-41e2-985f-affaef636499; 7e0446da-981d-4faa-b02d-f4dc605dba66,yes,yes,loaded,data/raw/react-course/
+FullStack,"Backend Development Using Node, MongoDB",,d82d6905-6694-42c4-8c0c-bd2c887c1b53; 128b8668-816b-44eb-9f04-86a571b0b495; b785ce15-460c-4e34-b3f3-b4b1b78ed789,,yes,no,loaded,data/raw/backend-node-course/
+FullStack,Django Backend Development,,,,no,no,no-content,
+FullStack,SpringBoot Backend Development,,,,no,no,no-content,
+FullStack,AI FullStack Projects,,,,no,no,no-content,
+FullStack,React Projects,,,,no,no,no-content,
+FullStack,MERN Projects,,,,no,no,no-content,
+CS Core,Database Management Systems,,25c1a72c-216e-47e1-9bc6-b2f16c66e0ca; a3aa84c2-ac32-4ed5-81a9-f050566521e9; dd6794ae-5206-4bb4-af26-efdacd3668fd,,yes,no,not-ingested,
+CS Core,Operating Systems,,,,no,no,no-content,
+CS Core,Computer Networks,,,,no,no,no-content,
+Induction,Introduction to Software Development,,10114fc8-7285-453e-bfda-933a15438c2c,-,yes,no,not-ingested,
+DS/ML,Math for CSE,,5561762b-2974-43f7-a5f5-b0f56a3828ed,,yes,no,not-ingested,
+DS/ML,Probability and Statistics,,,,no,no,no-content,
+DS/ML,Linear Algebra and Calculus,,,,no,no,no-content,
+DS/ML,Data Science Foundations,,,,no,no,no-content,
+DS/ML,Data Analytics Foundation,,,,no,no,no-content,
+DS/ML,Data Analytics with PowerBI,,,,no,no,no-content,
+DS/ML,Data Analytics with Tableau,,,,no,no,no-content,
+DS/ML,Introduction to ML and Classification Algorithms,,,,no,no,no-content,
+DS/ML,Supervised Learning: Regression,,,,no,no,no-content,
+DS/ML,Ensemble Learning,,,,no,no,no-content,
+DS/ML,Unsupervised Learning,,,,no,no,no-content,
+DS/ML,Introduction to Deep Learning,,,,no,no,no-content,
+DS/ML,PyTorch for Deep Learning,,,,no,no,no-content,
+DS/ML,Intorduction to Natural Language Processing,,,,no,no,no-content,
+DS/ML,Advanced NLP : Sequence and Attention Models,,,,no,no,no-content,
+DS/ML,Foundations of Computer Vision with CNNs,,,,no,no,no-content,
+DS/ML,AI Vision Systems: Detection & Segmentation,,,,no,no,no-content,
+DS/ML,Generative AI for Vision: Transformers & Diffusion Models,,,,no,no,no-content,
+DS/ML,Productionisation of ML systems,,,,no,no,no-content,
+DS/ML,Advanced GenAI,,,,no,no,no-content,
+GenAI,Introduction to GenAI,,b9811b34-585b-47e0-a0be-65f1081a74f2,,yes,no,not-ingested,
+GenAI,Building LLM Applications,,8874b642-82db-4274-8d71-b9940316db8d,,yes,no,not-ingested,
+GenAI,Practical Software Engineering,,,,no,no,no-content,
+GenAI,AI For Finance,,,,no,no,no-content,
+GenAI,AI For Sales,,,,no,no,no-content,
+GenAI,AI For HR,,,,no,no,no-content,
+GenAI,Base 44 Mastery,,,,no,no,no-content,
+GenAI,OpenAI Workshop,,,,no,no,no-content,
+System Design,High-Level System Design,,,,no,no,no-content,
+System Design,Low Level System Design,,,,no,no,no-content,
+Aptitude,Quantitative Aptitude,"CO1: Build a strong conceptual foundation in number systems by mastering divisibility, co-primes, power cycles, remainder cycles to solve complex quantitative problems. 
+CO2: Apply advanced concepts of multiples, factors, LCM, and GCD to handle real-world numerical challenges efficiently and strengthen analytical reasoning.
+CO3: Interpret and compute percentages, percentage changes, and conversions to solve real-world financial scenarios involving profit–loss, discounts, and interest calculations.
+CO4: Use ratios, proportions, mixtures, allegations, and partnership models to solve practical, real-world and business-oriented quantitative problems.
+CO5: Analyse and solve time–speed–distance problems—including trains, races, relative speed, and average speed—to improve accuracy and decision-making in real-world movement and travel scenarios.",97671af2-f44f-4eed-978c-d65d5c0c55c9,,yes,no,not-ingested,
+Aptitude,Numerical Ability,"CO1: Understand time and work concepts-efficiency, pipes & cisterns, man–chain rule, and wage distribution-to solve practical, real-world work-allocation problems accurately.
+CO2: Apply permutations, combinations, ranking logic, and probability (coins, dice, cards, real-life scenarios) to build analytical thinking and structured reasoning.
+CO3: Solve clocks and calendars using angles, time gain/loss, incorrect clocks, odd days, leap years, and repetition to improve precision in time-based reasoning.
+CO4: Interpret data from tables, graphs, and charts to compute ratios, percentages, and averages for informed decision-making in real-world quantitative contexts.
+CO5: Strengthen logical thinking and pattern analysis through ranking, direction, and coding–decoding problems to enhance spatial reasoning and decision-making.",3525d39d-b705-45a1-ac24-67291bf35bd6,,yes,no,not-ingested,
+Aptitude,Logical Reasoning,"CO1: Develop proficiency in solving linear, circular, and complex seating arrangements using grouping, sequencing, and conditional logic to strengthen structured reasoning and problem-solving.
+CO2: Evaluate statement sufficiency and analyze family-tree blood relations with precision to make quick, accurate decisions and enhance logical judgement.
+CO3: Apply set theory through Venn diagrams and solve statement–conclusion and syllogism problems to improve categorical reasoning and multi-set analytical skills.
+CO4: Solve advanced logical puzzles—floor, box, scheduling, classification, and grid-based—while evaluating syllogism validity to build abstract thinking and structured logic.
+CO5: Strengthen visual reasoning by identifying shapes, patterns, and figures, and solving mirror/water images, analogies, paper folding, and odd-one-out problems to enhance spatial intelligence.",cd8b2378-67b5-4440-a0fe-915e5586aa96,,yes,no,not-ingested,
+Aptitude,Advanced Aptitude,"CO1: Develop advanced decision-making ability by evaluating situations, identifying strong and weak arguments and selecting the most appropriate conclusions through structured analytical reasoning.
+CO2: Demonstrate proficiency in solving input–output transformations, crypt-arithmetic puzzles, and game-based analytical reasoning tasks by identifying patterns, applying multi-step reasoning.
+CO3: Strengthen quantitative analytical skills by mastering functions, progressions, simplifications, surds, indices, and number-base conversions, enabling efficient handling of diverse complex numerical problems.
+CO4: Apply advanced algebraic tools including equations, polynomials, inequalities, logarithms, and exponent rules to analyze and interpret mathematical situations effectively. 
+CO5: Develop competency in geometry, mensuration, statistics, and height–distance calculations to interpret data, apply formulas effectively, and solve real-world spatial and trigonometric problems with accuracy.",1bb8ffd0-cdfc-42a8-aedb-1c0b7ed7a5b3,,yes,no,not-ingested,
+English,Communicative English Foundation,"CO1: Understand the dynamics of English grammar, including nouns, pronouns, verbs, and modifiers, in functional English usage.
+CO2: Develop the ability to comprehend and respond in basic English across various contexts. 
+CO3: Construct complex sentences using conjunctions, prepositions, and diverse verb forms to communicate clearly and effectively.
+CO4: Apply correct verb forms, subject-verb agreement, and tenses to accurately convey actions, states, and relationships in conversations.
+CO5: Engage in numerous practical spoken English exercises to reduce public speaking anxiety, build confidence, and enhance presentability in verbal communication.
+CO6: Improve listening skills and comprehension through exposure to various accents, speech patterns, and vocabulary in real-world contexts.",f903dc8e-fe3f-4977-86ad-d72d7690d38d,,yes,no,not-ingested,
+English,Communicative English Advanced,"CO1: Master the use of present, past, and future tenses to clearly convey technical concepts in written and spoken communication.
+CO2: Develop the ability to express hypothetical scenarios and decisions in English for effective problem-solving and analysis.
+CO3: Gain proficiency in communicating project timelines, actions, and outcomes across various timeframes in a global team setting.
+CO4: Strengthen the ability to present technical findings with clarity and coherence to both technical and non-technical audiences.
+CO5: Enhance communication skills for interviews and professional applications by mastering sentence construction for technical discussions.",bfd0a2ef-eb93-4e4b-bc1c-9acac895d6a4,,yes,no,not-ingested,
+English,Applied Communicative English,"CO1: Demonstrate accuracy and fluency in constructing grammatically correct and contextually appropriate sentences.
+CO2: Apply effective questioning and responding strategies to sustain purposeful communication.
+CO3: Use persuasive language, idiomatic expressions, and structural balance to influence and engage audiences.
+CO4: Deliver coherent and impactful oral presentations with controlled use of voice, stress, and intonation.
+CO5: Exhibit professionalism, confidence, and adaptability in diverse communicative situations.",77b1f18a-a2e4-413a-9515-a91c399e4831,,yes,no,not-ingested,
+English,Language Analytics,"CO1: Students will use appropriate and precise vocabulary in academic and professional contexts.
+CO2: Students will read and interpret short texts accurately with improved comprehension skills.
+CO3: Students will identify and correct grammatical and logical errors in written sentences.
+CO4: Students will produce well-structured and clear documents suited to formal and workplace contexts.
+CO5: Students will demonstrate confidence and professionalism in interviews, presentations, and group communication.",7288e9d8-9925-4975-8490-a8a87b8b3dd9,,yes,no,not-ingested,
+DevOps & Testing,Cloud Computing Foundations,,,,no,no,no-content,
+DevOps & Testing,Testing With Selenium,,,,no,no,no-content,
+Physical AI,Course 1 (Yet to Confirm Names),,,,no,no,no-content,
+Physical AI,Course 2  (Yet to Confirm Names),,,,no,no,no-content,
+Physical AI,Course 3  (Yet to Confirm Names),,,,no,no,no-content,
+Physical AI,Course 4  (Yet to Confirm Names),,,,no,no,no-content,
