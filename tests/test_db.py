@@ -89,11 +89,18 @@ def deviation_scoped_to_designed_unis():
 
 
 def planning_knowledge_present():
-    """The agent's planning ability depends on these two reference tables existing."""
+    """The agent's planning ability depends on these reference tables existing."""
     _, r1, _ = db.run_sql("SELECT count(*) FROM scheduling_rules", con)
     assert r1[0][0] == 11, f"expected 11 scheduling rules, got {r1[0][0]}"
     _, r2, _ = db.run_sql("SELECT count(*) FROM planning_standards", con)
     assert r2[0][0] >= 14, f"planning_standards missing rows: {r2[0][0]}"
+
+
+def issues_join_to_institutes():
+    """Recorded issues must join to delivery on institute_name (not the short code)."""
+    _, r, _ = db.run_sql("""SELECT count(DISTINCT i.institute_name)
+        FROM issues i WHERE i.institute_name IN (SELECT institute_name FROM delivered_niat)""", con)
+    assert r[0][0] >= 3, f"issues not joining to delivered institutes: {r[0][0]}"
 
 
 def feedback_safe_hides_comments():
@@ -128,6 +135,7 @@ check("delivered timestamps are plausible", timestamps_are_real)
 check("deviation planned_start within 2025-26", planned_start_sane)
 check("deviation covers only designed universities", deviation_scoped_to_designed_unis)
 check("scheduling_rules + planning_standards present", planning_knowledge_present)
+check("recorded issues join to institutes", issues_join_to_institutes)
 check("session_feedback_safe excludes comment text", feedback_safe_hides_comments)
 
 con.close()

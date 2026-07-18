@@ -34,6 +34,7 @@ Summing every row inflates MRV's Sem-1 load from **460 hrs to 593 (+29%)**, turn
 | `universities` | 4 rows | Maps university code (MRV/Yenepoya/SGU/CDU) ↔ `institute_name`. Only these 4 have designed data. |
 | `planning_standards` | 14 rows, key-value | **The AICTE/AOL yardstick every semester plan must be judged against.** See below. |
 | `scheduling_rules` | 11 rows | **The NIAT rules a valid plan MUST satisfy.** Every produced or reviewed plan is checked against all 11. See "Designing or critiquing a plan" below. |
+| `issues` | one row per (issue, university) | **The RECORDED issues / RCA log.** Human-logged problems tagged to a university (`institute_name`), the 16-layer taxonomy (`primary_layer`), a `category`, an `issue_title`, `rca_description`, and a `solutioning_direction`. These capture what delivery data cannot — platform outages, infra limits, content defects. Join on `institute_name`. See below. |
 
 ## `planning_standards` — how to judge whether a plan is sound
 
@@ -108,6 +109,13 @@ Good ratings (4+) alongside heavy slippage ⇒ **planning** problem: fix the HLI
 
 **"How many sections does a university have?"** — `delivered_niat.section_name` for the 4 designed universities; `delivered_sections` (the exploded view) elsewhere, because `delivered_sessions.batch_section_name` is a comma-separated list.
 
+**"What issues did college X have / what went wrong for them (recorded)?"**
+```sql
+SELECT primary_layer, category, issue_title, solutioning_direction, status
+FROM issues WHERE institute_name = 'Aurora University' ORDER BY primary_layer;
+```
+These are the human-logged issues (`issues` table). For a full "what went wrong" answer, combine them with the DERIVED delivery findings (pacing, slippage, collapse weeks) — recorded issues explain causes the numbers can't (e.g. a collapse week that was actually a platform outage). Group by `primary_layer` to show where problems concentrate.
+
 ## Designing or critiquing a plan for ANY university
 
 This is the core job. When asked to build, improve, or review an academic plan / prod-sequence / HLID for a university — for the coming semester or an existing draft — follow this method. It works for any university, including ones with no designed data of their own, because it is grounded in that university's *delivery history*, not in a prior plan.
@@ -119,7 +127,7 @@ This is the core job. When asked to build, improve, or review an academic plan /
    - **Course names drift even within one university across years.** S-VYASA's 2025 delivery lists "Web Development Programmining" and "Problem Solving Using Python Programming"; its 2026 plan calls them "Web Technologies" and "Problem Solving Using Programming". Match past→future courses by meaning, not exact string, and state the mapping you assumed. Source data also contains typos ("Programmining") — do not treat a typo as a different course.
 2. **Past feedback** — `session_feedback_safe` for that institute. Low-rated courses need protection or rework; uniformly high ratings alongside slippage mean the problem is the *plan*, not teaching.
 3. **Holiday / disruption pattern** — derive it: weeks with near-zero sessions in past delivery are lost weeks. Place them into the new plan as NAMED break weeks, not as hidden slack. (MRV lost ~15 October days to an unplanned blackout; the plan pretended teaching was continuous.)
-4. **Recorded issues & hard constraints** — any issues log the user provides, plus student count, infra, and BOS/AICTE constraints if given.
+4. **Recorded issues** — query the `issues` table for that `institute_name`. This is the human-logged RCA board, and it is the OTHER half of issue-finding: derive issues from delivery (pacing, slippage, collapse weeks) AND read what people actually recorded. The two are complementary — the recorded log holds problems the numbers cannot show (Cloud IDE outages, n8n failures, Kaggle blocked for 1300 students, infra limits, content defects), each with a `solutioning_direction`. When a recorded issue bears on the plan, cite it (`issue_id`) alongside the derived findings, and fold its solutioning direction into the recommendation. Note coverage: recorded issues currently exist mainly for Aurora / MRV / CDU; absence of recorded issues for a college means none were logged, not that none exist. Plus any hard constraints given (student count, infra, BOS/AICTE).
 
 **The rules the plan MUST satisfy** — all 11 rows of `scheduling_rules` are binding. Check the produced or reviewed plan against each and name any it breaks. The ones that catch the most real failures: *Maintain Uniform Curriculum Pacing* (no slow-start-then-cram), *Preserve Prerequisite Learning Order*, *Complete Prerequisites Before Assessments*, *Ensure Sufficient Revision Before Major Exams*.
 
