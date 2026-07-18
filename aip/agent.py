@@ -129,6 +129,26 @@ class OpenRouterError(Exception):
     pass
 
 
+def account_usage(api_key):
+    """OpenRouter key balance: {usage, limit, remaining} in dollars, or None on failure."""
+    try:
+        r = requests.get("https://openrouter.ai/api/v1/auth/key",
+                         headers={"Authorization": f"Bearer {api_key}"}, timeout=15)
+        d = r.json().get("data", {})
+        return {"usage": d.get("usage"), "limit": d.get("limit"),
+                "remaining": d.get("limit_remaining"), "daily": d.get("usage_daily")}
+    except (requests.RequestException, ValueError, KeyError):
+        return None
+
+
+def _accrue(spend, data):
+    """Add one completion's usage (real cost + tokens) to the running total."""
+    u = data.get("usage") or {}
+    spend["cost"] += u.get("cost") or 0.0
+    spend["prompt_tokens"] += u.get("prompt_tokens") or 0
+    spend["completion_tokens"] += u.get("completion_tokens") or 0
+
+
 def _post(payload, api_key, retries=3):
     last = None
     for attempt in range(retries):
@@ -153,10 +173,11 @@ def _post(payload, api_key, retries=3):
 
 
 def answer(question, history=None, api_key=None, model=None, con=None):
-    """Answer a question. Returns (text, sql_trace).
+    """Answer a question. Returns (text, sql_trace, spend).
 
-    sql_trace is the list of queries actually run, so the UI can show its working
-    and the feedback log can record exactly what produced the answer.
+    sql_trace is the queries actually run (the UI shows its working). spend is
+    {cost, prompt_tokens, completion_tokens} summed across every model call in the
+    tool loop — real dollars from OpenRouter, so usage can be tracked live.
     """
     api_key = api_key or os.environ.get("OPENROUTER_API_KEY")
     if not api_key:
@@ -170,15 +191,19 @@ def answer(question, history=None, api_key=None, model=None, con=None):
         messages.append({"role": turn["role"], "content": turn["content"]})
     messages.append({"role": "user", "content": question})
 
+    # usage:{include} makes OpenRouter return real cost per call; we sum it.
+    base = {"model": model, "tools": TOOLS, "usage": {"include": True}}
+    spend = {"cost": 0.0, "prompt_tokens": 0, "completion_tokens": 0}
     sql_trace = []
     try:
         for _ in range(MAX_TOOL_ITERS):
-            data = _post({"model": model, "messages": messages, "tools": TOOLS}, api_key)
+            data = _post({**base, "messages": messages}, api_key)
+            _accrue(spend, data)
             msg = data["choices"][0]["message"]
             messages.append(msg)
             calls = msg.get("tool_calls") or []
             if not calls:
-                return (msg.get("content") or "").strip(), sql_trace
+                return (msg.get("content") or "").strip(), sql_trace, spend
 
             for call in calls:
                 try:
@@ -201,11 +226,12 @@ def answer(question, history=None, api_key=None, model=None, con=None):
                 })
 
         # Iteration cap hit: answer with what we have rather than looping forever.
-        data = _post({"model": model, "messages": messages + [{
+        data = _post({**base, "messages": messages + [{
             "role": "user",
             "content": "Answer now with what you have. Say explicitly that the investigation was truncated.",
         }]}, api_key)
-        return (data["choices"][0]["message"].get("content") or "").strip(), sql_trace
+        _accrue(spend, data)
+        return (data["choices"][0]["message"].get("content") or "").strip(), sql_trace, spend
     finally:
         if own:
             con.close()

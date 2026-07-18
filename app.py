@@ -40,6 +40,21 @@ def get_db():
 con = get_db()
 API_KEY = secret("OPENROUTER_API_KEY")
 
+# Light visual polish — Streamlit is templated by default; round the corners, tighten
+# spacing, and give the starter buttons a calmer, left-read feel.
+st.markdown("""<style>
+.stButton>button, .stDownloadButton>button { border-radius: 8px; }
+.stButton>button { font-weight: 400; }
+div[data-testid="stChatMessage"] { padding-top: .3rem; padding-bottom: .3rem; }
+section[data-testid="stSidebar"] div[data-testid="stMetric"] { padding: 2px 0; }
+</style>""", unsafe_allow_html=True)
+
+
+@st.cache_data(ttl=60, show_spinner=False)
+def account(_key):
+    """OpenRouter account balance, refreshed at most once a minute (not every rerun)."""
+    return agent.account_usage(_key)
+
 # Cost/capability ladder, cheapest first — the slider order. All support tool-calling
 # (verified against OpenRouter's live list), which this agent requires.
 MODEL_TIERS = [
@@ -118,6 +133,32 @@ with st.sidebar:
         st.caption("⚠️ Fine for lookups, weaker on multi-step analysis — "
                    "slide to Opus for planning questions.")
 
+    with st.expander("What each model is for"):
+        for name, _model, note in MODEL_TIERS:
+            price, _, purpose = note.partition("·")
+            st.markdown(f"**{name}** — {purpose.strip()}  \n`{price.strip()}` per 1M tokens (in/out)")
+
+    st.divider()
+
+    # --- Usage & cost (what the team asked to track) ---
+    st.markdown("**Usage**")
+    session_cost = sum(m.get("cost", 0) for m in st.session_state.msgs if m["role"] == "assistant")
+    acct = account(API_KEY) if API_KEY else None
+    c1, c2 = st.columns(2)
+    c1.metric("This session", f"${session_cost:.3f}")
+    if acct and acct.get("usage") is not None:
+        c2.metric("Key spent", f"${acct['usage']:.2f}")
+        if acct.get("limit"):
+            frac = min(1.0, acct["usage"] / acct["limit"])
+            st.progress(frac, text=f"${acct['usage']:.2f} of ${acct['limit']:.0f}"
+                                    f" · ${acct.get('remaining') or 0:.2f} left")
+        if acct.get("daily") is not None:
+            st.caption(f"Today: ${acct['daily']:.2f}")
+    else:
+        c2.metric("Key spent", "—", help="Add credit / a valid key to see account usage.")
+
+    st.divider()
+
     tables = [t for (t,) in con.execute("SHOW TABLES").fetchall()]
     with st.expander(f"Data ({len(tables)} tables)"):
         for t in tables:
@@ -171,6 +212,9 @@ for i, m in enumerate(st.session_state.msgs):
                 data=m["content"], file_name=f"{stem}.md", mime="text/markdown",
                 help="Raw text — for GitHub, editors, or pasting elsewhere.",
             )
+            if m.get("cost"):
+                st.caption(f"{m.get('model', '').split('/')[-1]} · "
+                           f"${m['cost']:.4f} · {m.get('tokens', 0):,} tokens")
 
 # A question comes from the chat box OR a starter chip; both feed the same path.
 typed = st.chat_input("Ask about the academic data…")
@@ -189,10 +233,15 @@ if question:
                      f"college is named.)")
     with st.chat_message("user"):
         st.markdown(question)
+    spend = {"cost": 0.0, "prompt_tokens": 0, "completion_tokens": 0}
     with st.chat_message("assistant"), st.spinner("Querying the data…"):
         try:
-            text, _ = agent.answer(effective, history=history, api_key=API_KEY, model=MODEL, con=con)
+            text, _, spend = agent.answer(effective, history=history, api_key=API_KEY, model=MODEL, con=con)
         except agent.OpenRouterError as e:
             text = f"❌ Could not reach the model: {e}"
-    st.session_state.msgs.append({"role": "assistant", "content": text, "q": question})
+    st.session_state.msgs.append({
+        "role": "assistant", "content": text, "q": question,
+        "cost": spend["cost"], "model": MODEL,
+        "tokens": spend["prompt_tokens"] + spend["completion_tokens"],
+    })
     st.rerun()
