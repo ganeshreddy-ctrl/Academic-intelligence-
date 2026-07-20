@@ -139,6 +139,19 @@ def derived_plan_excludes_noise():
     assert keep[0][0] > 0, "real unmapped courses (DBMS) wrongly dropped as noise"
 
 
+def english_content_ingested_and_mapped():
+    """Paged Content-repository readings ingest, and the two Communicative English
+    subjects reach content through the crosswalk."""
+    _, r, _ = db.run_sql("""SELECT count(*) FROM course_content
+        WHERE course='Communicative English Foundation' AND kind='reading'""", con)
+    assert r[0][0] >= 20, f"Foundation readings thin: {r[0][0]} (paged extractor?)"
+    _, j, _ = db.run_sql("""SELECT count(DISTINCT st.institute_name)
+        FROM subject_tags st JOIN tag_content_map m ON m.nxtwave_tag=st.nxtwave_tag
+        JOIN course_content cc ON cc.course=m.content_course
+        WHERE st.nxtwave_tag='Communicative English Advanced'""", con)
+    assert j[0][0] > 0, "Communicative English Advanced subject not reaching content"
+
+
 def subject_tags_supplement_merged():
     """The sheet extension (later-semester + typo-variant courses) is merged in."""
     _, r, _ = db.run_sql("SELECT count(*) FROM subject_tags", con)
@@ -206,6 +219,7 @@ check("scheduling_rules + planning_standards present", planning_knowledge_presen
 check("course_content ingested + JSON parsed", course_content_parsed)
 check("subject_tags crosswalk (id-keyed, mapped)", subject_tags_crosswalk)
 check("subject_tags supplement merged (sheet extension)", subject_tags_supplement_merged)
+check("English content ingested (paged) + mapped to subjects", english_content_ingested_and_mapped)
 check("derived plan excludes non-curriculum noise", derived_plan_excludes_noise)
 check("chain views (session_link + academic_plan_derived)", chain_views)
 check("college_summary is clean (real colleges only)", college_summary_is_clean)

@@ -100,15 +100,19 @@ def extract_xlsx(path):
     grp = lambda r: ci(r, "Module Name", "Topic Name")
     out = []
 
-    # readings — from ANY sheet that has a reading-content column
+    # readings — join any "Reading Material Content..." column(s) on a row into one
+    # reading. Handles both the single-column shape and the Content-repository shape
+    # where content is paged across "Reading Material Content 1 (Page 1)", "(Page 2)"...
     for rows in sh.values():
         for r in rows:
-            content = ci(r, "Reading Material Content", "Reading material content")
-            if content:
-                out.append(rec(course=course, module=grp(r), topic=ci(r, "Topic Name"),
-                               session_id=ci(r, "Session ID"), session_name=ci(r, "Session Name"),
-                               unit_id=ci(r, "Unit ID", "Reading Material id", "Reading Material Name"),
-                               kind="reading", content=content))
+            pages = [str(v).strip() for k, v in r.items()
+                     if k.lower().strip().startswith("reading material content") and str(v).strip()]
+            if not pages:
+                continue
+            out.append(rec(course=course, module=grp(r), topic=ci(r, "Topic Name", "Session Name"),
+                           session_id=ci(r, "Session ID"), session_name=ci(r, "Session Name"),
+                           unit_id=ci(r, "Unit ID", "Reading Material id", "Reading Material Name"),
+                           kind="reading", content="\n\n".join(pages)))
 
     # questions — from the embedded JSON sheets when present
     for sheet, kind in [("Objective Content JSON", "objective"), ("Classroom Quiz JSON", "classroom_quiz")]:
