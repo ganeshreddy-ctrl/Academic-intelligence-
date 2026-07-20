@@ -185,7 +185,9 @@ def render():
             WHERE university IN (SELECT code FROM universities WHERE institute_name=?)
             ORDER BY planned_sessions DESC NULLS LAST""", [uni]).fetchall()
         if designed and sem == "Semester 1":
-            st.markdown("**Designed plan** (HLID/Prod — only MRV, Yenepoya, SGU, CDU)")
+            st.markdown("**Designed plan** (HLID/Prod — Semester 1; available for 16 universities). "
+                        "Planned-vs-actual matches on course name, so where this university's HLID "
+                        "names a course differently from delivery it shows as a separate row.")
             st.dataframe([{
                 "Course": r[0], "Planned sessions": r[1], "Actual/section": r[2],
                 "Planned hrs": r[3], "Planned weeks": r[4]} for r in designed],
