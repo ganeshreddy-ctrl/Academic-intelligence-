@@ -96,6 +96,15 @@ def planning_knowledge_present():
     assert r2[0][0] >= 14, f"planning_standards missing rows: {r2[0][0]}"
 
 
+def course_content_parsed():
+    """Ingested content exists and its option JSON is parsed to plain text, not raw."""
+    _, r, _ = db.run_sql("SELECT count(*) FROM course_content", con)
+    assert r[0][0] > 4000, f"course_content thin: {r[0][0]} rows"
+    _, raw, _ = db.run_sql("""SELECT count(*) FROM course_content
+        WHERE options LIKE '[{%option_id%'""", con)
+    assert raw[0][0] == 0, f"{raw[0][0]} rows still have unparsed options JSON"
+
+
 def college_summary_is_clean():
     """One row per real college; internal DC/training/ops entries excluded."""
     _, r, _ = db.run_sql("SELECT count(*) FROM college_summary", con)
@@ -143,6 +152,7 @@ check("delivered timestamps are plausible", timestamps_are_real)
 check("deviation planned_start within 2025-26", planned_start_sane)
 check("deviation covers only designed universities", deviation_scoped_to_designed_unis)
 check("scheduling_rules + planning_standards present", planning_knowledge_present)
+check("course_content ingested + JSON parsed", course_content_parsed)
 check("college_summary is clean (real colleges only)", college_summary_is_clean)
 check("recorded issues join to institutes", issues_join_to_institutes)
 check("session_feedback_safe excludes comment text", feedback_safe_hides_comments)

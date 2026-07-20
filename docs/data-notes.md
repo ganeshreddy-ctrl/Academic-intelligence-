@@ -30,7 +30,8 @@ The HLID lists a course **and then its component modules as sibling rows**. For 
 
 Summing every row inflates MRV's Sem-1 load from **460 hrs to 593 (+29%)**, turning a sensible 93%-utilised plan into a fictional 120% overload — and every recommendation built on that is wrong. Always filter `WHERE is_submodule <> 'True'`, or just use `course_plan_vs_actual`, which already does. (MRV and CDU have sub-modules; Yenepoya and SGU do not.)
 | `session_feedback_safe` | one row per institute×session×unit | Ratings and counts. **Use this, not `session_feedback`.** |
-| `content_units` | one row per content item | Union of objective/coding/reading. `unit_id` repeats (many questions per unit). |
+| `content_units` | one row per content item | Union of objective/coding/reading (older ingest, ~15 courses). `unit_id` repeats. |
+| `course_content` | one row per content unit | **Full per-course content from the content exports** — `kind` is reading / objective / classroom_quiz / coding; carries `content` (question or reading text), `options` and `correct_answer` (already parsed from JSON, plain text), `code`, and unit/session/module. Use this for "show me the questions/quizzes/coding for course X", "what's in X's content". Currently: *Introduction to Software Development* (5,024 units). This is the fine-grained content layer `content_units` lacks — it distinguishes classroom_quiz from objective, which delivery data cannot. |
 | `sessions` | distinct session→unit catalogue | Same unit set as `delivered_sessions`; largely redundant with it. |
 | `universities` | 4 rows | Maps university code (MRV/Yenepoya/SGU/CDU) ↔ `institute_name`. Only these 4 have designed data. |
 | `planning_standards` | 14 rows, key-value | **The AICTE/AOL yardstick every semester plan must be judged against.** See below. |
