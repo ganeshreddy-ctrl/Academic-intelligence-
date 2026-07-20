@@ -124,6 +124,21 @@ def chain_views():
     assert u[0][0] >= 17, f"academic_plan_derived covers too few universities: {u[0][0]}"
 
 
+def derived_plan_excludes_noise():
+    """The subjects sheet is the truth for what a course is; academic_plan_derived
+    must exclude non-curriculum noise (orientation, placement tests, assessments)."""
+    _, r, _ = db.run_sql("""SELECT count(*) FROM academic_plan_derived
+        WHERE lower(course_title) LIKE '%assessment%'
+           OR lower(course_title) LIKE '%test your%'
+           OR lower(course_title) LIKE '%introduction to niat%'
+           OR lower(course_title) LIKE '%orientation%'""", con)
+    assert r[0][0] == 0, f"{r[0][0]} noise rows leaked into academic_plan_derived"
+    # real-but-unmapped courses must survive (DBMS is not in every sheet yet)
+    _, keep, _ = db.run_sql("""SELECT count(*) FROM academic_plan_derived
+        WHERE lower(course_title) LIKE '%database%'""", con)
+    assert keep[0][0] > 0, "real unmapped courses (DBMS) wrongly dropped as noise"
+
+
 def subject_tags_crosswalk():
     """The course-name crosswalk exists, is ID-keyed, and maps to canonical tags."""
     _, r, _ = db.run_sql("SELECT count(*) FROM subject_tags WHERE institute_id <> ''", con)
@@ -176,6 +191,7 @@ check("deviation covers only designed universities", deviation_scoped_to_designe
 check("scheduling_rules + planning_standards present", planning_knowledge_present)
 check("course_content ingested + JSON parsed", course_content_parsed)
 check("subject_tags crosswalk (id-keyed, mapped)", subject_tags_crosswalk)
+check("derived plan excludes non-curriculum noise", derived_plan_excludes_noise)
 check("chain views (session_link + academic_plan_derived)", chain_views)
 check("college_summary is clean (real colleges only)", college_summary_is_clean)
 check("recorded issues join to institutes", issues_join_to_institutes)

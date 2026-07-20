@@ -109,7 +109,7 @@ def render():
     # 2) COURSES -> SESSIONS : the chain rows (scheduling + feedback + instructor)
     with tabs[1]:
         courses = [r[0] for r in con.execute("""SELECT DISTINCT course_title FROM session_link
-            WHERE institute_name = ? AND semester = ? AND course_title IS NOT NULL
+            WHERE institute_name = ? AND semester = ? AND is_curriculum(course_title)
             ORDER BY 1""", [uni, sem]).fetchall()]
         if not courses:
             st.info(f"No delivered courses for {uni} in {sem}.")
@@ -194,7 +194,7 @@ def render():
         # course -> tag coverage
         cov = con.execute("""
             WITH courses AS (SELECT DISTINCT course_title FROM session_link
-                             WHERE institute_name=? AND semester=? AND course_title IS NOT NULL),
+                             WHERE institute_name=? AND semester=? AND is_curriculum(course_title)),
                  tagged AS (SELECT DISTINCT university_course FROM subject_tags
                             WHERE institute_name=? AND semester=?)
             SELECT (SELECT count(*) FROM courses) c,

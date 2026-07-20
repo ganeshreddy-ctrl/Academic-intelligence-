@@ -32,6 +32,22 @@ def build(db="data/aip.duckdb", verbose=True):
 
     # --- views ---
 
+    # is_curriculum: the subjects sheet is the source of truth for what a real
+    # subject/course is. Delivery data mixes in non-curriculum noise — orientation,
+    # placement tests, and assessment blocks — which are not subjects and must not
+    # show up as courses. This is the one place that noise is defined; reused by the
+    # views here and by the Explorer. Real courses the sheet hasn't mapped yet are a
+    # crosswalk-coverage gap, NOT noise — they pass this filter and are kept.
+    # ponytail: pattern list, small and stable; move to a committed CSV only if it grows.
+    con.execute("""CREATE MACRO is_curriculum(t) AS (
+        t IS NOT NULL
+        AND lower(t) NOT LIKE '%assessment%'
+        AND lower(t) NOT LIKE '%test your%'
+        AND lower(t) NOT LIKE '%test based%'
+        AND lower(t) NOT LIKE '%introduction to niat%'
+        AND lower(t) NOT LIKE '%orientation%'
+        AND lower(t) NOT LIKE '%foreign language%')""")
+
     # content_units: unified view over the three content-item tables.
     con.execute("""CREATE VIEW content_units AS
         SELECT unit_id, course_title, 'objective' AS k FROM objective_questions
@@ -272,7 +288,7 @@ def build(db="data/aip.duckdb", verbose=True):
         FROM delivered_niat d
         JOIN secs sc   USING (institute_name, semester)
         JOIN cohort co USING (institute_name, semester)
-        WHERE d.course_title IS NOT NULL
+        WHERE is_curriculum(d.course_title)
         GROUP BY d.institute_name, d.semester, d.course_title, sc.n_sections""")
 
     if verbose:
