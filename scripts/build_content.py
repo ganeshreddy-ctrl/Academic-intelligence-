@@ -132,24 +132,48 @@ def extract_xlsx(path):
 
 
 # ---------- json ----------
+def _obj_kind(obj):
+    obj = (obj or "").upper()
+    return "reading" if obj == "LEARNING_RESOURCE" else "coding" if obj == "CODING_QUESTIONS" else "objective"
+
+
 def extract_json(path):
     data = json.load(open(path, encoding="utf-8"))
-    if not isinstance(data, list):
-        return "", []
-    course = next((x.get("course_title") for x in data if x.get("course_title")), os.path.splitext(os.path.basename(path))[0])
+    default = os.path.splitext(os.path.basename(path))[0]
     out = []
-    for x in data:
-        obj = (x.get("object_type") or "").upper()
-        kind = "reading" if obj == "LEARNING_RESOURCE" else "objective"
-        content = strip_html(x.get("content") or "") or (x.get("short_text") or "").strip()
-        if not content:
-            continue
-        out.append(rec(course=x.get("course_title") or course, topic=x.get("topic_name") or "",
-                       unit_id=x.get("unit_id") or "", unit_name=x.get("unit_name") or "", kind=kind,
-                       question_type=x.get("question_type") or "", difficulty=(x.get("difficulty") or "").strip(),
-                       content=content, correct_answer=strip_html(str(x.get("answer") or "")),
-                       explanation=parse_explanation(x.get("answer_explanation"))))
-    return course, out
+
+    # Shape A: nested course -> topics -> units -> questions (e.g. GenAI coding questions)
+    if isinstance(data, dict) and "topics" in data:
+        course = data.get("course_title") or default
+        for t in data.get("topics", []):
+            topic = t.get("topic_title") or ""
+            for u in t.get("units", []):
+                uid, uname = u.get("unit_id") or "", u.get("unit_title") or ""
+                for q in u.get("questions", []):
+                    content = strip_html(q.get("question_text") or q.get("content") or "") or (q.get("short_text") or "").strip()
+                    if not content:
+                        continue
+                    out.append(rec(course=course, topic=topic, unit_id=uid, unit_name=uname, kind="coding",
+                                   question_type=q.get("question_type") or "",
+                                   difficulty=(q.get("difficulty_label") or q.get("toughness") or "").strip(),
+                                   content=content, code=str(q.get("default_code") or "")))
+        return course, out
+
+    # Shape B: flat list of content units (QA / building-llm / intro-swd exports)
+    if isinstance(data, list):
+        course = next((x.get("course_title") for x in data if x.get("course_title")), default)
+        for x in data:
+            content = strip_html(x.get("content") or "") or (x.get("short_text") or "").strip()
+            if not content:
+                continue
+            out.append(rec(course=x.get("course_title") or course, topic=x.get("topic_name") or "",
+                           unit_id=x.get("unit_id") or "", unit_name=x.get("unit_name") or "",
+                           kind=_obj_kind(x.get("object_type")),
+                           question_type=x.get("question_type") or "", difficulty=(x.get("difficulty") or "").strip(),
+                           content=content, correct_answer=strip_html(str(x.get("answer") or "")),
+                           explanation=parse_explanation(x.get("answer_explanation"))))
+        return course, out
+    return "", []
 
 
 def main():
