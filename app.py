@@ -16,9 +16,11 @@ st.set_page_config(page_title="NIAT Learning Copilot", page_icon="🎓", layout=
 dashboard.db_path()      # build the DB once per boot (cached)
 dashboard.inject_css()
 
+# Explicit url_path per page: all three callables are named `render`, and Streamlit
+# infers the pathname from the callable name, which would collide.
 pg = st.navigation([
-    st.Page(chat.render, title="Chat", icon="💬", default=True),
-    st.Page(knowledge_base.render, title="Knowledge Base", icon="📚"),
-    st.Page(pipeline.render, title="Pipeline", icon="🔧"),
+    st.Page(chat.render, title="Chat", icon="💬", url_path="chat", default=True),
+    st.Page(knowledge_base.render, title="Knowledge Base", icon="📚", url_path="knowledge-base"),
+    st.Page(pipeline.render, title="Pipeline", icon="🔧", url_path="pipeline"),
 ])
 pg.run()

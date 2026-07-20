@@ -60,7 +60,7 @@ def render():
             st.dataframe(
                 [{"Course": r[0], "Readings": r[1], "Objective": r[2],
                   "Classroom quiz": r[3], "Coding": r[4], "Total units": r[5]} for r in pivot],
-                use_container_width=True, hide_index=True)
+                width="stretch", hide_index=True)
         else:
             st.info("No ingested content matched this university's delivered units yet.")
 
@@ -79,7 +79,7 @@ def render():
             st.dataframe(
                 [{"Kind": r[0], "Difficulty": r[1] or "", "Content": (r[2] or "")[:300],
                   "Options": (r[3] or "")[:200], "Answer": (r[4] or "")[:120]} for r in rows],
-                use_container_width=True, hide_index=True)
+                width="stretch", hide_index=True)
 
         # courses delivered but with no ingested content (honest coverage gap)
         gaps = con.execute("""
@@ -110,7 +110,7 @@ def render():
                 ORDER BY TRY_CAST(teaching_quality_rating AS DOUBLE) LIMIT 10""", [uni]).fetchall()
             st.markdown("**Lowest-rated sessions (teaching quality)**")
             st.dataframe([{"Session": r[0], "Teaching": r[1], "Feedbacks": r[2]} for r in low],
-                         use_container_width=True, hide_index=True)
+                         width="stretch", hide_index=True)
         else:
             st.info("No feedback recorded for this university.")
 
@@ -124,7 +124,7 @@ def render():
             st.dataframe(
                 [{"Layer": r[0], "Category": r[1], "Issue": r[2],
                   "Solutioning direction": r[3], "Status": r[4]} for r in issues],
-                use_container_width=True, hide_index=True)
+                width="stretch", hide_index=True)
         else:
             st.info("No recorded issues for this university "
                     "(issues are logged mainly for Aurora / MRV / CDU).")
@@ -140,6 +140,6 @@ def render():
             st.dataframe(
                 [{"Course": r[0], "Planned sessions": r[1], "Actual/section": r[2],
                   "Planned hrs": r[3], "Planned weeks": r[4], "Coverage": r[5]} for r in plan_rows],
-                use_container_width=True, hide_index=True)
+                width="stretch", hide_index=True)
         else:
             st.info("No designed plan on file — only MRV, Yenepoya, SGU, and CDU have one.")

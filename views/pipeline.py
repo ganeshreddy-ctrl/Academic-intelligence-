@@ -39,7 +39,7 @@ def render():
                "Rebuilt from committed data on every deploy — this reflects the current state.")
 
     try:
-        st.graphviz_chart(DOT, use_container_width=True)
+        st.graphviz_chart(DOT, width="stretch")
     except Exception:  # noqa: BLE001 - fall back to a plain stage strip if graphviz is unavailable
         cols = st.columns(5)
         for c, label in zip(cols, ["Raw exports", "build_*.py", "Canonical files",
@@ -53,7 +53,7 @@ def render():
         [{"Build script": s, "Source": src,
           "Produces": ", ".join(t), "Rows": f"{sum(counts.get(t2, 0) for t2 in t):,}"}
          for s, src, t in STAGES],
-        use_container_width=True, hide_index=True)
+        width="stretch", hide_index=True)
 
     st.subheader("DuckDB tables & views")
     con = dashboard.conn()
@@ -62,7 +62,7 @@ def render():
     st.dataframe(
         [{"Name": n, "Kind": "view" if n in views else "table", "Rows": f"{c:,}"}
          for n, c in sorted(counts.items())],
-        use_container_width=True, hide_index=True)
+        width="stretch", hide_index=True)
     total = sum(counts.values())
     st.caption(f"{len(counts)} tables/views · {total:,} rows total")
 
@@ -77,5 +77,5 @@ def render():
     st.dataframe(
         [{"Course": r[0], "Readings": r[1], "Objective": r[2],
           "Classroom quiz": r[3], "Coding": r[4], "Total": r[5]} for r in inv],
-        use_container_width=True, hide_index=True)
+        width="stretch", hide_index=True)
     st.caption(f"{len(inv)} courses ingested into course_content.")

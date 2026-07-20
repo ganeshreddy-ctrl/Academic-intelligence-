@@ -83,7 +83,7 @@ def render():
         else:
             c2.metric("Key spent", "—", help="Add credit / a valid key to see account usage.")
 
-        if st.button("Clear chat", use_container_width=True):
+        if st.button("Clear chat", width="stretch"):
             st.session_state.msgs = []
             st.rerun()
 
@@ -104,7 +104,7 @@ def render():
             filled = [tmpl.format(c=(sample or DEFAULT_COLLEGE)) for tmpl, sample in prompts]
             cols = st.columns(len(filled))
             for col, prompt in zip(cols, filled):
-                if col.button(prompt, key=f"starter::{prompt}", use_container_width=True):
+                if col.button(prompt, key=f"starter::{prompt}", width="stretch"):
                     st.session_state.pending = prompt
                     st.rerun()
 
