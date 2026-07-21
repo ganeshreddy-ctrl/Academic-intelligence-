@@ -25,7 +25,7 @@ OUT = "data/canonical/planning"
 os.makedirs(OUT, exist_ok=True)
 UUID = re.compile(r"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$")
 UNIS = ["MRV", "Yenepoya", "SGU", "CDU", "ADYPU", "ANNA", "SVYASA", "NRI", "NSRIT",
-        "CHALAPATHY", "NIU", "CRESCENT", "TAKSHASHILA", "AMET", "VGU", "BITS"]
+        "CHALAPATHY", "NIU", "CRESCENT", "TAKSHASHILA", "AMET", "VGU", "NIATCH"]
 
 EPOCH = None  # serials converted via datetime below
 
