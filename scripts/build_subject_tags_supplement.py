@@ -14,7 +14,7 @@ Scope guardrails:
     rule as is_curriculum() in load_duckdb.py.
   - Only confident mappings are written; anything unmatched is reported, not guessed.
 
-Output: data/canonical/subject_tags_supplement.csv, merged into subject_tags by
+Output: data/canonical/subjects/subject_tags_supplement.csv, merged into subject_tags by
 load_duckdb.py. Re-run after delivery data changes. Reads committed files only.
 
 Usage: python scripts/build_subject_tags_supplement.py
@@ -25,9 +25,9 @@ import duckdb
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
-BASE = "data/canonical/subject_tags.csv"
-DELIV = "data/canonical/delivered_niat.parquet"
-OUT = "data/canonical/subject_tags_supplement.csv"
+BASE = "data/canonical/subjects/subject_tags.csv"
+DELIV = "data/canonical/delivery/delivered_niat.parquet"
+OUT = "data/canonical/subjects/subject_tags_supplement.csv"
 
 
 def norm(s):
@@ -94,8 +94,8 @@ def main():
     con.execute(f"CREATE TABLE deliv AS SELECT * FROM read_parquet('{DELIV}')")
     # HLID plan course names too, mapped to institute via the universities code table —
     # so an HLID-only name ("Programming for problem solving") resolves to its subject.
-    con.execute("CREATE TABLE unis AS SELECT * FROM read_csv_auto('data/canonical/universities.csv', header=true, all_varchar=true)")
-    con.execute("CREATE TABLE plan AS SELECT * FROM read_csv_auto('data/canonical/designed_course_plan.csv', header=true, all_varchar=true)")
+    con.execute("CREATE TABLE unis AS SELECT * FROM read_csv_auto('data/canonical/planning/universities.csv', header=true, all_varchar=true)")
+    con.execute("CREATE TABLE plan AS SELECT * FROM read_csv_auto('data/canonical/planning/designed_course_plan.csv', header=true, all_varchar=true)")
     # noise filter — mirrors is_curriculum() in load_duckdb.py
     con.execute("""CREATE MACRO is_curriculum(t) AS (
         t IS NOT NULL AND lower(t) NOT LIKE '%assessment%' AND lower(t) NOT LIKE '%test your%'

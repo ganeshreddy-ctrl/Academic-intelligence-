@@ -2,7 +2,7 @@
 """Flatten the recorded issues / RCA board into a committed canonical table.
 
 Reads data/raw/issues/batch3-issues-rca.xlsx (the "Issues by RCA Group" sheet) and
-writes data/canonical/issues.csv — one row per (issue, university), so the agent can
+writes data/canonical/issues/issues.csv — one row per (issue, university), so the agent can
 join issues to a college the same way it joins everything else.
 
 These are the RECORDED issues (the other half of the design's "derive issues AND read
@@ -20,7 +20,7 @@ import zipfile
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 RAW = "data/raw/issues/batch3-issues-rca.xlsx"
-OUT = "data/canonical/issues.csv"
+OUT = "data/canonical/issues/issues.csv"
 SHEET = "Issues by RCA Group"
 
 # Issue files use short university CODES; map them to the institute_name used everywhere

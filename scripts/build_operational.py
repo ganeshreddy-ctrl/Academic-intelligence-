@@ -2,7 +2,8 @@
 """Flatten scheduling + feedback (data/raw/scheduling/) into compact canonical
 operational tables that link to content via unit_id.
 
-Writes data/canonical/{sessions,session_feedback,instructor_sessions}.csv.
+Writes data/canonical/delivery/sessions.csv, data/canonical/feedback/session_feedback.csv,
+and data/canonical/instructors/instructor_sessions.csv.
 ponytail: only the small, RCA-relevant distillate is committed — the 396K raw
 session INSTANCE rows stay in raw/ (bulky telemetry, regenerable).
 
@@ -12,8 +13,12 @@ import duckdb, os, sys
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 S = "data/raw/scheduling"
-OUT = "data/canonical"
-os.makedirs(OUT, exist_ok=True)
+# three outputs, three domains
+OUT_SESSIONS = "data/canonical/delivery"
+OUT_FEEDBACK = "data/canonical/feedback"
+OUT_INSTRUCTORS = "data/canonical/instructors"
+for d in (OUT_SESSIONS, OUT_FEEDBACK, OUT_INSTRUCTORS):
+    os.makedirs(d, exist_ok=True)
 con = duckdb.connect()
 rd = lambda f: f"read_csv_auto('{S}/{f}', header=true, all_varchar=true, ignore_errors=true)"
 
@@ -22,7 +27,7 @@ con.execute(f"""COPY (
   SELECT DISTINCT session_id, session_title, session_type, unit_id, resource_type
   FROM {rd('scheduled-session-details.csv')}
   WHERE trim(coalesce(session_id,'')) <> ''
-) TO '{OUT}/sessions.csv' (HEADER, DELIMITER ',')""")
+) TO '{OUT_SESSIONS}/sessions.csv' (HEADER, DELIMITER ',')""")
 
 # 2) session_feedback: quantitative ratings + qualitative comment text, per (institute, session, unit)
 con.execute(f"""COPY (
@@ -39,7 +44,7 @@ con.execute(f"""COPY (
     ON  q.institute_name = l.institute_name
     AND q.session_id     = l.session_id
     AND coalesce(q.unit_ids,'') = coalesce(l.unit_ids,'')
-) TO '{OUT}/session_feedback.csv' (HEADER, DELIMITER ',')""")
+) TO '{OUT_FEEDBACK}/session_feedback.csv' (HEADER, DELIMITER ',')""")
 
 # 3) instructor_sessions: per-instructor delivery aggregates (from NIAT)
 con.execute(f"""COPY (
@@ -53,7 +58,7 @@ con.execute(f"""COPY (
   FROM {rd('niat-scheduled-session-details.csv')}
   WHERE trim(coalesce("Instructor Name",'')) <> '' AND "Instructor Name" <> '-'
   GROUP BY 1,2 ORDER BY total_sessions DESC
-) TO '{OUT}/instructor_sessions.csv' (HEADER, DELIMITER ',')""")
+) TO '{OUT_INSTRUCTORS}/instructor_sessions.csv' (HEADER, DELIMITER ',')""")
 
 for t in ["sessions", "session_feedback", "instructor_sessions"]:
     n = con.execute(f"SELECT count(*) FROM read_csv_auto('{OUT}/{t}.csv', header=true, all_varchar=true)").fetchone()[0]

@@ -2,8 +2,8 @@
 """Flatten the HLID + Recommended Prod Sequence xlsx into committed 'designed' tables.
 
 Writes:
-  data/canonical/designed_sequence.csv     — unit-level plan: what was meant to run, when
-  data/canonical/designed_course_plan.csv  — course-level plan from the HLID Student Journey
+  data/canonical/planning/designed_sequence.csv     — unit-level plan: what was meant to run, when
+  data/canonical/planning/designed_course_plan.csv  — course-level plan from the HLID Student Journey
 
 Reads data/raw/design/{UNI}-{hlid,prod}.xlsx (gitignored; see data/README.md).
 
@@ -21,7 +21,7 @@ from xlsx_dump import shared_strings, sheet_map, read_sheet  # stdlib xlsx reade
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 RAW = "data/raw/design"
-OUT = "data/canonical"
+OUT = "data/canonical/planning"
 os.makedirs(OUT, exist_ok=True)
 UUID = re.compile(r"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$")
 UNIS = ["MRV", "Yenepoya", "SGU", "CDU", "ADYPU", "ANNA", "SVYASA", "NRI", "NSRIT",

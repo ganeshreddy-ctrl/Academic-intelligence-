@@ -9,7 +9,7 @@ Handles the several export shapes seen in the wild:
   - Standalone .json: a list of content units (questions + learning resources) with
     answer / difficulty / explanation — the payload the xlsx's "JSONs" sheet links to.
 
-Writes data/canonical/course_content.csv, one row per content unit, JSON parsed to
+Writes data/canonical/content/course_content.csv, one row per content unit, JSON parsed to
 plain text. Drop any of the above into data/raw/content/ and re-run.
 
 Usage: python scripts/build_content.py
@@ -20,7 +20,7 @@ from xlsx_dump import shared_strings, sheet_map, read_sheet
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 RAW = "data/raw/content"
-OUT = "data/canonical/course_content.csv"
+OUT = "data/canonical/content/course_content.csv"
 COLS = ["course", "module", "topic", "session_id", "session_name", "unit_id", "unit_name",
         "kind", "question_type", "difficulty", "content", "options", "correct_answer",
         "explanation", "code"]

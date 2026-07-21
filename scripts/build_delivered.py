@@ -2,8 +2,8 @@
 """Flatten raw Clickup scheduling into committed, queryable 'delivered' tables.
 
 Writes:
-  data/canonical/delivered_sessions.parquet  — unit-level: what ran, when, which unit
-  data/canonical/delivered_niat.parquet      — course/instructor/status level
+  data/canonical/delivery/delivered_sessions.parquet  — unit-level: what ran, when, which unit
+  data/canonical/delivery/delivered_niat.parquet      — course/instructor/status level
 
 These are two SEPARATE tables on purpose: the NIAT export carries no unit_id or
 session_id, so it cannot be joined to the unit-level export on any key. Its
@@ -20,7 +20,7 @@ import duckdb, os, sys
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 S = "data/raw/scheduling"
-OUT = "data/canonical"
+OUT = "data/canonical/delivery"
 os.makedirs(OUT, exist_ok=True)
 con = duckdb.connect()
 rd = lambda f: f"read_csv_auto('{S}/{f}', header=true, all_varchar=true, ignore_errors=true)"

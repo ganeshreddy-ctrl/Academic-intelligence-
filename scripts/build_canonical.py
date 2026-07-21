@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Flatten all loaded content (JSON + Python xlsx) into canonical tables.
 
-Outputs data/canonical/{reading_materials,objective_questions,coding_questions,
+Outputs data/canonical/content/{reading_materials,objective_questions,coding_questions,
 editorials}.csv and loads them (+ courses.csv) into data/aip.duckdb.
 
 ponytail: canonical rows keep the queryable fields + IDs; bulky detail
@@ -13,7 +13,7 @@ csv.field_size_limit(50_000_000)
 import duckdb
 
 RAW = "data/raw"
-OUT = "data/canonical"
+OUT = "data/canonical/content"
 os.makedirs(OUT, exist_ok=True)
 
 # course_id -> (title, stack) from the catalogue

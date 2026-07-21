@@ -2,7 +2,7 @@
 """Build the university course-name -> NxtWave tag crosswalk, ID-keyed.
 
 Reads data/raw/subjects/NIAT 2025 - 1st Year All Subjects Data.xlsx (the
-"NIAT25 Sem-N subjects status" sheets) and writes data/canonical/subject_tags.csv:
+"NIAT25 Sem-N subjects status" sheets) and writes data/canonical/subjects/subject_tags.csv:
 one row per (institute, course) mapping the university's LOCAL course name to the
 canonical NxtWave TAG, keyed by institute_id and course_id.
 
@@ -17,7 +17,7 @@ from xlsx_dump import shared_strings, sheet_map, read_sheet
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 RAW = "data/raw/subjects/NIAT 2025 - 1st Year All Subjects Data.xlsx"
-OUT = "data/canonical/subject_tags.csv"
+OUT = "data/canonical/subjects/subject_tags.csv"
 UUID = re.compile(r"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}")
 
 # Sheet uses short university names; map to the institute_name used in delivery data.

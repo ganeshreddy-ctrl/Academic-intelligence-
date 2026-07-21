@@ -22,7 +22,8 @@ def build(db="data/aip.duckdb", verbose=True):
     con = duckdb.connect(db)
 
     sources = [("courses", "data/courses.csv")]
-    for p in sorted(glob.glob("data/canonical/*.csv")) + sorted(glob.glob("data/canonical/*.parquet")):
+    for p in (sorted(glob.glob("data/canonical/**/*.csv", recursive=True))
+              + sorted(glob.glob("data/canonical/**/*.parquet", recursive=True))):
         sources.append((os.path.splitext(os.path.basename(p))[0], p))
     for name, path in sources:
         p = path.replace(os.sep, "/")

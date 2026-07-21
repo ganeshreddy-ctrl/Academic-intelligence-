@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build data/canonical/course_crosswalk.csv — bridges course titles across layers
+"""Build data/canonical/subjects/course_crosswalk.csv — bridges course titles across layers
 (delivered scheduling, content, catalogue) via a normalized course_key.
 
 Auto-matches to the catalogue by normalized key (exact, then containment). Titles
@@ -14,7 +14,7 @@ import duckdb
 
 RAW_NIAT = "data/raw/scheduling/niat-scheduled-session-details.csv"
 CANON = "data/canonical"
-OUT = f"{CANON}/course_crosswalk.csv"
+OUT = f"{CANON}/subjects/course_crosswalk.csv"
 con = duckdb.connect()
 
 def ckey(s):
@@ -38,7 +38,7 @@ for title, stack, cids in catalogue:
 
 delivered = distinct(f"SELECT DISTINCT \"Course Title\" FROM read_csv_auto('{RAW_NIAT}', header=true, all_varchar=true, ignore_errors=true)")
 content = []
-for p in glob.glob(f"{CANON}/*.csv"):
+for p in glob.glob(f"{CANON}/**/*.csv", recursive=True):
     cols = [c[0] for c in con.execute(f"DESCRIBE SELECT * FROM read_csv_auto('{p.replace(os.sep,'/')}', header=true, all_varchar=true)").fetchall()]
     if "course_title" in cols:
         content += distinct(f"SELECT DISTINCT course_title FROM read_csv_auto('{p.replace(os.sep,'/')}', header=true, all_varchar=true)")
@@ -69,7 +69,7 @@ for layer, titles in [("catalogue", [c[0] for c in catalogue]), ("delivered", de
             status, ctitle, stack = match(key)
         rows.append((layer, t, key, status, ctitle, stack))
 
-os.makedirs(CANON, exist_ok=True)
+os.makedirs(os.path.dirname(OUT), exist_ok=True)
 with open(OUT, "w", newline="", encoding="utf-8") as f:
     w = csv.writer(f)
     w.writerow(["layer", "raw_title", "course_key", "match_status", "catalogue_course_title", "stack"])

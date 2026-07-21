@@ -11,7 +11,7 @@ sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 # so this stays correct as new courses are flattened in. ponytail: derive, don't maintain a list.
 import glob, os
 INGESTED = {}
-for cf in glob.glob("data/canonical/*.csv"):
+for cf in glob.glob("data/canonical/**/*.csv", recursive=True):
     with open(cf, encoding="utf-8") as f:
         rd = csv.DictReader(f)
         if "course_id" not in (rd.fieldnames or []):
