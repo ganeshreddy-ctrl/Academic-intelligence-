@@ -222,6 +222,10 @@ def build(db="data/aip.duckdb", verbose=True):
         SELECT course_title AS course, 'reading'   AS kind, unit_id, 'catalogue' AS source FROM reading_materials
         UNION ALL SELECT course_title, 'objective', unit_id, 'catalogue' FROM objective_questions
         UNION ALL SELECT course_title, 'coding',    unit_id, 'catalogue' FROM coding_questions
+        -- editorials are solution write-ups for coding questions; map them in via the
+        -- coding question they solve (editorials.question_id -> coding_questions.question_id).
+        UNION ALL SELECT cq.course_title, 'editorial', cq.unit_id, 'catalogue'
+                  FROM editorials e JOIN coding_questions cq ON cq.question_id = e.question_id
         UNION ALL SELECT course, kind, unit_id, 'ingested' FROM course_content""")
 
     # college_summary: one row per college — the at-a-glance health view. Powers the

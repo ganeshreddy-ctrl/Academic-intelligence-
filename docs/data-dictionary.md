@@ -84,7 +84,9 @@ Ingested content units (readings, quizzes, coding). Grain: content unit. `course
 
 ### `reading_materials` · `objective_questions` · `coding_questions` · `editorials` (tables) — `build_canonical.py`
 The catalogue-side content, keyed `course_id → topic_name → unit_id`. Readings (543),
-objective Qs (19,163), coding Qs (1,039), editorials (141).
+objective Qs (19,163), coding Qs (1,039). **`editorials` (141)** are the solution write-ups
+for coding questions — join `editorials.question_id → coding_questions.question_id` (all 141
+match; DSA only). They surface in `content_all` as `kind='editorial'`.
 
 ### `tag_content_map` (table · 14 rows) — committed reference
 Maps a `nxtwave_tag` (subject) → the `content_course` name in the content tables. The
@@ -136,7 +138,7 @@ The 63-course catalogue across 11 stacks. `stack`, `course_title`, `course_ids`,
 | **`academic_plan_derived`** | 335 | Planning metrics derived from *delivery* for **all** universities: `sessions_per_section` (**lecture/teaching** sessions per section — same basis as the HLID's planned session count, so it matches `course_plan_vs_actual`), teaching_weeks, first/last_session, start_slip_days, pct_completed. |
 | **`course_plan_vs_actual`** | 159 | The designed vs delivered comparison per course (16 universities with HLID). `coverage` = both / planned_not_delivered / delivered_not_planned; `session_gap` = actual − planned. |
 | **`session_feedback_safe`** | 8,529 | Agent-facing feedback (ratings only, no comment text). |
-| **`content_all`** | 33,072 | Unified content across the catalogue tables + `course_content`, keyed by `course` + `unit_id`. Use this for "what content exists". |
+| **`content_all`** | 33,213 | Unified content across the catalogue tables (reading/objective/coding/**editorial**) + `course_content`, keyed by `course` + `unit_id`. Use this for "what content exists". |
 | **`content_units`** | 20,745 | Distinct content `unit_id` ↔ `course_title`. |
 | **`college_summary`** | 17 | One row per real college: sections, courses, completion, avg ratings, recorded_issues, has_designed_plan. The "how is X doing" table. |
 | **`delivered_sections`** | 239,676 | Section-normalised scheduling. |
