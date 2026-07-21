@@ -133,7 +133,7 @@ The 63-course catalogue across 11 stacks. `stack`, `course_title`, `course_ids`,
 | View | Rows | What it gives you |
 |---|---|---|
 | **`session_link`** | 157,502 | The spine: every `delivered_niat` session with its `session_id`/`unit_id` where the fuzzy bridge to `delivered_sessions` matched. `linked` + `link_precision` flag confidence (~76% minute, ~85% day). |
-| **`academic_plan_derived`** | 335 | Planning metrics derived from *delivery* for **all** universities: sessions/section, teaching_weeks, first/last_session, start_slip_days, pct_completed. |
+| **`academic_plan_derived`** | 335 | Planning metrics derived from *delivery* for **all** universities: `sessions_per_section` (**lecture/teaching** sessions per section — same basis as the HLID's planned session count, so it matches `course_plan_vs_actual`), teaching_weeks, first/last_session, start_slip_days, pct_completed. |
 | **`course_plan_vs_actual`** | 159 | The designed vs delivered comparison per course (16 universities with HLID). `coverage` = both / planned_not_delivered / delivered_not_planned; `session_gap` = actual − planned. |
 | **`session_feedback_safe`** | 8,529 | Agent-facing feedback (ratings only, no comment text). |
 | **`content_all`** | 33,072 | Unified content across the catalogue tables + `course_content`, keyed by `course` + `unit_id`. Use this for "what content exists". |

@@ -172,7 +172,9 @@ def render():
 
     # 4) ACADEMIC PLANNING : derived (all unis) + designed (the 4)
     with tabs[3]:
-        st.markdown("**Derived from delivery** (available for every university)")
+        st.markdown("**Derived from delivery** (available for every university). "
+                    "*Sessions/section* = lecture (teaching) sessions per section — the same basis "
+                    "as the plan below, so a course's number matches across both tables.")
         dp = con.execute("""SELECT course_title, sessions_per_section, teaching_weeks,
                 first_session, last_session, start_slip_days, pct_completed
             FROM academic_plan_derived WHERE institute_name=? AND semester=?

@@ -308,7 +308,11 @@ def build(db="data/aip.duckdb", verbose=True):
              cohort AS (SELECT institute_name, semester, min(start_ts)::DATE cohort_start
                         FROM delivered_niat WHERE is_scheduled GROUP BY 1, 2)
         SELECT d.institute_name, d.semester, d.course_title,
-               round(count(*) FILTER (WHERE d.is_scheduled) * 1.0 / nullif(sc.n_sections, 0), 1) AS sessions_per_section,
+               -- lecture (teaching) sessions per section — the same basis as the HLID's
+               -- planned session count (planned ≈ lectures), so this matches the Designed
+               -- plan's Actual/section for the same course instead of contradicting it.
+               round(count(*) FILTER (WHERE d.is_scheduled AND d.session_type='LECTURE') * 1.0
+                     / nullif(sc.n_sections, 0), 1) AS sessions_per_section,
                count(*) FILTER (WHERE d.is_scheduled)                             AS scheduled_sessions,
                count(DISTINCT date_trunc('week', d.start_ts)) FILTER (WHERE d.is_scheduled) AS teaching_weeks,
                min(d.start_ts) FILTER (WHERE d.is_scheduled)::DATE                AS first_session,
