@@ -48,6 +48,8 @@ Summing every row inflates MRV's Sem-1 load from **460 hrs to 593 (+29%)**, turn
 | `planning_standards` | 14 rows, key-value | **The AICTE/AOL yardstick every semester plan must be judged against.** See below. |
 | `scheduling_rules` | 11 rows | **The NIAT rules a valid plan MUST satisfy.** Every produced or reviewed plan is checked against all 11. See "Designing or critiquing a plan" below. |
 | `issues` | one row per (issue, university) | **The RECORDED issues / RCA log.** Human-logged problems tagged to a university (`institute_name`), the 16-layer taxonomy (`primary_layer`), a `category`, an `issue_title`, `rca_description`, and a `solutioning_direction`. These capture what delivery data cannot — platform outages, infra limits, content defects. Join on `institute_name`. See below. |
+| `instructor_sessions` | one row per instructor | Per-instructor delivery aggregates: `total_sessions`, `completed`, `pending`, `completion_rate`, `institutes`, `courses`. Use for "who taught the most", "instructor completion rates". NIAT-tracked delivery only. |
+| `tag_content_map` | one row per (subject → content course) | **The bridge from a Subject to its content.** `subject_tags.nxtwave_tag` → `tag_content_map.nxtwave_tag` → `content_all.course`. Use for "what content/readings/quizzes does subject X have". Only ~13 subjects have a content course mapped; the rest have no content ingested yet. |
 
 ## `planning_standards` — how to judge whether a plan is sound
 
