@@ -21,7 +21,7 @@ def build(db="data/aip.duckdb", verbose=True):
         os.remove(db)
     con = duckdb.connect(db)
 
-    sources = [("courses", "data/courses.csv")]
+    sources = []
     for p in (sorted(glob.glob("data/canonical/**/*.csv", recursive=True))
               + sorted(glob.glob("data/canonical/**/*.parquet", recursive=True))):
         sources.append((os.path.splitext(os.path.basename(p))[0], p))

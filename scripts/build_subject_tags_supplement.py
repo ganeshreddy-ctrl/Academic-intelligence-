@@ -94,8 +94,8 @@ def main():
     con.execute(f"CREATE TABLE deliv AS SELECT * FROM read_parquet('{DELIV}')")
     # HLID plan course names too, mapped to institute via the universities code table —
     # so an HLID-only name ("Programming for problem solving") resolves to its subject.
-    con.execute("CREATE TABLE unis AS SELECT * FROM read_csv_auto('data/canonical/planning/universities.csv', header=true, all_varchar=true)")
-    con.execute("CREATE TABLE plan AS SELECT * FROM read_csv_auto('data/canonical/planning/designed_course_plan.csv', header=true, all_varchar=true)")
+    con.execute("CREATE TABLE unis AS SELECT * FROM read_csv_auto('data/canonical/planning/standards/universities.csv', header=true, all_varchar=true)")
+    con.execute("CREATE TABLE plan AS SELECT * FROM read_csv_auto('data/canonical/planning/designed/designed_course_plan.csv', header=true, all_varchar=true)")
     # noise filter — mirrors is_curriculum() in load_duckdb.py
     con.execute("""CREATE MACRO is_curriculum(t) AS (
         t IS NOT NULL AND lower(t) NOT LIKE '%assessment%' AND lower(t) NOT LIKE '%test your%'

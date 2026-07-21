@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Flatten all loaded content (JSON + Python xlsx) into canonical tables.
 
-Outputs data/canonical/content/{reading_materials,objective_questions,coding_questions,
-editorials}.csv and loads them (+ courses.csv) into data/aip.duckdb.
+Outputs data/canonical/content/catalogue/{reading_materials,objective_questions,
+coding_questions,editorials}.csv and loads them (+ courses.csv) into data/aip.duckdb.
 
 ponytail: canonical rows keep the queryable fields + IDs; bulky detail
 (test-case bodies, full option sets) stays in the raw files, referenced by id.
@@ -13,12 +13,12 @@ csv.field_size_limit(50_000_000)
 import duckdb
 
 RAW = "data/raw"
-OUT = "data/canonical/content"
+OUT = "data/canonical/content/catalogue"
 os.makedirs(OUT, exist_ok=True)
 
 # course_id -> (title, stack) from the catalogue
 CMAP = {}
-with open("data/courses.csv", encoding="utf-8") as f:
+with open("data/canonical/subjects/courses.csv", encoding="utf-8") as f:
     for row in csv.DictReader(f):
         for cid in [x.strip() for x in row["course_ids"].split(";") if x.strip()]:
             CMAP[cid] = (row["course_title"], row["stack"])

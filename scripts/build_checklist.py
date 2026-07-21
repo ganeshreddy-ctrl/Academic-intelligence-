@@ -2,7 +2,7 @@
 """Build the upload checklist from the Central Catalogue's Stack sheet.
 
 Reads data/raw/catalogue/stack.csv (authoritative), cross-checks against what
-we've actually ingested, writes data/courses.csv, prints a grouped checklist.
+we've actually ingested, writes data/canonical/subjects/courses.csv, prints a grouped checklist.
 """
 import csv, sys
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -49,7 +49,7 @@ for r in rows[1:]:
 
 cols = ["stack", "course_title", "course_outcome", "course_ids", "prereq_course_ids",
         "content_in_catalogue", "has_taxonomy", "ingest_status", "source_dir"]
-with open("data/courses.csv", "w", newline="", encoding="utf-8") as f:
+with open("data/canonical/subjects/courses.csv", "w", newline="", encoding="utf-8") as f:
     w = csv.DictWriter(f, fieldnames=cols)
     w.writeheader(); w.writerows(out)
 

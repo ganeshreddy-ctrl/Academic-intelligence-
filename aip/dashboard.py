@@ -29,7 +29,7 @@ def _data_fingerprint():
     """A cheap hash of the committed data files. Changes whenever a deploy pulls new
     CSVs/parquet — which is what must trigger a rebuild."""
     parts = []
-    for f in sorted(glob.glob("data/canonical/**/*", recursive=True) + ["data/courses.csv"]):
+    for f in sorted(glob.glob("data/canonical/**/*", recursive=True)):
         if os.path.isfile(f):
             parts.append(f"{os.path.basename(f)}:{os.path.getsize(f)}:{os.path.getmtime(f):.0f}")
     return hashlib.md5("|".join(parts).encode()).hexdigest()[:12]

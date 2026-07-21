@@ -124,7 +124,7 @@ delivery on `institute_name`. Coverage: Aurora, Chaitanya (CDU), MRV only.
 
 ## catalogue
 
-### `courses` (table · 63 rows) — `build_checklist.py` — `data/courses.csv`
+### `courses` (table · 63 rows) — `build_checklist.py` — `data/canonical/subjects/courses.csv`
 The 63-course catalogue across 11 stacks. `stack`, `course_title`, `course_ids`,
 `prereq_course_ids`, `ingest_status`.
 

@@ -30,7 +30,7 @@ def distinct(sql):
 # --- source titles per layer ---
 catalogue = con.execute(
     "SELECT DISTINCT course_title, stack, course_ids FROM "
-    "read_csv_auto('data/courses.csv', header=true, all_varchar=true) WHERE course_title IS NOT NULL"
+    "read_csv_auto('data/canonical/subjects/courses.csv', header=true, all_varchar=true) WHERE course_title IS NOT NULL"
 ).fetchall()
 cat_by_key = {}
 for title, stack, cids in catalogue:
@@ -39,6 +39,8 @@ for title, stack, cids in catalogue:
 delivered = distinct(f"SELECT DISTINCT \"Course Title\" FROM read_csv_auto('{RAW_NIAT}', header=true, all_varchar=true, ignore_errors=true)")
 content = []
 for p in glob.glob(f"{CANON}/**/*.csv", recursive=True):
+    if os.path.basename(p) == "courses.csv":     # the catalogue itself (read above), not a content layer
+        continue
     cols = [c[0] for c in con.execute(f"DESCRIBE SELECT * FROM read_csv_auto('{p.replace(os.sep,'/')}', header=true, all_varchar=true)").fetchall()]
     if "course_title" in cols:
         content += distinct(f"SELECT DISTINCT course_title FROM read_csv_auto('{p.replace(os.sep,'/')}', header=true, all_varchar=true)")

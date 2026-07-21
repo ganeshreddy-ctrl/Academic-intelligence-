@@ -87,7 +87,7 @@ Canonical tables live under `data/canonical/<domain>/`. Full column-level refere
 | **subjects/** | Taxonomy / crosswalk (local name ↔ NxtWave subject) | `subject_tags`, `subject_tags_supplement`, `course_crosswalk` |
 | **issues/** | RCA / issues log | `issues` |
 
-`data/courses.csv` is the cross-domain course catalogue. `load_duckdb.py` also builds
+`data/canonical/subjects/courses.csv` is the 63-course catalogue. `load_duckdb.py` also builds
 **views** that join across domains — `session_link`, `academic_plan_derived`,
 `course_plan_vs_actual`, `content_all`, `session_feedback_safe`, `college_summary` (see
 the data dictionary).
@@ -135,9 +135,10 @@ aip/                   # shared app code: db, agent, dashboard infra, export
 views/                 # the 3 pages: chat, knowledge_base, pipeline
 scripts/               # ingestion: build_*.py (raw → canonical) + load_duckdb.py (→ DuckDB)
 data/
-  courses.csv          # course catalogue
-  canonical/<domain>/  # committed flattened tables (see table above)
-  raw/                 # source exports — GITIGNORED, not needed to run
+  canonical/<domain>/  # committed flattened tables, grouped by domain (see table above);
+                       #   big domains have sub-folders (content/{catalogue,ingested},
+                       #   planning/{designed,standards}); courses.csv is in subjects/
+  raw/                 # source exports (mirror the domains) — GITIGNORED, not needed to run
   reports/             # derived one-off reports
 docs/
   data-dictionary.md   # per-table reference (start here to query the data)
