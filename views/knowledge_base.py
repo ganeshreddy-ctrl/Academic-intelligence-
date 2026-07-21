@@ -103,7 +103,7 @@ def render():
             st.dataframe([{
                 "Their course name": r[0], "NxtWave subject (tag)": r[1], "Credits": r[2],
                 "Readings": r[3], "Objective": r[4], "Quiz": r[5], "Coding": r[6],
-                "Content?": "—" if (r[3]+r[4]+r[5]+r[6]) == 0 else "✓"} for r in subs],
+                "Content": "—" if (r[3]+r[4]+r[5]+r[6]) == 0 else "✓"} for r in subs],
                 width="stretch", hide_index=True)
             st.caption("'—' = no content ingested for that subject yet.")
         else:
@@ -131,11 +131,11 @@ def render():
                 WHERE sl.institute_name=? AND sl.semester=? AND sl.course_title=? AND sl.is_scheduled
                 ORDER BY sl.start_ts LIMIT 200""", [uni, sem, course]).fetchall()
             st.caption(f"{total:,} scheduled sessions in {course} — showing first {len(rows)}. "
-                       "'Linked' = matched to scheduling/unit data (fuzzy bridge).")
+                       "'Linked' = this session was matched to the scheduling data.")
             st.dataframe([{
                 "Session": r[0], "Type": r[1], "Instructor": r[2] or "—", "Status": r[3] or "—",
                 "When": str(r[4])[:16], "Section": r[5], "Linked": "✓" if r[6] else "✗",
-                "Teaching rating": r[7] or "—", "Has content unit": "✓" if r[8] else "—"}
+                "Teaching rating": r[7] or "—", "Content": "✓" if r[8] else "—"}
                 for r in rows], width="stretch", hide_index=True)
 
     # 3) INSTRUCTOR DELIVERY : per-instructor stats, derived from the chain (session_link)
@@ -179,29 +179,56 @@ def render():
                 "Completion %": r[6]} for r in dp], width="stretch", hide_index=True)
         else:
             st.info("No delivery to derive planning from for this selection.")
-        # Only rows that HAVE a designed plan; delivered-but-unplanned rows have empty
-        # planned columns and don't belong under a "Designed plan" heading — summarise them below.
-        designed = con.execute("""SELECT course, planned_sessions, planned_total_hours,
-                planned_weeks, actual_lectures_per_section
-            FROM course_plan_vs_actual
-            WHERE university IN (SELECT code FROM universities WHERE institute_name=?)
-              AND coverage <> 'delivered_not_planned'
-            ORDER BY planned_sessions DESC NULLS LAST""", [uni]).fetchall()
-        unplanned = con.execute("""SELECT count(*) FROM course_plan_vs_actual
-            WHERE university IN (SELECT code FROM universities WHERE institute_name=?)
-              AND coverage = 'delivered_not_planned'""", [uni]).fetchone()[0]
+        # Designed plan with a REASON for each planned course instead of a bare
+        # "not matched". If a planned course isn't matched to delivery by name, find its
+        # real delivered counterpart via the shared subject tag, or a near-identical name
+        # (typo). So each row reads "delivered as 'X'" or an honest "not delivered".
+        # Designed data is Semester 1 only.
+        designed = con.execute("""
+            WITH plan AS (
+                SELECT course, planned_sessions, planned_total_hours, planned_weeks, coverage,
+                       course_key_loose(course) AS pk,
+                       (SELECT st.nxtwave_tag FROM subject_tags st
+                        WHERE st.institute_name=? AND st.semester='Semester 1'
+                          AND (course_key(st.university_course)=course_key(course_plan_vs_actual.course)
+                               OR course_key(st.nxtwave_tag)=course_key(course_plan_vs_actual.course)) LIMIT 1) AS tag
+                FROM course_plan_vs_actual
+                WHERE university IN (SELECT code FROM universities WHERE institute_name=?)
+                  AND coverage <> 'delivered_not_planned'
+            ),
+            cand AS (
+                SELECT DISTINCT d.course_title,
+                       (SELECT st.nxtwave_tag FROM subject_tags st
+                        WHERE st.institute_name=d.institute_name AND st.semester=d.semester
+                          AND course_key(st.university_course)=course_key(d.course_title) LIMIT 1) AS tag,
+                       course_key_loose(d.course_title) AS dk
+                FROM delivered_niat d
+                WHERE d.institute_name=? AND d.semester='Semester 1' AND is_curriculum(d.course_title)
+            )
+            SELECT DISTINCT plan.course, plan.planned_sessions, plan.planned_total_hours, plan.planned_weeks, plan.coverage,
+                   (SELECT c.course_title FROM cand c WHERE c.tag=plan.tag AND plan.tag IS NOT NULL LIMIT 1) AS as_tag,
+                   (SELECT c.course_title FROM cand c ORDER BY jaro_winkler_similarity(c.dk, plan.pk) DESC LIMIT 1) AS as_fuzzy,
+                   (SELECT max(jaro_winkler_similarity(c.dk, plan.pk)) FROM cand c) AS sim
+            FROM plan ORDER BY plan.planned_sessions DESC NULLS LAST
+        """, [uni, uni, uni]).fetchall()
         if designed and sem == "Semester 1":
-            st.markdown("**Designed plan** (HLID — Semester 1). Every row is a planned course; "
-                        "**Delivered** shows whether it was matched to actual delivery.")
+            def _delivery(cov, as_tag, as_fuzzy, sim):
+                if cov == "both":
+                    return "✓ delivered"
+                if as_tag:
+                    return f"delivered as ‘{as_tag}’"
+                if sim is not None and sim >= 0.90:
+                    return f"delivered as ‘{as_fuzzy}’ (name differs)"
+                return "not delivered"
+            st.markdown("**Designed plan** (HLID — Semester 1). Each row is a planned course; "
+                        "**Delivery** explains whether and how it actually ran.")
             st.dataframe([{
-                "Course": r[0], "Planned sessions": r[1], "Planned hrs": r[2],
-                "Planned weeks": r[3],
-                "Delivered": "✓" if r[4] is not None else "not matched"} for r in designed],
+                "Course": r[0], "Planned sessions": r[1], "Planned hrs": r[2], "Planned weeks": r[3],
+                "Delivery": _delivery(r[4], r[5], r[6], r[7])} for r in designed],
                 width="stretch", hide_index=True)
-            if unplanned:
-                st.caption(f"{unplanned} delivered course(s) aren't in this HLID — usually the same "
-                           "course under a different name (e.g. HLID 'Web Technologies' vs delivered "
-                           "'Web Development'). See the Alignment tab for the pairing.")
+            st.caption("**Delivery** — ✓ delivered: ran under the same name · "
+                       "*delivered as '…'*: the same subject ran under a different name (matched by "
+                       "subject, or a near-identical name) · *not delivered*: no delivery counterpart found.")
 
     # 5) ALIGNMENT : how well each link in the chain holds
     with tabs[4]:
