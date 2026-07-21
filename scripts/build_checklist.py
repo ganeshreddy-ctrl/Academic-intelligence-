@@ -20,7 +20,7 @@ for cf in glob.glob("data/canonical/**/*.csv", recursive=True):
             if row.get("course_id"):
                 INGESTED.setdefault(row["course_id"], "data/canonical/")
 
-with open("data/raw/catalogue/stack.csv", encoding="utf-8") as f:
+with open("data/raw/subjects/catalogue/stack.csv", encoding="utf-8") as f:
     rows = list(csv.reader(f))
 idx = {n: i for i, n in enumerate(rows[0])}
 c = lambda r, k: (r[idx[k]] if idx.get(k) is not None and idx[k] < len(r) else "").strip()

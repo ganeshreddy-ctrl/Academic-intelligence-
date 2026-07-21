@@ -12,7 +12,7 @@ sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 csv.field_size_limit(50_000_000)
 import duckdb
 
-RAW = "data/raw"
+RAW = "data/raw/content"
 OUT = "data/canonical/content/catalogue"
 os.makedirs(OUT, exist_ok=True)
 

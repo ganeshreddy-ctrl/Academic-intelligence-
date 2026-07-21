@@ -12,7 +12,7 @@ Usage: python scripts/build_course_crosswalk.py
 import csv, os, re, glob
 import duckdb
 
-RAW_NIAT = "data/raw/scheduling/niat-scheduled-session-details.csv"
+RAW_NIAT = "data/raw/delivery/niat-scheduled-session-details.csv"
 CANON = "data/canonical"
 OUT = f"{CANON}/subjects/course_crosswalk.csv"
 con = duckdb.connect()

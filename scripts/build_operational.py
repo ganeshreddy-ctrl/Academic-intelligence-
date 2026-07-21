@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Flatten scheduling + feedback (data/raw/scheduling/) into compact canonical
+"""Flatten scheduling + feedback (data/raw/delivery/) into compact canonical
 operational tables that link to content via unit_id.
 
 Writes data/canonical/delivery/sessions.csv, data/canonical/feedback/session_feedback.csv,
@@ -12,7 +12,7 @@ Usage: python scripts/build_operational.py
 import duckdb, os, sys
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
-S = "data/raw/scheduling"
+S = "data/raw/delivery"
 # three outputs, three domains
 OUT_SESSIONS = "data/canonical/delivery"
 OUT_FEEDBACK = "data/canonical/feedback"

@@ -5,7 +5,7 @@ Writes:
   data/canonical/planning/designed/designed_sequence.csv     — unit-level plan: what was meant to run, when
   data/canonical/planning/designed/designed_course_plan.csv  — course-level plan from the HLID Student Journey
 
-Reads data/raw/design/{UNI}-{hlid,prod}.xlsx (gitignored; see data/README.md).
+Reads data/raw/planning/{UNI}-{hlid,prod}.xlsx (gitignored; see data/README.md).
 
 KNOWN LIMITATION, by design: the Prod Sequence sheets have sparsely-filled
 Unit ID columns. Coverage of delivered units varies (MRV ~82%, SGU ~65%,
@@ -20,7 +20,7 @@ from xlsx_dump import shared_strings, sheet_map, read_sheet  # stdlib xlsx reade
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
-RAW = "data/raw/design"
+RAW = "data/raw/planning"
 OUT = "data/canonical/planning/designed"
 os.makedirs(OUT, exist_ok=True)
 UUID = re.compile(r"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$")
@@ -280,7 +280,7 @@ for uni in UNIS:
     else:
         print(f"  {uni:9s} {len(tops)} courses ({hrs(tops):.0f} hrs), no sub-modules")
 
-assert seq_rows, "no designed sequence extracted — check data/raw/design/*.xlsx"
+assert seq_rows, "no designed sequence extracted — check data/raw/planning/*.xlsx"
 assert all(r["planned_start"] == "" or re.match(r"^\d{4}-\d{2}-\d{2}$", r["planned_start"])
            for r in seq_rows), "planned_start must be ISO date or empty, never a raw serial"
 

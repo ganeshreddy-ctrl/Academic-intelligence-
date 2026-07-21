@@ -19,7 +19,7 @@ Usage: python scripts/build_delivered.py
 import duckdb, os, sys
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
-S = "data/raw/scheduling"
+S = "data/raw/delivery"
 OUT = "data/canonical/delivery"
 os.makedirs(OUT, exist_ok=True)
 con = duckdb.connect()
