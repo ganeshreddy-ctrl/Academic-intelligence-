@@ -9,6 +9,11 @@ rejects multi-statement / non-SELECT SQL, and times out runaway queries.
 
 Run locally (stdio, for Claude Desktop / Cursor):   python mcp_server.py
 Run as a remote connector (HTTP):                   python mcp_server.py --http
+
+Auth: Claude.ai custom connectors can't send a static token (they use OAuth or
+connect open), so the HTTP server runs OPEN unless AIP_MCP_TOKEN is set. Set that
+env var only for header-capable clients (Cursor etc.); leave it unset for Claude.ai.
+This repo's data is already public, so an open read-only endpoint exposes nothing new.
 """
 import os
 import sys
