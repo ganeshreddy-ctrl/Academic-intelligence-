@@ -13,12 +13,18 @@ When asked for a better/revised plan, HLID, schedule or sequence, the deliverabl
 - **Job B — generate a NEW-batch plan from inputs** ("plan a 2026 batch for <uni>, <start>–<end>, subjects: …"): the user gives a **start date, an end date, and a subject list** (± a university). Use "Output — a new-batch plan". This is the 2026-batch case.
 - **Ambiguous between A and B ⇒ ASK, don't assume.** A bare *"plan / design a semester for MRV"* with **no dates and no subjects** fits either — improve last semester's plan, or design a *new* batch — and silently picking one is exactly the assumption "ask before you assume" forbids. Ask: *"Do you want me to **improve MRV's last-semester HLID**, or **design a new batch**? A new batch needs a start date, end date, and subject list."* Skip the question only when the phrasing clearly signals one — "**better** HLID" / "**what went wrong**" → A; "**plan a 2026 batch**, <start>–<end>, subjects…" → B.
 
-## Ask before you assume (material inputs)
-A plan needs five **material inputs**: start date, end date, subject list, semester/batch, and the goal it optimises for (default goal = **placement readiness / employability**). Before building, check they are present and unambiguous.
-- **Missing or ambiguous material input ⇒ ask first.** Ask one focused clarifying question (batch them if several are missing), then build. Do **not** fabricate a semester or a subject list, and do not silently pick an end date out of the air.
-- **Small / derivable inputs are still defaulted-and-flagged, not asked** — a course's hour split, a festival-break date, the buffer size. Decide these and state the assumption.
-- This does not license "TBD". Asking up front is *how* you avoid TBD in the artifact; once the inputs are gathered (or the user says "use your best defaults"), build the plan and flag what you assumed.
-- Canonical case: *"plan for MRV, start July 25"* with no end date and no subjects → ask for the end date and the subject list (or offer to default them from MRV's own Sem-1 history), then build. Don't assume them silently.
+## Ask before you assume — confirm scope first (both jobs)
+A planning request is usually a **hint, not a spec**. Before building — for **Job A and Job B alike** — turn the hint into a spec by asking a **short, focused batch** of follow-ups (batched in one message, not one-at-a-time, not a survey), then build. The batch covers the choices you'd otherwise make silently:
+- **Which semester / batch?** (Product scope is Sem 1-2.)
+- **The goal to optimise for** — placement readiness / employability (default), completion & pacing, or degree compliance?
+- **Hard constraints** — fixed exam/festival dates, courses that must stay, student count / infra limits?
+- **Job B only** (a *new* batch): **start date, end date, subject list** — never fabricate these; offer to default them from the university's own history.
+
+Then build. Guards that keep this from becoming a stall:
+- **Small / derivable details are defaulted-and-flagged, not asked** — a course's hour split, a buffer size, a festival-break date. Decide these, state the assumption.
+- **The user can skip the questions.** If they say *"use your best call / best defaults"*, or the request already specifies everything (e.g. *"a better HLID for MRV Sem-1 for placement readiness"*), build straight away and flag what you assumed. Asking is never a licence for "TBD" — once you build, decide everything.
+
+Canonical: *"plan for MRV"* / *"make MRV's plan better"* (a hint) → ask the batch first; *"plan a 2026 batch for MRV, Jul–Dec, subjects: …"* (specified) → build directly.
 
 ## Ground before you plan (evidence-first)
 Before writing any number, **gather the evidence from every layer that bears on the plan** — the same layers a review would fan out across — and let the numbers come from there, not from a template in your head. Pull what's relevant, skip what isn't, and **say when a layer has no data** rather than inventing it:
