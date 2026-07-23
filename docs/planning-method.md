@@ -9,8 +9,9 @@ university"; read it alongside this.
 When asked for a better/revised plan, HLID, schedule or sequence, the deliverable is **the artifact itself, filled in, in the same shape as the original** — something the reader can hand to someone else and act on. A list of changes is not the artifact. Every number must trace to evidence (actual delivery, the standards) — **cite its source inline** (table · filter · value, e.g. `26 [course_plan_vs_actual · MRV]`) — or be flagged as a judgement call. Never write "TBD" — decide, and say what would change your mind.
 
 ## Two planning jobs — detect which one you're in
-- **Job A — critique / improve an existing plan** ("give me a better HLID for MRV"): you have a prior HLID/delivery to react to. Use "Output — critique / improve".
+- **Job A — critique / improve an existing plan** ("give me a better HLID for MRV", "what went wrong for MRV"): you have a prior HLID/delivery to react to. Use "Output — critique / improve".
 - **Job B — generate a NEW-batch plan from inputs** ("plan a 2026 batch for <uni>, <start>–<end>, subjects: …"): the user gives a **start date, an end date, and a subject list** (± a university). Use "Output — a new-batch plan". This is the 2026-batch case.
+- **Ambiguous between A and B ⇒ ASK, don't assume.** A bare *"plan / design a semester for MRV"* with **no dates and no subjects** fits either — improve last semester's plan, or design a *new* batch — and silently picking one is exactly the assumption "ask before you assume" forbids. Ask: *"Do you want me to **improve MRV's last-semester HLID**, or **design a new batch**? A new batch needs a start date, end date, and subject list."* Skip the question only when the phrasing clearly signals one — "**better** HLID" / "**what went wrong**" → A; "**plan a 2026 batch**, <start>–<end>, subjects…" → B.
 
 ## Ask before you assume (material inputs)
 A plan needs five **material inputs**: start date, end date, subject list, semester/batch, and the goal it optimises for (default goal = **placement readiness / employability**). Before building, check they are present and unambiguous.
