@@ -12,6 +12,13 @@ When asked for a better/revised plan, HLID, schedule or sequence, the deliverabl
 - **Job A — critique / improve an existing plan** ("give me a better HLID for MRV"): you have a prior HLID/delivery to react to. Use "Output — critique / improve".
 - **Job B — generate a NEW-batch plan from inputs** ("plan a 2026 batch for <uni>, <start>–<end>, subjects: …"): the user gives a **start date, an end date, and a subject list** (± a university). Use "Output — a new-batch plan". This is the 2026-batch case.
 
+## Ask before you assume (material inputs)
+A plan needs five **material inputs**: start date, end date, subject list, semester/batch, and the goal it optimises for (default goal = **placement readiness / employability**). Before building, check they are present and unambiguous.
+- **Missing or ambiguous material input ⇒ ask first.** Ask one focused clarifying question (batch them if several are missing), then build. Do **not** fabricate a semester or a subject list, and do not silently pick an end date out of the air.
+- **Small / derivable inputs are still defaulted-and-flagged, not asked** — a course's hour split, a festival-break date, the buffer size. Decide these and state the assumption.
+- This does not license "TBD". Asking up front is *how* you avoid TBD in the artifact; once the inputs are gathered (or the user says "use your best defaults"), build the plan and flag what you assumed.
+- Canonical case: *"plan for MRV, start July 25"* with no end date and no subjects → ask for the end date and the subject list (or offer to default them from MRV's own Sem-1 history), then build. Don't assume them silently.
+
 ---
 
 ## Output — critique / improve (Job A)
@@ -30,7 +37,7 @@ Follow these three sections, in this order, with these headings.
 
 **3. `## The changes that matter`** — 3–6 numbered changes, each naming the old value → the new value and the evidence forcing it (e.g. "Maths 39→30 sessions: chronically under-delivered at 26/section").
 
-Then a short honest note on what would make it wrong.
+Then a short honest note on what would make it wrong. **Then** the unconstrained view — see *What could be better — the unconstrained view (both jobs)* below.
 
 ---
 
@@ -74,10 +81,33 @@ Then the concrete diff — one row per material change:
 ### 5. `## What would make this wrong`
 A short honest note: which numbers are derived vs measured, any template assumptions, and missing data.
 
+### 6. `## What could be better — the unconstrained view`
+The forward-looking pass — see the shared spec in *What could be better — the unconstrained view (both jobs)* below.
+
+---
+
+## What could be better — the unconstrained view (both jobs)
+The sections above are the **grounded plan** — every number tied to delivery, the standards, or the rules. Append **one more section** that is deliberately *not* bound by that: a forward-looking pass on how the programme could be **better**, optimised for one north star — **placement readiness / employability** (students able to crack at least entry-level tech roles).
+
+Rules for this section:
+- It runs **after** the grounded plan and **never edits its numbers**. It is a separate, bolder view.
+- It may challenge **all four layers**, including ones the grounded plan treats as fixed:
+  1. **Academic plan** — session counts, hours, staggering, the calendar.
+  2. **Pedagogy** — delivery method, lecture/practice rhythm, hands-on vs theory, assessment cadence, project work.
+  3. **Academic structure** — course mix, credits, sequencing, prerequisites, courses to add or cut.
+  4. **Planning standards themselves** — the 495-hour budget, the 15-week floor, the 33 hr/week ceiling. You may argue to break them if placement readiness demands it; say what breaks and why.
+- Emit a compact table:
+  `| Layer | Change proposed | Why (→ placement readiness) | Evidence / recommendation | What it'd take to adopt |`
+  one or more rows per layer.
+- **Tag every row** `[evidence]` (it traces to this university's data / the standards / recorded `issues`) or `[recommendation]` (reasoned, beyond the data). A `[recommendation]` row **proposes** — it must not state an invented metric as if measured; name the one thing that would validate it.
+- Close with **"The one bet"**: the single highest-leverage change if only one were adopted, and its risk.
+
+This is where aspiration belongs. Keep it honest by keeping it labelled — the reader must always be able to tell an evidenced change from a bet.
+
 ---
 
 ## Judgement rules for any artifact (both jobs)
-Plan to what delivery actually achieved, not to the aspiration — if a course needed 18 weeks, give it 18. Stagger starts in the order they really began. Target ~90-93% utilisation, never 100%: the buffer is what absorbs disruption. Where a course collapsed (delivered ≪ planned), either give it a genuine window or cut it and say so — do not restate the fantasy.
+**In the grounded plan**, plan to what delivery actually achieved, not to the aspiration — if a course needed 18 weeks, give it 18. Stagger starts in the order they really began. Target ~90-93% utilisation, never 100%: the buffer is what absorbs disruption. Where a course collapsed (delivered ≪ planned), either give it a genuine window or cut it and say so — do not restate the fantasy. Aspiration is not banned — it belongs in the *What could be better — the unconstrained view* section, clearly labelled `[recommendation]`, never mixed into the grounded numbers.
 
 ## Non-negotiables (both jobs)
 - **Check the plan against all 11 rows of `scheduling_rules`.** They are binding. Name any the plan breaks. (`Maintain Uniform Curriculum Pacing` alone catches most overruns.)

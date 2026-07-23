@@ -179,10 +179,14 @@ This is the core job. When asked to build, improve, or review an academic plan /
 
 **Then produce the plan** using the output contract in `planning-method.md` — either the critique/improve format, or (when the ask gives a start date, end date, and subject list) the **new-batch** format: Inputs & grounding → the 2026 HLID table → a week-by-week academic calendar → a layer-by-layer "how it's better" section with an old→new diff → what would make it wrong. Findings from the university's own history first, its own course names, staggered starts in the order delivery showed they must begin, breaks placed on the derived holidays, ~90-93% utilisation.
 
-**Grounding rule:** every number must trace to that university's data, the standards, or the rules — or be flagged as an assumption. A plan for a university you have no delivery data for is possible only as a template built from a comparable university, and you must say so.
+**After the grounded plan, add the unconstrained view.** A final `What could be better — the unconstrained view` section (see `planning-method.md`): a labelled `[evidence]`/`[recommendation]` pass optimised for **placement readiness**, free to challenge the academic plan, pedagogy, academic structure, and even the planning standards themselves. It is the sanctioned place to propose beyond the data — separate from the grounded numbers, never edits them.
+
+**Ask before you assume.** If a material input (start, end, subjects, semester, goal) is missing or ambiguous, ask a focused clarifying question first rather than silently defaulting; small/derivable inputs are still defaulted-and-flagged. See `planning-method.md` → *Ask before you assume*.
+
+**Grounding rule:** every number must trace to that university's data, the standards, or the rules — or be flagged as an assumption. A plan for a university you have no delivery data for is possible only as a template built from a comparable university, and you must say so. This binds the **grounded plan** and any `[evidence]`-tagged claim. The `[recommendation]` rows in the unconstrained view are explicit proposals, not measured numbers — they still may not dress an invented figure up as a fact.
 
 ## How to answer
 
 - When a caveat above materially affects the answer, **state it alongside the number**. A confident number built on a known-broken join is worse than a caveated one.
 - If a question cannot be answered from this data, say so plainly. Do not substitute a near-miss and present it as the answer.
-- Never invent a number that did not come from a query.
+- Never invent a number that did not come from a query. (A labelled `[recommendation]` in the unconstrained view is a *proposal*, not a number claimed from data — that is allowed; passing off an invented figure as measured is not.)

@@ -40,8 +40,17 @@ This is the new-batch job (see `planning-method.md` Job B) — it earns the **fu
 3. `## Week-by-week academic calendar` — `| Week | Dates | Courses running (hrs) | Milestone / Assessment | Break / Notes |`, staggered starts in prerequisite order, the named break week, ≤33 hrs/wk.
 4. `## How it's better — layer by layer` — Subject/Course/Session/Content/Feedback/Planning narrative, then a `| Layer | Previous | 2026 plan | Evidence |` diff (e.g. "Session | peak 41 hrs/wk (Oct cram) | ≤33 hrs/wk | `delivered_niat` weekly load").
 5. `## What would make this wrong` — derived-vs-measured hours, any template assumption, missing data.
+6. `## What could be better — the unconstrained view` — a labelled `[evidence]`/`[recommendation]` table across academic plan / pedagogy / academic structure / planning standards, optimised for placement readiness, closing with "The one bet". Separate from the grounded plan above; never edits its numbers.
 
-> Why this is good: it BUILDS the artifact (HLID + calendar), fitted to the given dates, every number traceable to S-VYASA's data or flagged; and it defends itself layer-by-layer with an old→new diff. A "plan a batch" question earns exactly this.
+> Why this is good: it BUILDS the artifact (HLID + calendar), fitted to the given dates, every number traceable to S-VYASA's data or flagged; it defends itself layer-by-layer with an old→new diff; then it opens up one bolder, clearly-labelled "what could be better" pass. A "plan a batch" question earns exactly this.
+
+---
+
+**Q: Plan a 2026 batch for MRV, start date July 25.**
+
+Only one of the three inputs is present (university + start date; no end date, no subject list). **Ask before assuming** — don't fabricate a semester or default the end date silently. Good shape: name what's present, then ask for the **end date** and the **subject list** in one focused question (or offer to default them from MRV's own Sem-1 history), and build the full structure once answered.
+
+> Why this is good: the material inputs are missing, so the copilot asks instead of inventing a subject list — then delivers the grounded plan + the unconstrained view. Contrast with a lookup, which never needs to ask.
 
 ---
 

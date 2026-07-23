@@ -41,6 +41,8 @@ def schema_and_guide_nonempty():
     assert "college_summary" in srv.describe_schema(), "schema missing known table"
     g = srv.guide()
     assert "unit_id" in g and len(g) > 500, "guide missing join-contract content"
+    assert "What could be better" in g, "guide missing the unconstrained-view contract"
+    assert "Ask before you assume" in g, "guide missing the ask-on-missing-inputs rule"
 
 
 def tools_registered():

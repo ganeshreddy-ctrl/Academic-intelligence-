@@ -37,7 +37,10 @@ mcp = FastMCP(
         "run_sql() (read-only SELECT/WITH only). guide() also carries the academic-"
         "planning contract: you can generate a 2026-batch HLID + week-by-week academic "
         "calendar when given a start date, end date, and subject list, grounded in the "
-        "university's own delivery history. guide() ALSO carries a second product as "
+        "university's own delivery history. When a plan is asked for but a material input "
+        "(start, end, subjects, semester, goal) is missing, ASK before assuming; and "
+        "alongside the grounded plan, offer an unconstrained 'what could be better' view "
+        "optimised for placement readiness. guide() ALSO carries a second product as "
         "reference context -- the GRIT 2026-27 programme (skills/Miles/tracks); GRIT has "
         "no tables, so answer GRIT questions from the guide, not run_sql()."
     ),
