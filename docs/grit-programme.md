@@ -1,80 +1,91 @@
 # GRIT 2026–27 — programme knowledge (reference context)
 
-Served via `guide()` alongside the academic-delivery notes. This is a **second product** the
-copilot must know: **G.R.I.T — Global Readiness Immersion Trips**, NIAT/NxtWave's sponsored
-international tech-immersion + gamified-contest programme.
+Served via `guide()` alongside the academic-delivery notes. A **second product** the copilot must
+know: **G.R.I.T — Global Readiness Immersion Trip**, NIAT/NxtWave's year-long gamified skill
+competition whose top performers win a fully sponsored international trip.
 
-**GRIT is reference context, NOT queryable data.** There are **no GRIT tables** in the DuckDB
-store — do not write `run_sql` against it. Answer GRIT questions from THIS document. The
-delivery/planning data (`delivered_*`, `course_plan_vs_actual`, …) is a different product
-(NIAT university delivery) and never mixes with GRIT numbers.
+**GRIT is reference context, NOT queryable data.** There are **no GRIT tables** in the DuckDB store —
+do not `run_sql` against it. Answer GRIT questions from THIS document. The delivery/planning data
+(`delivered_*`, `course_plan_vs_actual`, …) is a different product (NIAT university delivery) and
+never mixes with GRIT numbers.
 
-**Confirmed vs WIP.** Source consolidates the programme write-up + two internal planning
-workbooks. Where the sources disagree, the *confirmed* value and the *superseded* one are both
-named below — quote the confirmed one and flag the conflict. Dates, destinations, budget, seat
-splits, role names, and ownership are **indicative/internal, subject to change**; NIAT reserves
-the right to revise skill content, scoring, Miles, attempt rules, tracks, and criteria anytime.
+**Sources.** Updated from the **"GRIT Program Briefer (2026-27)"** (16 Jul — the official *How GRIT
+works* explainer) over the earlier Master Knowledge Document. **Where they differ the briefer is newer
+and wins**; superseded values are flagged in §14. Dates, destinations, seat splits, salary bands, and
+Miles values are **indicative/internal, subject to change**.
 
 ---
 
-## 1. Snapshot
+## 1. What GRIT is
+**G.R.I.T = Global Readiness Immersion Trip.** A year-long, gamified skill competition run exclusively
+for NIAT students (batches 2023/24/25) across partner campuses. Students earn **Miles** by competing
+in contests, clearing skill levels, unlocking track badges, and completing verified external
+achievements. Miles + badges set leaderboard rank; the top performers win a **fully sponsored
+international trip** to a global tech hub. Contests **Feb 2026 → Feb 2027**; travel **May–Jul 2027**
+(tentative). Framing: *"start early, win early"* — skill up from Year 1, not at final-year placement pressure.
 
+## 2. Snapshot & key facts
 | Attribute | Detail |
 |---|---|
-| Name | G.R.I.T — Global Readiness Immersion Trips 2026–27 |
+| Name | G.R.I.T — Global Readiness Immersion **Trip** 2026-27 |
 | Run by | NIAT / NxtWave |
 | Eligible batches | 2023, 2024, 2025 |
-| Programme duration | 15 Feb 2026 → 15 Feb 2027 (12 months) |
-| Contest / qualification window | Feb 2026 → Feb 2027 |
-| Travel window | May – Jul 2027 (tentative) |
-| Total seats | 1,000 announced (**not** a guarantee all fill — base criteria must be met) |
-| Seat split (2023 : 2024 : 2025) | **2 : 132 : 866** (confirmed) |
-| Selection routes | Top of the Leaderboard (merit) + Lucky Draw (basic eligibility) |
-| Candidate destinations | UAE, Singapore, China, UK, Europe, USA, South Korea, Japan (tentative) |
-| Sponsored | Return economy airfare, accommodation, food, local travel (official schedule) |
-| Student pays | Passport & visa (by design — "skin in the game"); expenses outside itinerary |
-| Immersions per student | One |
-| Budget (internal) | ~₹20 crore INR |
-| Delivery (internal) | 6 cohorts (~167 each); 1 staff : 12 students (~84 staff) |
+| Contest window | Feb 2026 → Feb 2027 |
+| Travel | May–Jul 2027 (tentative) |
+| Prize | Fully sponsored trip — airfare, food, accommodation, local travel — to a global hub (US, China, Japan, Germany, Singapore, South Korea…). Student pays **passport & visa** ("skin in the game"). One immersion per student. |
+| Eligibility | ≥75% attendance from 15 Feb 2026 · on-time semester registration · NIAT code of conduct · batches 2023/24/25 |
+| Qualify | Earn **≥1 track badge by December 2026** + clear the final interview round |
+| Public site | grit.niatindia.com · support niat.grit@nxtwave.tech |
+| Seats (master doc — briefer silent) | 1,000 announced; split **2 : 132 : 866** (2023:2024:2025). Indicative; the 16 Jul briefer does not restate seat counts. |
 
-**Mission line:** "make every one of you compete globally… skill up, become stronger, aim higher."
+## 3. Glossary — use these terms precisely
+- **Miles** — the score; earned via contests + verified achievements. More Miles = higher rank + higher reward chance.
+- **Tracks** — curated skill bundles leading to a certification: AI Product Mastery, AI Systems Mastery, AI Models Mastery, AI Robotics Mastery (more coming).
+- **Skills** — what a student practices (e.g. Applied Gen AI Development, CS Fundamentals, UI Engineering, DS & ML).
+- **Skill Levels L1–L4** — difficulty inside a skill; higher = more Miles.
+- **Track Badge** — the certification within a track. Progression **Novice → Specialist → Expert → Elite → Legend** (informally "Novice up to Grand Master"). Each needs a defined skill+level set + a **Level Clearance Interview**.
+- **Medals** — Gold / Silver / Try Again per contest attempt → maps to Miles.
+- **GRIT Contests** — proctored contests (run via SEB) where levels are cleared.
+- **Level Clearance Interview** — verification step ("a quick layover") before Miles/badges are awarded.
+- **Leaderboards** — Miles + badges decide the trip. Two tiers: **Pre-Qualiflyers** (all eligible/registered/approved) · **Qualiflyers** (≥1 Track Badge completed).
+- **Ticket to Finale** — direct finale path via a standout external achievement (bypasses the grind).
+- **Bonus Miles** — Miles from verified external platforms/competitions.
+- **SEB** — Secure Exam Browser (proctoring). **SPOCs** — campus single points of contact. **GRIT Dashboard** — the product running Miles/leaderboard/eligibility/Bonus-Miles verification (built on Replit).
 
----
+## 4. Student roadmap
+Choose a **Track** → pick a **Skill** → enter **GRIT Contests** → clear **Skill Levels (L1–L4)** →
+score **Miles** (by medal) → crack the **Level Clearance Interview** → unlock a **Track Badge** →
+climb the **Leaderboard** → top students win the trip. A Track contains multiple Badges; each Badge is
+a defined combination of Skills at defined Levels + an interview.
 
-## 2. Eligibility & selection
+## 5. The three ways to win  *(replaces the old "Lucky Draw")*
+1. **Top the GRIT Leaderboard** — max Miles, unlock Track Badges, top the **Qualiflyer** leaderboard.
+2. **Direct Ticket to Finale** — a standout external achievement, bypassing the grind, in one of:
+   Competitive Programming (e.g. ACM-ICPC Regionals) · Open Source (e.g. GSoC 2026/27) ·
+   Entrepreneurship (reputed accelerator/incubator, or equity funding/grants from a recognised
+   VC/angel/family office) · Research & Academia · Content Creation. (More opportunities added over time.)
+3. **Surprises & rewards** — hitting qualifying milestones raises the chance of goodies/exclusive rewards throughout.
 
-**Eligibility:** enrolled in batch 2023/24/25 · **≥75% attendance** from 15 Feb 2026 · on-time
-semester registration, kept every semester through the programme · valid passport with **≥1 year
-validity at travel**.
+## 6. Leaderboards & ranking
+Two tiers — **Pre-Qualiflyers** (all eligible) and **Qualiflyers** (≥1 badge). Ranking priority:
+1. **Total Miles** → 2. **highest Track Badge level** (Legend > Elite > Expert > Specialist > Novice)
+→ 3. **skill-level depth** (L4 > L3 > L2 > L1) → 4. **earliest timestamp** (first to the milestone).
+*(Internal: leaderboard / Miles-math accuracy is a real operational risk — trip eligibility depends on it.)*
 
-**Two routes to a seat** — both require base criteria, and **clearing the interview is mandatory
-to keep a finale position active**:
-- **Top of the Leaderboard** — purely merit, highest Miles scorers.
-- **Lucky Draw** — luck-based among students meeting basic eligibility ("Lucky Draw" is a working
-  label, may be renamed).
+## 7. The Miles economy
+Loop: **GRIT contests → clear skill levels → score Miles (by medal) → unlock track badges → climb the
+leaderboard**; verified external achievements add Bonus Miles (§11).
 
-Seats allocated by weighted distribution across batches; equal opportunity within a batch, no
-campus weighting. Final list confirmed **only after successful visa approval**; no visa ⇒ deferred
-or reassigned.
-
----
-
-## 3. The Miles economy
-
-Loop: **complete skill assessments → gain certifications → earn Miles → climb the leaderboard.**
-Higher Miles also raises the probability of extra goodies/surprises.
-
-**Medals** (each Skill-Level assessment returns one):
+**Medals** (each skill-level attempt returns one):
 
 | Outcome | Meaning | Miles | Unlocks next level? |
 |---|---|---|---|
 | Gold | Top band | Full Miles for the level | Yes |
-| Silver | Strong pass | ~90% of Gold | Yes |
-| Try Again | Below pass | Flat **5** (participation) | No — must re-attempt to ≥ Silver |
+| Silver | Strong/partial pass | ~90% of Gold | Yes |
+| Try Again | Below threshold | Flat **5** (participation) | No — must re-attempt to ≥ Silver |
 
-**Attempt rules:** unlimited attempts via later contests · only the **highest** score counts · a
-level unlocks only after Gold/Silver on the previous one · **≥5-day gap** between re-attempts of
-the same level.
+**Attempt rules:** unlimited attempts via later contests · only the **highest** score counts · a level
+unlocks only after Gold/Silver on the previous one · **≥5-day gap** between re-attempts of the same level.
 
 **Miles per level by weight** (Gold shown; Silver ≈ 90%, Try Again = 5):
 
@@ -85,12 +96,10 @@ the same level.
 | Advanced — L2 flagship / L3 | 80 / 200 |
 | Elite (L4) | 400 |
 
-> Superseded: an earlier model used **Grade A / B / RA** with per-skill multipliers. Current model
-> is Gold / Silver / Try-Again with fixed Miles per level (above).
+> Exact Mile values per level & medal live in the internal skill-level and badge tables. Superseded: an
+> earlier model used **Grade A / B / RA** with per-skill multipliers; current model is Gold / Silver / Try-Again.
 
----
-
-## 4. Skills & Levels catalogue
+## 8. Skills & Levels catalogue
 
 Gold Miles per level. "Locked" levels open progressively.
 
@@ -109,11 +118,9 @@ Gold Miles per level. "Locked" levels open progressively.
 | Data Intelligence | 10 | 40 | — | — | L1 analytics workflow, data cleaning, Power BI/Tableau/Excel, descriptive · L2 advanced viz, data modeling (star schema), DAX, storytelling |
 | Physical AI | 20 | 80 | 200 🔒 | 400 🔒 | L1 Linux/ROS2, robot modelling/maths, Gazebo, SLAM, nav, CV, embedded · L2 advanced ROS2, ros2_control, MoveIt2, path planning, sensor fusion · L3/L4 Locked |
 | Human Skills for the AI Era | 10 🔒 | 40 🔒 | — | — | Locked |
-| Quantitative Finance Foundations | 20 🔒 | 80 🔒 | 200 🔒 | — | Locked |
+| Quantitative Finance Foundation | 20 🔒 | 80 🔒 | 200 🔒 | — | Locked |
 
----
-
-## 5. Contest formats & score bands
+## 9. Contest formats & score bands
 
 Pattern · duration · band → medal (Gold / Silver / Try-Again). Syllabus + sample questions live in
 the Assessments workbook (not reproduced — they change as the question bank evolves).
@@ -139,76 +146,54 @@ the Assessments workbook (not reproduced — they change as the question bank ev
 | DS & ML L1 | MCQs + Coding | 90 min | 90–100 / 85–89.99 / 0–84.99 |
 | Physical AI L1 | MCQs + Coding | 90 min | 85–100 / 70–84.99 / 0–69.99 |
 
----
+## 10. Certifications — tracks & badges
+A **Track Badge** is earned by clearing a defined skill+level combination **plus a Level Clearance
+Interview**. Badges are **sequential (no skipping)**: **Novice → Specialist → Expert → Elite → Legend**.
 
-## 6. Certifications — tracks & badges
+**Tracks:** AI Product Mastery · AI Systems Mastery · AI Models Mastery · AI Robotics Mastery (more TBA).
+(AI Models & AI Robotics badge matrices still being finalised.)
 
-Certifications ("Tracks") sit above individual skills: earned by clearing a defined skill+level
-combination **plus a mandatory interview where applicable**. Badges are **sequential (no skipping)**,
-Novice → Grand Master.
+**Badge → indicative salary band (master doc; internal):** Novice 3.5–6 · Specialist 6–12 ·
+Expert 12–18 · **Elite** 18–25 · **Legend** 25+ LPA.
 
-**Track types:** AI Product Mastery · AI Systems Mastery · AI Models Mastery · AI Robotics Mastery
-(Physical AI) · more TBA. (AI Models & AI Robotics matrices still being finalised.)
+**Track composition (skill levels per badge):**
+- *AI Product Mastery* — **Novice**: Computational Thinking L1, CS Fundamentals L1, Applied Gen AI L1, UI Engineering L2. **Specialist**: CT L2, CS Fund L1, Gen AI L2, UI Eng L2, Server-Side Engineering L1, SQL L1. **Expert**: + System Design L1. Elite / Legend: TBD.
+- *AI Systems Mastery* — **Novice**: CT L1, CS L1, GenAI L1, Quant Reasoning L1, Critical Thinking L2 · **Specialist**: CT L2, CS L1, GenAI L2, Quant L1, CritThink L2 · **Expert**: CT L3, CS L2, GenAI L3, System Design L1, Quant L1, CritThink L2 · **Elite**: CT L4, CS L2, GenAI L4, Quant L1, CritThink L2 · Legend: TBD.
 
-**Badge → indicative salary band (internal):** Novice 3.5–6 · Specialist 6–12 · Expert 12–18 ·
-Master 18–25 · Grand Master 25+ LPA.
+Expert / Elite / Legend badges are **Locked**, unlocked progressively.
 
-**Track composition (skill levels required per badge):**
+## 11. Bonus Miles — external achievements (verified)
+Beyond contests, eligible students earn Bonus Miles by proving skills on recognised external
+platforms; achievements are **verified** (e.g. CP ratings via an offline proctored test).
+- **Competitive programming** — indicative **Codeforces**: Newbie (<1200, ≥2 problems attempted) **20** · Pupil (≥1200) **80** · Specialist (≥1400) **200** · Expert (≥1600) **400** · Candidate Master (≥1900) **higher**. Also CodeChef and LeetCode rating milestones.
+- **Physical AI & Robotics** — national competitions like **Smart India Hackathon (SIH)** and **VBYLD (Design for Bharat)**; finalists/winners score significantly.
+- **Hackathons & more** — recognised national/international hackathons across AI, tech, engineering.
 
-*AI Product Mastery* — Novice: Comp.Thinking L1, CS Fund L1, GenAI L1, UI Eng L2 · Specialist:
-CT L2, CS L1, GenAI L2, UI L2, Backend L1, SQL L1 · Expert: System Design L1 · Master / Grand
-Master: TBD (rows empty in source).
+*A Bonus-Miles framework for external co-curricular achievements (stipend internships, paid freelancing,
+hackathon wins) is being aligned with the Student Success and Assessment/Outcomes heads before finalisation.*
 
-*AI Systems Mastery* — Novice: CT L1, CS L1, GenAI L1, Quant Reasoning L1, Critical Thinking L2 ·
-Specialist: CT L2, CS L1, GenAI L2, Quant L1, CritThink L2 · Expert: CT L3, CS L2, GenAI L3, SysDesign
-L1, Quant L1, CritThink L2 · Master: CT L4, CS L2, GenAI L4, Quant L1, CritThink L2 · Grand Master: TBD.
+## 12. Operational & product context (internal)
+- **GRIT Dashboard** — built on **Replit**; owns Miles calculation, leaderboard ranking, contest eligibility, and Bonus-Miles verification. *It lives OUTSIDE the learning portal — integration talks should be clear about which system owns which calculation.*
+- **Contest ops** — run across campuses via **SEB (Secure Exam Browser)**; a WhatsApp ops group handles real-time escalations. Recurring issues: access/provisioning failures, SEB stability/security, coding-environment defects.
+- **Malpractice** — IP-anomaly + SEB malicious-pattern flags, auto-flagging, invigilator incentives, a student appeal process, and post-contest risk-scoring.
+- **GRIT Awards** — campus-level Student-of-the-Year + centrally administered category awards (single self-nomination form).
+- **Coordination** — campus **SPOCs**; scoped to batches 2023/24/25. Roadmap: Dashboard product hire, GRIT Awards execution, a student-dashboard Milestones tab, and finalising the Bonus-Miles framework.
 
-Expert/Master/Grand-Master badges are **Locked**, unlocked progressively.
+## 13. Companion programmes (context)
+GRIT sits in a wider NIAT ecosystem: **MINT** (Monetise Intelligence and Talent — earn per project on
+real business problems · mint.niatindia.com) · **BRAVE** (Boosting Revenue through AI Value Engineering
+— teams build AI solutions for SMB clients and generate revenue · brave.niatindia.com) · **SPARK**
+(creator programme — win by crossing follower/revenue thresholds).
 
----
-
-## 7. Additional ways to earn Miles
-
-All require verification — typically an equivalent NxtWave **offline proctored test** — before Miles credit.
-
-**Competitive programming:** Codeforces Pupil ≥1200 → 80 · Specialist ≥1400 → 200 · Expert ≥1600 →
-400 · Candidate Master ≥1900 → 1000 (requires Problem-Solving L1). CodeChef 1★→6★ = 20/40/80/200/400/1000.
-LeetCode 1600 → 40 · 1800/2000/2200/2400 → 80/200/400/1000 (sustain 3 consecutive contests).
-
-**Hackathons (finalist / winner):** SIH National 150/200 · VBYLD / Design for Bharat 150/200 ·
-NIAT Makers Conclave 100/150.
-
-**Ticket to Finale (skip the leaderboard):** ICPC Regionals selection · GSoC selection · raising
-capital / renowned incubator or accelerator.
-
-**WIP avenues:** Open Source, Entrepreneurship, Content Creation, AI-led perf marketing, UI/UX —
-Miles values being designed; proofs required.
-
----
-
-## 8. Governance & rollout (internal)
-
-Scale: ~1,000 students / 6 cohorts (~167 each) · 1:12 staffing (~84 staff) · ~₹20 cr. Owners (GRIT
-POD, working assignments): Overall SJ · Program Design SG & SJ · Assessment Design + Leaderboard
-formula SG · Assessment Ops Srikar & PD · Perf monitoring VT & PD · Engineering Gayathri · Data &
-Analytics Sagar (TBC).
-
-Rollout phases: 1 Announcement → 2 Registrations → 3 Mini Contests (warm-up) → 4 First Assessments
-(go-live from March) → 5 Surprise Elements → 6 Final Winner Announcement.
-
-Engagement mechanics: physical certificates per level; group penalties/rewards; batch-wise
-leaderboards; first-50 / early-mover + on-time-registration bonus Miles; UGC / viral-video campaigns.
-
----
-
-## 9. Known conflicts & open items (flag these, don't state one side as settled)
-
-- **Seat split** — confirmed **2 / 132 / 866**. Workbooks also cite a **10 : 988 : 6502** weighting
-  and an earlier **500 / 500** leaderboard-vs-lucky-draw split. Use 2/132/866; the others are superseded.
-- **Placement benchmark** — public write-up: "crack at least entry-level Tech roles"; workbook:
-  "crack at least **3.5 LPA**." Treat the LPA figure as an **internal benchmark**, not a published promise.
-- **Medals** — Gold/Silver/Try-Again is current; **Grade A/B/RA** with multipliers is legacy.
-- **Locked / TBU** — Server-Side L2 duration TBU; ~10 Locked levels; AI Models & AI Robotics track
-  matrices unfinished; Grand Master rows empty in both defined tracks.
-- **Naming / indicative** — "Lucky Draw" label may change; destinations, dates, budget, role names,
-  and ownership are indicative and subject to revision.
+## 14. Known changes & open items (flag these — don't state one side as settled)
+- **"Lucky Draw" is superseded.** The 16 Jul briefer replaces the old "Top-of-Leaderboard + Lucky Draw"
+  seats model with the **three ways to win** (leaderboard / Ticket to Finale / surprises) and the
+  **Pre-Qualiflyers / Qualiflyers** tiers. Don't cite Lucky Draw as current.
+- **Badge names changed** — Novice → Specialist → Expert → **Elite → Legend** (was …Master → Grand
+  Master). "Grand Master" is the old/informal label.
+- **Seat split (2 / 132 / 866; 1,000 seats)** — from the master doc; the briefer doesn't restate it.
+  (Workbooks also cited 10:988:6502 and a 500/500 split — superseded.) Treat as indicative.
+- **Salary bands** (Novice 3.5–6 … Legend 25+) — master-doc internal figures, mapped to the new badge
+  names. Placement benchmark: "entry-level tech roles" / "3.5 LPA" — internal, not a published promise.
+- **Locked / TBD** — Server-Side L2 duration TBU; several Locked levels; AI Models & AI Robotics badge
+  matrices unfinished; Elite/Legend rows TBD in the defined tracks.
