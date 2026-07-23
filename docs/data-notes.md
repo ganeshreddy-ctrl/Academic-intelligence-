@@ -23,6 +23,7 @@ contract is in `planning-method.md`.
 - **Subjects:** 20 canonical `nxtwave_tag`s. **Designed HLID plans:** 16 universities in `course_plan_vs_actual` (**code `NIATCH` = NIAT Chevella**). Derived planning (`academic_plan_derived`) covers all 17.
 - **Content:** ingested (`course_content`) for ~13 course names; catalogue (`reading/objective/coding/editorials`) for ~15. **Editorials** = DSA coding-question solutions, in `content_all` as `kind='editorial'`. **Feedback:** 6,945 rated sessions (empties removed; every row has a `session_id`).
 - **Known linkage gaps — caveat these in answers:** Session→Scheduling links **~85%** (fuzzy bridge; 15% unmatched). Only **~70%** of delivered curriculum courses map to a subject (mostly Sem-3/4). Content exists for a minority of delivered units. 8 subjects have no content yet. Absence usually means *not covered/ingested*, not *zero*.
+- **Semester coverage — which layers reach which semester (caveat Sem 3/4):** `delivered_niat`, `academic_plan_derived`, and `college_summary` cover **all 4 semesters**. But `delivered_sessions` / `session_link` / **feedback** / **content** stop at **Sem 1+2** — the fuzzy bridge collapses to **~5% (Sem 3), 0% (Sem 4)** — so **Sem 3/4 have no feedback, content, or unit-level joins**; those queries return empty, not error. Designed plans (`course_plan_vs_actual`, `deviation`, `designed_sequence`) are **Sem 1 only**; `subject_tags` is Sem 1+2 (Sem 3 sparse, Sem 4 none). For a Sem 3/4 question, answer from `delivered_niat` / `academic_plan_derived` and **say feedback/content/designed-plan aren't available for that semester** — don't imply zero. (A stray Jun–Jul 2026 tail of ~5k sessions can skew min/max date windows; prefer explicit semester filters.)
 
 ## Table meanings and grain
 
@@ -36,7 +37,7 @@ contract is in `planning-method.md`.
 | `deviation` | one row per university×unit | Pre-solved designed↔delivered join. Use this rather than re-deriving it. |
 | `session_link` | one row per delivered_niat session | **The bridge between the two delivery tables.** `delivered_niat` (course + instructor + status) has no session_id/unit_id; `delivered_sessions` (session_id + unit_id + feedback link) has no course/instructor. This LEFT JOINs them on institute + session_title + start-minute, adding `session_id`, `unit_id`, and a `linked` flag (~76% match). Use it to connect a course/instructor session to its scheduling, feedback (by session_id), and content (by unit_id). Unmatched rows have `linked=false` — the gap is real, not hidden. |
 | `academic_plan_derived` | one row per (institute, semester, course) | **Planning-style metrics derived from delivery, for ALL universities** (designed plans exist for 16). `sessions_per_section` counts **lecture (teaching) sessions** per section — the same basis as the HLID's planned session count (planned ≈ lectures), so it matches `course_plan_vs_actual.actual_lectures_per_section`; also teaching_weeks, first/last_session, start_slip_days, pct_completed. This is the universal "plan" layer; `course_plan_vs_actual` is the real *designed* plan for the 16 with HLID/Prod data. |
-| `college_summary` | one row per college | **At-a-glance health per college** — sections, courses, scheduled_sessions, pct_completed, teaching_weeks, first/last_session, avg_understanding, avg_teaching, recorded_issues, has_designed_plan. Use for "how is X doing", "compare colleges", "which college is struggling". Semester 1. |
+| `college_summary` | one row per college × **semester** | **At-a-glance health per college** — sections, courses, scheduled_sessions, pct_completed, teaching_weeks, first/last_session, avg_understanding, avg_teaching, recorded_issues, has_designed_plan. Use for "how is X doing", "compare colleges", "which college is struggling". Covers **all semesters (1–4)** — filter `WHERE semester=…` for one. Feedback `avg_*` NULL for Sem 3/4 (feedback is Sem 1+2); `has_designed_plan` true only for Sem 1. |
 | `course_plan_vs_actual` | one row per university×course | **Pre-solved plan-vs-delivery, already per-section.** Use this for any "how did the plan hold up / give me a better plan" question. |
 
 ## ⚠️ `designed_course_plan.is_submodule` — read before summing anything
@@ -148,10 +149,10 @@ Good ratings (4+) alongside heavy slippage ⇒ **planning** problem: fix the HLI
 
 **"How is college X doing / compare colleges / which is struggling?"**
 ```sql
-SELECT * FROM college_summary ORDER BY pct_completed;          -- struggling first
-SELECT * FROM college_summary WHERE institute_name = 'Aurora University';
+SELECT * FROM college_summary WHERE semester='Semester 1' ORDER BY pct_completed;   -- one semester, struggling first
+SELECT * FROM college_summary WHERE institute_name = 'Aurora University' ORDER BY semester;  -- a college across its semesters
 ```
-One row per college, pre-joined: completion %, ratings, teaching weeks, recorded issue count, whether it has a plan. Lead with the ranked answer; don't turn a comparison into a full diagnosis of each.
+One row per college × **semester**, pre-joined: completion %, ratings, teaching weeks, recorded issue count, whether it has a plan. **Filter to one `semester` before ranking**, or you compare across semesters. Feedback ratings (`avg_*`) are **NULL for Sem 3/4** (feedback is Sem 1+2). Lead with the ranked answer; don't turn a comparison into a full diagnosis of each.
 
 **"What issues did college X have / what went wrong for them (recorded)?"**
 ```sql

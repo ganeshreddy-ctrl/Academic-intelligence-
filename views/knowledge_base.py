@@ -70,7 +70,7 @@ def render():
                    "Scheduling → Content unit → Content · Feedback")
 
     colleges = [r[0] for r in con.execute(
-        "SELECT institute_name FROM college_summary ORDER BY 1").fetchall()]
+        "SELECT DISTINCT institute_name FROM college_summary ORDER BY 1").fetchall()]
     if not colleges:
         st.info("No colleges with delivery data found.")
         return
@@ -261,6 +261,9 @@ def render():
             st.caption("**Delivery** — ✓ delivered (same name) · *delivered as '…'* (same subject, different "
                        "name) · *not delivered*. **Actual/section** = lecture sessions delivered per section; "
                        "**Gap** = actual − planned (+ over-delivered, − under).")
+        elif designed and sem != "Semester 1":
+            st.caption("ℹ️ Designed-plan (HLID) comparison is available for **Semester 1 only** — designed "
+                       "data covers Sem 1. The derived-from-delivery table above still applies to this semester.")
 
     # 5) ALIGNMENT : how well each link in the chain holds
     with tabs[4]:

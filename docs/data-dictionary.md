@@ -140,7 +140,7 @@ The 63-course catalogue across 11 stacks. `stack`, `course_title`, `course_ids`,
 | **`session_feedback_safe`** | 8,529 | Agent-facing feedback (ratings only, no comment text). |
 | **`content_all`** | 33,213 | Unified content across the catalogue tables (reading/objective/coding/**editorial**) + `course_content`, keyed by `course` + `unit_id`. Use this for "what content exists". |
 | **`content_units`** | 20,745 | Distinct content `unit_id` ↔ `course_title`. |
-| **`college_summary`** | 17 | One row per real college: sections, courses, completion, avg ratings, recorded_issues, has_designed_plan. The "how is X doing" table. |
+| **`college_summary`** | 39 | One row per real college × **semester** (all 4): sections, courses, completion, avg ratings, recorded_issues, has_designed_plan. The "how is X doing" table. Feedback NULL for Sem 3/4; filter `WHERE semester=…`. |
 | **`delivered_sections`** | 239,676 | Section-normalised scheduling. |
 | **`deviation`** | 24,813 | Unit-level planned_start vs actual_start drift (Sem-1 designed unis). |
 

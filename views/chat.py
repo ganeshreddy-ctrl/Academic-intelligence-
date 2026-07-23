@@ -32,11 +32,11 @@ DEFAULT_COLLEGE = "S-VYASA"   # fallback for a starter template with no sample c
 # college, so the landing spans a MIX of colleges instead of the same one everywhere.
 STARTERS = {
     "📋 Plan a semester": [
-        ("Design Semester 1 for {c} based on their past delivery and feedback, fixing the issues they had.", "Aurora University"),
+        ("Design a semester for {c} based on their past delivery and feedback, fixing the issues they had.", "Aurora University"),
         ("Is {c}'s planned course load within the 495-hour AICTE budget?", "Malla Reddy Vishwavidyapeeth"),
     ],
     "🔍 Diagnose a college": [
-        ("What went wrong for {c} in Semester 1? Combine the recorded issues and what the delivery data shows.", "Chaitanya Deemed-to-be University"),
+        ("What went wrong for {c}? Combine the recorded issues and what the delivery data shows.", "Chaitanya Deemed-to-be University"),
         ("Which {c} courses were delivered late or under-delivered versus plan?", "S-VYASA"),
     ],
     "📚 Look up the data": [

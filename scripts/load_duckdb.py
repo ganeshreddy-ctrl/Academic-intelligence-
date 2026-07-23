@@ -251,13 +251,16 @@ def build(db="data/aip.duckdb", verbose=True):
                   FROM editorials e JOIN coding_questions cq ON cq.question_id = e.question_id
         UNION ALL SELECT course, kind, unit_id, 'ingested' FROM course_content""")
 
-    # college_summary: one row per college — the at-a-glance health view. Powers the
+    # college_summary: one row per (college, SEMESTER) — the at-a-glance health view. Powers the
     # copilot's most common questions ("how is X doing", "compare colleges", "which is
     # struggling") so it doesn't reassemble the same 4-table join every time.
-    # Semester 1. Only is_scheduled sessions count toward completion.
+    # Covers ALL semesters delivery data spans (1-4). Only is_scheduled sessions count toward
+    # completion. Feedback columns are NULL for Sem 3/4 — feedback links via session_id, which
+    # only exists in delivered_sessions (Sem 1+2); has_designed_plan is true only for Sem 1
+    # (designed data is Sem-1 only). Filter on `semester` for a single-semester snapshot.
     con.execute("""CREATE VIEW college_summary AS
         WITH d AS (
-            SELECT institute_name,
+            SELECT institute_name, semester,
                    count(DISTINCT section_name)                          AS sections,
                    count(DISTINCT course_title)                          AS courses,
                    count(*) FILTER (WHERE is_scheduled)                  AS scheduled_sessions,
@@ -267,29 +270,35 @@ def build(db="data/aip.duckdb", verbose=True):
                    max(start_ts) FILTER (WHERE is_scheduled)::DATE       AS last_session,
                    count(DISTINCT date_trunc('week', start_ts)
                          ) FILTER (WHERE is_scheduled)                   AS teaching_weeks
-            FROM delivered_niat WHERE semester='Semester 1' GROUP BY 1
+            FROM delivered_niat GROUP BY 1, 2
         ),
+        -- feedback carries no semester; recover it via the session_id -> semester map in
+        -- delivered_sessions (Sem 1+2 only), so Sem 3/4 correctly get NULL ratings.
+        sem_of AS (SELECT DISTINCT session_id, semester FROM delivered_sessions),
         f AS (
-            SELECT institute_name,
-                   round(avg(TRY_CAST(session_understanding_rating AS DOUBLE)), 2) AS avg_understanding,
-                   round(avg(TRY_CAST(teaching_quality_rating AS DOUBLE)), 2)      AS avg_teaching,
-                   count(*)                                              AS rated_sessions
-            FROM session_feedback_safe GROUP BY 1
+            SELECT sf.institute_name, s.semester,
+                   round(avg(TRY_CAST(sf.session_understanding_rating AS DOUBLE)), 2) AS avg_understanding,
+                   round(avg(TRY_CAST(sf.teaching_quality_rating AS DOUBLE)), 2)      AS avg_teaching,
+                   count(DISTINCT sf.session_id)                         AS rated_sessions
+            FROM session_feedback_safe sf
+            JOIN sem_of s ON s.session_id = sf.session_id
+            GROUP BY 1, 2
         ),
         i AS (SELECT institute_name, count(DISTINCT issue_id) AS recorded_issues FROM issues GROUP BY 1)
-        SELECT d.institute_name, d.sections, d.courses, d.scheduled_sessions, d.pct_completed,
+        SELECT d.institute_name, d.semester, d.sections, d.courses, d.scheduled_sessions, d.pct_completed,
                d.teaching_weeks, d.first_session, d.last_session,
                f.avg_understanding, f.avg_teaching, coalesce(f.rated_sessions, 0) AS rated_sessions,
                coalesce(i.recorded_issues, 0) AS recorded_issues,
-               (u.code IS NOT NULL) AS has_designed_plan
+               (u.code IS NOT NULL AND d.semester = 'Semester 1') AS has_designed_plan
         FROM d
-        LEFT JOIN f USING (institute_name)
-        LEFT JOIN i USING (institute_name)
+        LEFT JOIN f ON f.institute_name = d.institute_name AND f.semester = d.semester
+        LEFT JOIN i ON i.institute_name = d.institute_name
         LEFT JOIN universities u ON u.institute_name = d.institute_name
         -- real colleges only: drop internal distribution/training/ops entries
         WHERE d.scheduled_sessions > 100
           AND d.institute_name NOT ILIKE '%DC'
-          AND d.institute_name NOT IN ('Training Institute', 'Program_Ops')""")
+          AND d.institute_name NOT IN ('Training Institute', 'Program_Ops')
+        ORDER BY d.institute_name, d.semester""")
 
     # session_link: the fuzzy bridge reconnecting the two delivery tables that share no
     # key. delivered_niat (course + instructor + status) has no session_id/unit_id;
