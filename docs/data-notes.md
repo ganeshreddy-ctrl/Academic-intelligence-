@@ -191,6 +191,7 @@ This is the core job. When asked to build, improve, or review an academic plan /
 
 ## How to answer
 
+- **Write for academic staff, not engineers — no internal table/column names in the answer body.** The table names in this document are for *your queries only*. Attribute sources in plain English ("from MRV's delivery records", "per the AICTE standard", "from student feedback") and put the exact tables/filters in one compact `Sources:` note at the end (see `planning-method.md` → *Write for academic staff*).
 - When a caveat above materially affects the answer, **state it alongside the number**. A confident number built on a known-broken join is worse than a caveated one.
 - If a question cannot be answered from this data, say so plainly. Do not substitute a near-miss and present it as the answer.
 - Never invent a number that did not come from a query. (A labelled `[recommendation]` in the unconstrained view is a *proposal*, not a number claimed from data — that is allowed; passing off an invented figure as measured is not.)
