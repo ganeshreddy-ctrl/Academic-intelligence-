@@ -1,4 +1,5 @@
-streamlit>=1.40
+streamlit>=1.42
+Authlib>=1.3.2
 duckdb>=1.1
 requests>=2.32
 markdown>=3.5

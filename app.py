@@ -13,6 +13,8 @@ from views import chat, knowledge_base, pipeline
 
 st.set_page_config(page_title="NIAT Learning Copilot", page_icon="🎓", layout="wide")
 
+dashboard.require_login()   # Google OIDC gate — Nxtwave accounts only; renders before any page
+
 dashboard.db_path()      # build the DB once per boot (cached)
 dashboard.inject_css()
 

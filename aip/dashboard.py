@@ -81,6 +81,47 @@ def account(_key):
     return agent.account_usage(_key)
 
 
+_ALLOWED_DOMAINS = ("@nxtwave.co.in", "@nxtwave.tech")
+
+
+def require_login():
+    """Google OIDC gate — only verified Nxtwave accounts pass. Renders the login
+    screen and st.stop()s for everyone else. Call before st.navigation so no page
+    or sidebar leaks to anonymous users. `str.endswith` accepts a tuple."""
+    if st.user.is_logged_in:
+        email = (st.user.email or "").lower()
+        if st.user.get("email_verified") and email.endswith(_ALLOWED_DOMAINS):
+            return
+        _login_screen(denied=st.user.email or "That account")
+    else:
+        _login_screen()
+    st.stop()
+
+
+def _login_screen(denied=None):
+    st.markdown("""<style>
+      header[data-testid="stHeader"], footer { display: none; }
+      .stApp { background: radial-gradient(1200px 600px at 50% -10%, #e8f0fe 0%, #ffffff 55%); }
+      .login-card { text-align: center; padding: 2.2rem 1.6rem; border: 1px solid #e6e8eb;
+        border-radius: 16px; background: #fff; box-shadow: 0 10px 30px rgba(20,40,80,.08); }
+      .login-card .logo { font-size: 3rem; line-height: 1; }
+    </style>""", unsafe_allow_html=True)
+    _, mid, _ = st.columns([1, 1.1, 1])
+    with mid:
+        st.markdown("<div class='login-card'>", unsafe_allow_html=True)
+        st.markdown("<div class='logo'>🎓</div>", unsafe_allow_html=True)
+        st.markdown("### NIAT Learning Copilot")
+        st.caption("Internal tool · Nxtwave staff only")
+        if denied:
+            st.error(f"{denied} isn't a Nxtwave account.")
+            st.button("Try another account", on_click=st.logout, use_container_width=True)
+        else:
+            st.button("Continue with Google", on_click=st.login,
+                      type="primary", icon=":material/login:", use_container_width=True)
+        st.caption("Access limited to @nxtwave.co.in and @nxtwave.tech")
+        st.markdown("</div>", unsafe_allow_html=True)
+
+
 def inject_css():
     """Light visual polish — Streamlit is templated by default."""
     st.markdown("""<style>
