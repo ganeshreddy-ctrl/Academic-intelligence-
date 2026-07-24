@@ -45,9 +45,15 @@ INSTITUTE = {
 }
 
 # raw header -> snake_case column (order preserved for the output).
+# Two-level hierarchy: `subject` (the name — 22 values) is the human label; a subject can
+# span several `course_id`s (27 values), the precise NxtWave course UUID (dash-less 32-hex).
+# `Course Name` is dropped (it equals `Subject` in every row). `course_id` resolves to
+# subject_tags.course_id / courses.course_ids for ~60% of courses (see data-notes).
 COLS = {
     "University": "university",
     "Semester": "semester",
+    "Subject": "subject",
+    "Course ID": "course_id",
     "Batch": "batch",
     "Section": "section",
     "Number of Sections": "num_sections",
@@ -72,7 +78,7 @@ COLS = {
     "Coding Completion %": "coding_completion_pct",
 }
 
-WS_COLS = {"university", "semester", "batch", "section"}  # collapse odd whitespace on keys
+WS_COLS = {"university", "semester", "subject", "batch", "section"}  # collapse odd whitespace on keys
 
 
 def norm_ws(s):

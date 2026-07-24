@@ -148,6 +148,14 @@ def student_perf_rollups():
     _, miss, _ = db.run_sql("""SELECT count(*) FROM (SELECT DISTINCT institute_name FROM student_perf_by_college) s
         WHERE institute_name NOT IN (SELECT institute_name FROM college_summary)""", con)
     assert miss[0][0] == 0, "a student_perf college is missing from college_summary — crosswalk broke"
+    # subject/course levels: 22 subjects, 27 course_ids, rates still in range
+    _, s, _ = db.run_sql("SELECT count(DISTINCT subject) FROM student_perf_by_subject", con)
+    assert s[0][0] == 22, f"by_subject has {s[0][0]} subjects (expect 22)"
+    _, c, _ = db.run_sql("SELECT count(DISTINCT course_id) FROM student_perf_by_course", con)
+    assert c[0][0] == 27, f"by_course has {c[0][0]} course_ids (expect 27)"
+    _, b2, _ = db.run_sql("""SELECT count(*) FROM student_perf_by_subject
+        WHERE mcq_accuracy_pct NOT BETWEEN 0 AND 100 OR coding_completion_pct NOT BETWEEN 0 AND 100""", con)
+    assert b2[0][0] == 0, "by_subject rate out of [0,100]"
 
 
 def derived_plan_excludes_noise():

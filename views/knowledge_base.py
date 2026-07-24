@@ -74,7 +74,7 @@ digraph model {
     FB  [label="session_feedback_safe" fillcolor="#e8f5e9"];
     INS [label="instructor_sessions" fillcolor="#e8f5e9"];
     ISS [label="issues" fillcolor="#e8f5e9"];
-    SP  [label="student_performance\\n(mcq · coding)" fillcolor="#e8f5e9"];
+    SP  [label="student_performance\\n(mcq · coding, per course)" fillcolor="#e8f5e9"];
   }
   subgraph cluster_derived {
     label="Derived views"; style=rounded; color="#b0bec5"; fontsize=9;
@@ -114,6 +114,7 @@ digraph model {
   ISS  -> DN   [label="institute_name"];
   INS  -> DN   [label="instructor_name"];
   U    -> SP   [label="institute_name + semester + section"];
+  SP   -> ST   [label="course_id (~60%)" style=dashed];
   DS   -> DSEC;
   XW   -> DN   [label="normalises names" style=dashed];
 }
@@ -127,7 +128,8 @@ KEY_LEGEND = [
     ("universities.code ↔ institute_name", "designed layer ↔ delivered layer", "HLID uses codes; delivery uses full names."),
     ("nxtwave_tag", "subject ↔ content", "subject_tags → tag_content_map → content_all."),
     ("session_link (fuzzy)", "delivered_niat ↔ delivered_sessions", "No shared id — matched on institute+title+time (~85%)."),
-    ("institute_name + semester + section", "student performance ↔ delivery/feedback", "Per-section MCQ/coding; many rows/section, no course key — aggregate first."),
+    ("institute_name + semester + section", "student performance ↔ delivery/feedback", "Per-section MCQ/coding; each row a course (course_id)."),
+    ("course_id (partial)", "student performance → subject_tags / courses", "NxtWave course UUID; resolves to the catalogue subject/content for ~60% of courses."),
 ]
 
 
@@ -484,22 +486,28 @@ def render():
         else:
             st.info(f"No feedback recorded for {uni} in {sem}.")
 
-    # 7) STUDENT PERFORMANCE — MCQ & coding practice, rolled up per section from the
-    # un-keyed raw rows (rates recomputed from summed counts; attendance practice-weighted).
+    # 7) STUDENT PERFORMANCE — MCQ & coding practice. Each raw row is a course (course_id)
+    # that ran in a section; rates are recomputed from summed counts at every level
+    # (subject / section / college); attendance is a practice-weighted average.
     with tabs[6]:
-        st.caption("ℹ️ **How this is computed** — the MCQ/coding practice rows for this college & semester "
-                   "(student_performance) are many-per-section with no course key, so we sum the counts per "
-                   "section and recompute each rate (attempt, accuracy, completion); attendance is a "
-                   "practice-weighted average. Linked on institute_name + semester + section.")
+        st.caption("ℹ️ **How this is computed** — each practice row is a course (its NxtWave course_id) that "
+                   "ran in a section; we sum the counts and recompute every rate (attempt, accuracy, completion) "
+                   "at each level, attendance as a practice-weighted average. **Subject** = the 22 course names; "
+                   "a subject can span several course_ids. Linked on institute_name + semester + section.")
         tot = con.execute("""SELECT students, mcq_attempts, mcq_accuracy_pct, mcq_attendance_pct,
                    coding_attempts, coding_completion_pct
             FROM student_perf_by_college WHERE institute_name=? AND semester=?""", [uni, sem]).fetchone()
+        subs = con.execute("""SELECT subject, scheduled_mcq, mcq_attempts, mcq_attempt_pct,
+                   mcq_accuracy_pct, mcq_attendance_pct, scheduled_coding, coding_attempts,
+                   coding_completion_pct, coding_attendance_pct
+            FROM student_perf_by_subject WHERE institute_name=? AND semester=? ORDER BY subject""",
+            [uni, sem]).fetchall()
         rows = con.execute("""SELECT section, students, scheduled_mcq, mcq_attempts, mcq_attempt_pct,
                    mcq_accuracy_pct, mcq_attendance_pct, scheduled_coding, coding_attempts,
                    coding_completion_pct, coding_attendance_pct
             FROM student_perf_by_section WHERE institute_name=? AND semester=? ORDER BY section""",
             [uni, sem]).fetchall()
-        if tot and rows:
+        if tot and (subs or rows):
             k = st.columns(3)
             k[0].metric("MCQ accuracy", f"{_flag(tot[2] or 0)} {tot[2] or 0}%",
                         help="Correct ÷ attempted, summed across the semester.")
@@ -507,6 +515,13 @@ def render():
                         help="Problems completed ÷ attempted, summed across the semester.")
             k[2].metric("Avg attendance (MCQ)", f"{tot[3] or 0}%",
                         help="Practice-weighted mean of per-practice attendance.")
+            st.markdown("**By subject** — MCQ/coding across all sections of each subject")
+            st.dataframe([{
+                "Subject": r[0], "MCQ practices": r[1], "MCQ attempts": r[2], "MCQ attempt %": r[3],
+                "MCQ accuracy %": r[4], "MCQ attendance %": r[5], "Coding practices": r[6],
+                "Coding attempts": r[7], "Coding completion %": r[8], "Coding attendance %": r[9]}
+                for r in subs], width="stretch", hide_index=True)
+            st.markdown("**By section**")
             st.dataframe([{
                 "Section": r[0], "Students": r[1],
                 "MCQ practices": r[2], "MCQ attempts": r[3], "MCQ attempt %": r[4],
@@ -515,6 +530,7 @@ def render():
                 "Coding completion %": r[9], "Coding attendance %": r[10]} for r in rows],
                 width="stretch", hide_index=True)
             st.caption("Attendance is a practice-weighted average (a per-practice student count, not additive). "
-                       "Blank rates mean no attempts were recorded for that section.")
+                       "Blank rates mean no attempts were recorded there. Per-course (course_id) detail is in "
+                       "student_perf_by_course.")
         else:
             st.info(f"No MCQ/coding practice data for {uni} in {sem}.")

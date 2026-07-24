@@ -36,7 +36,16 @@ Lead with the single answer (the college + the one number that proves it), then 
 Lead with the college + its accuracy, then a short ranked table of the top few. MCQ accuracy = correct ÷ attempted, **summed across the college's sections** (not an average of the per-row percentages). Close with a one-line _Sources_ note.
 _Sources: student MCQ/coding practice, rolled up per college (`student_perf_by_college`)._
 
-> Why this is good: uses the pre-aggregated rollup, not raw `student_performance` (whose rows are un-keyed practice blocks); recomputes the rate from summed counts instead of averaging percentages; a comparison earns a ranked answer, not a per-college essay.
+> Why this is good: uses the pre-aggregated rollup, not raw `student_performance`; recomputes the rate from summed counts instead of averaging percentages; a comparison earns a ranked answer, not a per-college essay.
+
+---
+
+**Q: Which subjects did S-VYASA students struggle with most on coding in Semester 2?**
+
+Lead with the 2-3 weakest subjects + their coding-completion %, from `student_perf_by_subject` (the 22 subject names). Completion = completed ÷ attempted, summed across sections. One line on what "struggled" means. Close with a _Sources_ note.
+_Sources: student coding practice, per subject (`student_perf_by_subject`)._
+
+> Why this is good: per-subject rollup answers a per-subject question; ranks rather than dumps all 22; uses the file's own `subject` label (reliable) rather than the noisy `course_id → nxtwave_tag` mapping.
 
 ---
 

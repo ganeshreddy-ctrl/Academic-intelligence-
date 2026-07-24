@@ -14,7 +14,8 @@ One picture of how the whole store links up. For per-table structure see
 | **`universities.code ↔ institute_name`** | designed layer ↔ delivered layer | HLID uses short codes (MRV, SGU…); delivery uses full names. |
 | **`nxtwave_tag`** | subject ↔ content | `subject_tags` (local course → tag) → `tag_content_map` (tag → content course) → `content_all`. |
 | **`session_link`** (fuzzy) | `delivered_niat` ↔ `delivered_sessions` | The two delivery tables share **no** id — bridged on institute + session_title + start-minute (~76–85%; ~0% for Sem 3/4). |
-| **`institute_name` + `semester` + `section`** | `student_performance` ↔ delivery/feedback | MCQ/coding practice, per section. Many rows/section, **no course key** — aggregate (`student_perf_by_section`/`_by_college`) and recompute rates. |
+| **`institute_name` + `semester` + `section`** | `student_performance` ↔ delivery/feedback | MCQ/coding practice — one row per section×course (22 subjects, 27 course_ids). Aggregate via the rollups and recompute rates. |
+| **`course_id`** (partial) | `student_performance` → `subject_tags` / `courses` | NxtWave course UUID (dash-less); resolves to the catalogue subject/content for **~60%** of courses — best-effort, sometimes noisy. |
 
 > **Course names never join reliably across layers.** "Web Development" vs "Web Application Development" vs a
 > typo are the same course — normalise with `course_crosswalk` / the `course_key` macros, not raw string match.
@@ -47,7 +48,7 @@ flowchart LR
     FB["session_feedback_safe"]
     INS["instructor_sessions"]
     ISS["issues"]
-    SP["student_performance<br/>(mcq / coding, per section)"]
+    SP["student_performance<br/>(mcq / coding, per course)"]
   end
   subgraph DERIVED["Derived views"]
     SL["session_link<br/>(fuzzy bridge)"]
@@ -85,6 +86,7 @@ flowchart LR
   ISS -->|institute_name| DN
   INS -->|instructor_name| DN
   U -->|institute_name + semester + section| SP
+  SP -.->|course_id ~60%| ST
   DS --> DSEC
   XW -.->|normalises names| DN
 ```

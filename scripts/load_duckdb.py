@@ -373,8 +373,12 @@ def build(db="data/aip.duckdb", verbose=True):
     # (never average a per-row %). Attendance is a per-block student count (not additive)
     # -> practice-weighted mean, surfaced as *_attendance_pct. Links to the rest of the
     # model on institute_name + semester (+ section). Grain differs only in the GROUP BY.
+    # Grains: section & college (as before), plus subject (the 22 names) and course
+    # (the 27 course_ids — a subject can span several). Rates recomputed at every level.
     for _view, _grain in [("student_perf_by_section", "sp.institute_name, sp.semester, sp.section"),
-                          ("student_perf_by_college", "sp.institute_name, sp.semester")]:
+                          ("student_perf_by_college", "sp.institute_name, sp.semester"),
+                          ("student_perf_by_subject", "sp.institute_name, sp.semester, sp.subject"),
+                          ("student_perf_by_course",  "sp.institute_name, sp.semester, sp.subject, sp.course_id")]:
         con.execute(f"""CREATE VIEW {_view} AS
             SELECT {_grain},
                    max(TRY_CAST(sp.students AS BIGINT))                   AS students,

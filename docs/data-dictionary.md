@@ -47,14 +47,16 @@ Joins to scheduling on `session_id`, to content on `unit_ids`.
 
 ## performance/ — student outcomes (MCQ & coding)
 
-### `student_performance` (table · 1,826 rows) — `build_student_performance.py`
-One row per MCQ/coding **practice block**. Grain: college × semester × section, but **many rows
-per section with no course/date key** — a single row is *not* a section total; aggregate.
+### `student_performance` (table · 1,698 rows) — `build_student_performance.py`
+One row per **(college, semester, section, course)** — 22 `subject`s, 27 `course_id`s (a subject can
+span several course_ids). MCQ & coding practice outcomes.
 Key cols: `institute_name` (added via a curated crosswalk so it matches the model), `semester`,
-`section` (`S-0NN`), `students`, and paired MCQ/coding counts (`*_attempts`, `*_expected_attempts`,
-`mcq_correct`, `coding_completions`) plus per-row rates. Links on `institute_name` + `semester` + `section`.
-> Query the **`student_perf_by_section`** / **`student_perf_by_college`** views, not this raw table —
-> they sum the counts and recompute every rate (never average a per-row %).
+`subject`, `course_id` (NxtWave course UUID, dash-less), `section` (`S-0NN`), `students`, and paired
+MCQ/coding counts (`*_attempts`, `*_expected_attempts`, `mcq_correct`, `coding_completions`) + per-row
+rates. Links on `institute_name` + `semester` + `section`; `course_id` resolves to
+`subject_tags.course_id` / `courses.course_ids` for ~60% of courses (best-effort, sometimes noisy).
+> Query the **`student_perf_by_subject` / `_by_course` / `_by_section` / `_by_college`** views, not this
+> raw table — they sum the counts and recompute every rate (never average a per-row %).
 
 ---
 
@@ -157,8 +159,10 @@ The 63-course catalogue across 11 stacks. `stack`, `course_title`, `course_ids`,
 | **`college_summary`** | 33 | One row per real college × **semester** (Sem 1-2; Sem 3/4 out of scope): sections, courses, completion, avg ratings, recorded_issues, has_designed_plan. The "how is X doing" table. Filter `WHERE semester=…`. |
 | **`delivered_sections`** | 239,676 | Section-normalised scheduling. |
 | **`deviation`** | 24,813 | Unit-level planned_start vs actual_start drift (Sem-1 designed unis). |
-| **`student_perf_by_section`** | 143 | Per college × semester × **section** MCQ/coding: summed attempts/correct/completions + recomputed attempt/accuracy/completion %; `*_attendance_pct` = practice-weighted mean. |
-| **`student_perf_by_college`** | 30 | Same MCQ/coding measures rolled to college × semester — for cross-college comparison. |
+| **`student_perf_by_subject`** | 353 | Per college × semester × **subject** (the 22 names) MCQ/coding: summed attempts/correct/completions + recomputed attempt/accuracy/completion %; `*_attendance_pct` = practice-weighted mean. |
+| **`student_perf_by_course`** | 358 | The finer per **course_id** (27) level — same measures. |
+| **`student_perf_by_section`** | 143 | Per college × semester × **section** MCQ/coding, same measures. |
+| **`student_perf_by_college`** | 30 | Rolled to college × semester — for cross-college comparison. |
 
 ---
 
