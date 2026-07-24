@@ -105,7 +105,8 @@ def _login_screen(denied=None):
       header[data-testid="stHeader"], footer { display: none; }
       [data-testid="stAppViewContainer"] {
         background: linear-gradient(160deg,#eaf1ff 0%,#f6f9ff 45%,#ffffff 100%); }
-      .block-container { padding-top: 10vh; max-width: 720px; }
+      .block-container { min-height: 94vh; max-width: 640px; padding-top: 0; padding-bottom: 0;
+        display: flex; flex-direction: column; justify-content: center; }
       .login-hero { text-align: center; margin-bottom: 1.6rem; }
       .login-hero .logo { display:inline-flex; align-items:center; justify-content:center;
         width:96px; height:96px; font-size:3.2rem; border-radius:26px;
