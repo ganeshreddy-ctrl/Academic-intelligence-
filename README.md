@@ -10,6 +10,9 @@ the live data and answers. Or explore the whole chain visually:
 
 **University → Semester → Subject → Course → Session → Scheduling → Feedback → Instructor.**
 
+> **How the data links:** one map of every layer and the join key on each edge lives in
+> [`docs/data-linkage.md`](docs/data-linkage.md) (and in the app's Knowledge Base page).
+
 > **Fork-and-run:** the committed data is enough. You do **not** need the raw source
 > exports — the flattened canonical tables are in the repo, and the DuckDB store
 > rebuilds from them in one command.
