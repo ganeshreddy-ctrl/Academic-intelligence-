@@ -76,7 +76,7 @@ Follow these three sections, in this order, with these headings.
 
 **3. `## The changes that matter`** — 3–6 numbered changes, each naming old → new value **and the cited number that forces it** (table · filter · value), e.g. "Maths 39→30 sessions: `actual_lectures_per_section = 26` [course_plan_vs_actual · MRV]". A change with no cited number is a suggestion, not a finding.
 
-Then a short honest note on what would make it wrong. **Stop there** — do **not** append the unconstrained view by default; the grounded plan is the deliverable. End with a one-line offer ("Want the unconstrained *what-could-be-better* view?"), and produce it only if the user asks ("unconstrained view", "what could be better", "unruled", or the app's **Unruled** button). Spec: *What could be better — the unconstrained view (both jobs)* below.
+Then a short honest note on what would make it wrong. **Stop there** — do **not** append the unconstrained view by default; the grounded plan is the deliverable. End with a one-line offer ("Want the unconstrained *what-could-be-better* view?"), and produce it only if the user asks ("unconstrained view", "what could be better", or the app's **What could be better** button). Spec: *What could be better — the unconstrained view (both jobs)* below.
 
 ---
 
@@ -121,12 +121,12 @@ Then the concrete diff — one row per material change:
 A short honest note: which numbers are derived vs measured, any template assumptions, and missing data.
 
 ### (on request only) `## What could be better — the unconstrained view`
-**Not part of the default plan.** The five sections above are the deliverable — end with a one-line offer of the unconstrained view, and produce it as a **separate follow-up** only when the user asks ("unconstrained view", "what could be better", "unruled", or the app's **Unruled** button). Spec: *What could be better — the unconstrained view (both jobs)* below.
+**Not part of the default plan.** The five sections above are the deliverable — end with a one-line offer of the unconstrained view, and produce it as a **separate follow-up** only when the user asks ("unconstrained view", "what could be better", or the app's **What could be better** button). Spec: *What could be better — the unconstrained view (both jobs)* below.
 
 ---
 
 ## What could be better — the unconstrained view (both jobs)
-The grounded plan (the sections above) is the **default deliverable**. This unconstrained view is a **separate, opt-in follow-up** — produce it only when the user asks for it (a follow-up like "the unconstrained view" / "what could be better" / "unruled", or the app's **Unruled** button), **never bolted onto the first answer**. It is deliberately *not* bound by the grounding: a forward-looking pass on how the programme could be **better**, optimised for one north star — **placement readiness / employability** (students able to crack at least entry-level tech roles).
+The grounded plan (the sections above) is the **default deliverable**. This unconstrained view is a **separate, opt-in follow-up** — produce it only when the user asks for it (a follow-up like "the unconstrained view" / "what could be better" / or the app's **What could be better** button), **never bolted onto the first answer**. It is deliberately *not* bound by the grounding: a forward-looking pass on how the programme could be **better**, optimised for one north star — **placement readiness / employability** (students able to crack at least entry-level tech roles).
 
 Rules for this section:
 - It is produced **separately from** the grounded plan (on request) and **never edits its numbers**. It is a bolder, standalone view.

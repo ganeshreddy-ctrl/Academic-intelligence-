@@ -41,7 +41,7 @@ mcp = FastMCP(
         "(start, end, subjects, semester, goal) is missing, ASK before assuming. Deliver "
         "the grounded plan by default and only OFFER an unconstrained 'what could be better' "
         "view (optimised for placement readiness) -- produce it as a separate follow-up "
-        "only if the user asks ('unconstrained view' / 'what could be better' / 'unruled'). "
+        "only if the user asks ('unconstrained view' / 'what could be better'). "
         "guide() ALSO carries a second product as "
         "reference context -- the GRIT 2026-27 programme (skills/Miles/tracks); GRIT has "
         "no tables, so answer GRIT questions from the guide, not run_sql()."

@@ -138,16 +138,16 @@ def render():
                 if m.get("cost"):
                     st.caption(f"{m.get('model', '').split('/')[-1]} · "
                                f"${m['cost']:.4f} · {m.get('tokens', 0):,} tokens")
-                # After a grounded plan, offer the opt-in unconstrained ("unruled") view.
+                # After a grounded plan, offer the opt-in "What could be better" view.
                 # Heuristic gate: a plan closes with "utilisation"/"HLID"; skip if the
-                # answer already IS the unconstrained view (avoids a self-referential button).
+                # answer already IS that view (avoids a self-referential button).
                 content = m["content"]
                 is_plan = ("utilisation" in content or "HLID" in content
                            or "Inputs & grounding" in content)
-                already_unruled = ("what could be better" in content.lower()
-                                   or "the one bet" in content.lower())
-                if is_plan and not already_unruled:
-                    if st.button("🔓 Unruled — what could be better?", key=f"unruled::{i}",
+                already_shown = ("what could be better" in content.lower()
+                                 or "the one bet" in content.lower())
+                if is_plan and not already_shown:
+                    if st.button("🔍 What could be better", key=f"wcb::{i}",
                                  help="Opt-in bolder view: changes across plan, pedagogy, "
                                       "structure and standards, optimised for placement readiness."):
                         st.session_state.pending = (
