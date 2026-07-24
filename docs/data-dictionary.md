@@ -7,6 +7,7 @@ and pre-solve the cross-domain joins. Query any of them read-only.
 **Join keys at a glance:** `unit_id` (universal content key) · `session_id` (scheduling ↔
 feedback) · `institute_name` (delivery ↔ feedback ↔ issues) · `nxtwave_tag` (subject ↔
 content) · designed↔delivered bridges fuzzily via `session_link` / `course_plan_vs_actual`.
+For the whole picture — every layer and the key on each edge — see [`data-linkage.md`](data-linkage.md).
 
 ---
 

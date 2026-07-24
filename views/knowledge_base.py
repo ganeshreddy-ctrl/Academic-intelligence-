@@ -36,6 +36,96 @@ digraph chain {
 }
 """
 
+# The WHOLE schema (not just the teaching chain above): every layer + the join key on
+# each edge. Mirrors docs/data-linkage.md. Content catalogue tables are grouped as one
+# "Content" box (unified by content_all) to stay legible. Dashed = fuzzy/best-effort link.
+MODEL_DOT = """
+digraph model {
+  rankdir=LR; bgcolor="transparent"; compound=true;
+  node [shape=box style="rounded,filled" fontname="Helvetica" fontsize=9 color="#d0d0d0"];
+  edge [fontname="Helvetica" fontsize=8 color="#888"];
+
+  subgraph cluster_subj {
+    label="Subjects & names"; style=rounded; color="#c5cae9"; fontsize=9;
+    ST  [label="subject_tags\\n(nxtwave_tag)" fillcolor="#e3f2fd"];
+    TCM [label="tag_content_map" fillcolor="#e3f2fd"];
+    XW  [label="course_crosswalk" fillcolor="#e3f2fd"];
+  }
+  subgraph cluster_content {
+    label="Content"; style=rounded; color="#90caf9"; fontsize=9;
+    RAW [label="reading · objective\\ncoding · editorials\\n+ course_content"];
+    CA  [label="content_all\\n(course, unit_id)" fillcolor="#e3f2fd"];
+  }
+  subgraph cluster_deliv {
+    label="Delivery — what ran"; style=rounded; color="#ffcc80"; fontsize=9;
+    DN  [label="delivered_niat\\n(course, instructor)" fillcolor="#fff3e0"];
+    DS  [label="delivered_sessions\\n(session_id, unit_id)" fillcolor="#fff3e0"];
+    DSEC[label="delivered_sections" fillcolor="#fff3e0"];
+  }
+  subgraph cluster_design {
+    label="Designed plan (HLID)"; style=rounded; color="#b39ddb"; fontsize=9;
+    U   [label="universities\\n(code = institute)" fillcolor="#ede7f6"];
+    DCP [label="designed_course_plan" fillcolor="#ede7f6"];
+    DSEQ[label="designed_sequence\\n(unit_id)" fillcolor="#ede7f6"];
+  }
+  subgraph cluster_signal {
+    label="Feedback · instructors · issues"; style=rounded; color="#a5d6a7"; fontsize=9;
+    FB  [label="session_feedback_safe" fillcolor="#e8f5e9"];
+    INS [label="instructor_sessions" fillcolor="#e8f5e9"];
+    ISS [label="issues" fillcolor="#e8f5e9"];
+  }
+  subgraph cluster_derived {
+    label="Derived views"; style=rounded; color="#b0bec5"; fontsize=9;
+    SL  [label="session_link\\n(fuzzy bridge)" fillcolor="#eceff1"];
+    CPA [label="course_plan_vs_actual" fillcolor="#eceff1"];
+    APD [label="academic_plan_derived" fillcolor="#eceff1"];
+    DEV [label="deviation" fillcolor="#eceff1"];
+    CS  [label="college_summary" fillcolor="#eceff1"];
+  }
+  subgraph cluster_ref {
+    label="Reference — no join"; style="rounded,dashed"; color="#bbb"; fontsize=9;
+    PS  [label="planning_standards" fillcolor="#fafafa"];
+    SR  [label="scheduling_rules" fillcolor="#fafafa"];
+    CO  [label="courses" fillcolor="#fafafa"];
+  }
+
+  RAW  -> CA   [label="unit_id"];
+  ST   -> TCM  [label="nxtwave_tag"];
+  TCM  -> CA   [label="content course = course"];
+  ST   -> DN   [label="course_key ~ name" style=dashed];
+  U    -> DN   [label="institute_name"];
+  U    -> DCP  [label="code"];
+  U    -> DSEQ [label="code"];
+  DN   -> DS   [label="session_link ~85%" style=dashed color="#d9534f" fontcolor="#d9534f"];
+  DS   -> CA   [label="unit_id"];
+  DS   -> FB   [label="session_id"];
+  FB   -> CA   [label="unit_ids" style=dashed];
+  DSEQ -> DS   [label="unit_id"];
+  DCP  -> CPA;
+  DN   -> CPA  [label="per course/section"];
+  DSEQ -> DEV;
+  DS   -> DEV  [label="unit_id drift"];
+  DN   -> APD  [label="derived"];
+  DN   -> CS;
+  FB   -> CS;
+  ISS  -> CS   [label="institute_name"];
+  ISS  -> DN   [label="institute_name"];
+  INS  -> DN   [label="instructor_name"];
+  DS   -> DSEC;
+  XW   -> DN   [label="normalises names" style=dashed];
+}
+"""
+
+# The six keys the whole model hangs off — shown in the app next to MODEL_DOT.
+KEY_LEGEND = [
+    ("unit_id", "content ↔ delivery ↔ designed ↔ feedback", "The universal content key — same everywhere."),
+    ("session_id", "delivered_sessions ↔ session_feedback", "Dash-less 32-hex; never join a dashed UUID."),
+    ("institute_name", "delivery ↔ feedback ↔ issues ↔ rollups", "The college key across almost every table."),
+    ("universities.code ↔ institute_name", "designed layer ↔ delivered layer", "HLID uses codes; delivery uses full names."),
+    ("nxtwave_tag", "subject ↔ content", "subject_tags → tag_content_map → content_all."),
+    ("session_link (fuzzy)", "delivered_niat ↔ delivered_sessions", "No shared id — matched on institute+title+time (~85%)."),
+]
+
 
 def _uni_grid(colleges):
     """Clickable grid of universities; returns the selected institute_name."""
@@ -62,6 +152,19 @@ def render():
                "Session (lecture/practice/exam) + Instructor → [85% fuzzy bridge] → Scheduling → "
                "Content unit (resource/quiz) → Content, with Feedback on the session.")
     con = dashboard.conn()
+
+    # The whole schema first (collapsed): how EVERY table links, and the six join keys.
+    with st.expander("🔗 Full data model — how every table links", expanded=False):
+        try:
+            st.graphviz_chart(MODEL_DOT, width="stretch")
+        except Exception:  # noqa: BLE001
+            st.caption("See docs/data-linkage.md for the full map.")
+        st.markdown("**The six join keys everything hangs off**")
+        st.dataframe([{"Join key": k, "Connects": c, "Notes": n} for k, c, n in KEY_LEGEND],
+                     width="stretch", hide_index=True)
+        st.caption("Solid edge = reliable id/name join · dashed = fuzzy/best-effort "
+                   "(session_link, feedback-by-unit, name normalisation). "
+                   "Full write-up: docs/data-linkage.md.")
 
     try:
         st.graphviz_chart(CHAIN_DOT, width="stretch")
