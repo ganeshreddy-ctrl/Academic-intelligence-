@@ -99,27 +99,42 @@ def require_login():
 
 
 def _login_screen(denied=None):
+    # All visual content lives in ONE self-contained markdown block — Streamlit
+    # auto-closes a bare <div>, so wrapping widgets in raw open/close divs breaks.
     st.markdown("""<style>
       header[data-testid="stHeader"], footer { display: none; }
-      .stApp { background: radial-gradient(1200px 600px at 50% -10%, #e8f0fe 0%, #ffffff 55%); }
-      .login-card { text-align: center; padding: 2.2rem 1.6rem; border: 1px solid #e6e8eb;
-        border-radius: 16px; background: #fff; box-shadow: 0 10px 30px rgba(20,40,80,.08); }
-      .login-card .logo { font-size: 3rem; line-height: 1; }
+      [data-testid="stAppViewContainer"] {
+        background: linear-gradient(160deg,#eaf1ff 0%,#f6f9ff 45%,#ffffff 100%); }
+      .block-container { padding-top: 10vh; max-width: 720px; }
+      .login-hero { text-align: center; margin-bottom: 1.6rem; }
+      .login-hero .logo { display:inline-flex; align-items:center; justify-content:center;
+        width:96px; height:96px; font-size:3.2rem; border-radius:26px;
+        background:linear-gradient(135deg,#3b82f6,#6366f1);
+        box-shadow:0 14px 34px rgba(79,70,229,.38); margin-bottom:1.2rem; }
+      .login-hero h1 { font-size:2.3rem; font-weight:800; letter-spacing:-.02em; margin:0 0 .45rem;
+        background:linear-gradient(90deg,#1e3a8a,#4f46e5); -webkit-background-clip:text;
+        background-clip:text; -webkit-text-fill-color:transparent; }
+      .login-hero p { color:#64748b; font-size:1.05rem; margin:0; }
+      div.stButton > button { border-radius:12px; padding:.72rem 1rem; font-weight:600;
+        box-shadow:0 10px 24px rgba(59,130,246,.30); transition:transform .06s ease; }
+      div.stButton > button:hover { transform:translateY(-1px); }
     </style>""", unsafe_allow_html=True)
-    _, mid, _ = st.columns([1, 1.1, 1])
+
+    logo, title, sub = ("🎓", "NIAT Learning Copilot", "Ask anything about your academic data.")
+    if denied:
+        logo, title, sub = ("🔒", "Wrong account", f"{denied} can’t sign in here — use your Nxtwave account.")
+
+    _, mid, _ = st.columns([1, 1.5, 1])
     with mid:
-        st.markdown("<div class='login-card'>", unsafe_allow_html=True)
-        st.markdown("<div class='logo'>🎓</div>", unsafe_allow_html=True)
-        st.markdown("### NIAT Learning Copilot")
-        st.caption("Internal tool · Nxtwave staff only")
+        st.markdown(
+            f"<div class='login-hero'><div class='logo'>{logo}</div>"
+            f"<h1>{title}</h1><p>{sub}</p></div>",
+            unsafe_allow_html=True)
         if denied:
-            st.error(f"{denied} isn't a Nxtwave account.")
             st.button("Try another account", on_click=st.logout, use_container_width=True)
         else:
             st.button("Continue with Google", on_click=st.login,
                       type="primary", icon=":material/login:", use_container_width=True)
-        st.caption("Access limited to @nxtwave.co.in and @nxtwave.tech")
-        st.markdown("</div>", unsafe_allow_html=True)
 
 
 def inject_css():
